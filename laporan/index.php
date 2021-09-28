@@ -15,8 +15,21 @@
     <div class="container pt-5 pb-5">
         <div class="col-12">
             <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            <div class="d-flex justify-content-center">
+            <label class="mx-2">Pilih:</label>
+            <select id="selectortahun">
+                <option>Tahun</option>
+                <option>Bulan</option>
+            </select>
+            <label class="mx-2">Pilih:</label>
+            <select id="selectorbulan">
+                <option>Select selector</option>
+            </select>
+            </div>
+            
         </div>
         <div class="col-12 d-flex justify-content-center">
+            
             <table id="tablelaporan" class="table table-striped" style="width:70%">
                 <thead>
                     <tr>
@@ -494,7 +507,7 @@
     </div>
 
     <script>
-        var test=10;
+        var test = 10;
 
         google.charts.load('current', {
             'packages': ['corechart']
@@ -503,14 +516,45 @@
 
 
         $(document).ready(function() {
+            
             $("#myInput").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
                 $("#tablelaporan tbody tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+
+
+
+            //filter bulan/tahun
+            $(document).on('change','#selectortahun',function(){
+                $("#selectorbulan option").remove();
+                var value=$(this).find(":selected").html();
+                if(value=="Bulan"){
+                    for (let i=1;i<=12;i++){
+                        $("#selectorbulan").append(
+                            `
+                            <option>${i}</option>
+                            `
+                        )
+                    }
+                }
+                if(value=="Tahun"){
+                    for(let i=1960;i<=2021;i++){
+                        $("#selectorbulan").append(
+                            `
+                            <option>${i}</option>
+                            `
+                        )
+                    }
+                }
+            });
+
+
+
         });
 
+        //buat chart
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
