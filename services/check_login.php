@@ -1,6 +1,6 @@
 <?php 
 
-include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/database.php";
+include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php";
 
 header("Content-Type: application/json");
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($row_count >= 1) {
             $result['redirect'] = '/ProyekManpro/index.php';
             $user = $stmt->fetch();
-            session_start();
+            //session_start();
             $_SESSION['id'] = $user['id_sales'];
             $_SESSION['nama'] = $user['nama'];
             $_SESSION['email'] = $user['email'];

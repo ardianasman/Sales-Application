@@ -8,8 +8,7 @@
     <!-- CSS Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <!-- JQuery Confirm -->
-    <link rel="stylesheet" href="assets/jquery-confirm/jquery-confirm.css"/>
+
 
 </head>
 <body>
@@ -100,8 +99,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 
-<!-- JQuery Confirm -->
-<script src="assets/jquery-confirm/jquery-confirm.js"></script>
 
 <!-- Script -->
 <script>
@@ -116,7 +113,7 @@ $("#sign-in-button").click(function() {
   var password = $("#password").val();
 
   $.ajax({
-    url: '/ProyekManpro/check_login.php',
+    url: '/ProyekManpro/services/check_login.php',
     method: 'POST',
     dataType: 'json',
     data: {
@@ -126,17 +123,8 @@ $("#sign-in-button").click(function() {
     success: function(data){
         window.location = data['redirect'];
     },
-    error: function($xhr, textStatus, errorThrown) {
-        $.confirm({
-            title: 'Error!',
-            content: $xhr.responseJSON['error'],
-            type: 'red',
-            typeAnimated: true,
-            buttons: {
-                close: function () {
-                }
-            }
-        });
+    error: function (request, status, error) {
+        alert(request.responseText);
     }
   });
 });
