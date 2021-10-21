@@ -71,7 +71,7 @@ include "services/database.php";
                 <label class="ms-4 me-2 d-flex align-items-center">Sampai:</label>
                 <input type="date" id="tanggalsampai" name="tanggalsampai">
                 <!-- <button type="button" class="btn btn-primary ms-4" id="datefilterbutton">Filter</button> -->
-                <button type="button" class="btn btn-primary ms-4" id="downloadbutton" onclick="HTMLtoPDF()">Download as PDF</button>
+
             </div>
 
         </div>
@@ -136,8 +136,13 @@ include "services/database.php";
             </table>
         </div>
         <div class="row">
-            <div class="col-lg-6 col-12 d-flex justify-content-center">
+            <div class="col-12 d-flex justify-content-center">
                 <div id="piechart"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <button type="button" class="btn btn-primary ms-4" id="downloadbutton" onclick="HTMLtoPDF()">Download as PDF</button>
             </div>
         </div>
     </div>
@@ -166,6 +171,8 @@ include "services/database.php";
                 false,
                 true
             ).draw();
+            google.charts.setOnLoadCallback(drawChartsalesman);
+
         }
 
         function filterColumn(i) {
@@ -174,10 +181,11 @@ include "services/database.php";
                 false,
                 true
             ).draw();
+            google.charts.setOnLoadCallback(drawChartsalesman);
+
         }
 
         function load_data() {
-            console.log('helloa');
             var tanggal_mulai_order = $('#tanggalmulai').val();
             var tanggal_selesai_order = $('#tanggalsampai').val();
 
@@ -192,7 +200,6 @@ include "services/database.php";
                     tanggal_selesai_order
                 },
                 success: function(data) {
-                    console.log(data);
                     $('#tablelaporan tbody').html('');
                     var co = 1;
                     html = "";
@@ -214,10 +221,9 @@ include "services/database.php";
                         col6.appendTo(row);
                         col7.appendTo(row);
                         $("#tablelaporan tbody").append(row);
-                        html+=row;
+                        html += row;
 
                     })
-                    console.log(html);
                     $('#tablelaporan').DataTable({
                         dom: 'lrtip',
                         "processing": true,
@@ -247,7 +253,7 @@ include "services/database.php";
             google.charts.load('current', {
                 'packages': ['corechart']
             });
-            google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(drawChartsalesman);
 
             // $("#myInput").on("keyup", function() {
             //     var value = $(this).val().toLowerCase();
@@ -293,36 +299,36 @@ include "services/database.php";
 
 
 
-            function filterRows() {
-                var from = $('#tanggalmulai').val();
-                var to = $('#tanggalsampai').val();
+            // function filterRows() {
+            //     var from = $('#tanggalmulai').val();
+            //     var to = $('#tanggalsampai').val();
 
-                if (!from && !to) { // no value for from and to
-                    return;
-                }
+            //     if (!from && !to) { // no value for from and to
+            //         return;
+            //     }
 
-                from = from || '1970/01/01'; // default from to a old date if it is not set
-                to = to || '2999/12/31';
+            //     from = from || '1970/01/01'; // default from to a old date if it is not set
+            //     to = to || '2999/12/31';
 
-                var dateFrom = moment(from);
-                var dateTo = moment(to);
+            //     var dateFrom = moment(from);
+            //     var dateTo = moment(to);
 
-                $('#tablelaporan tbody tr').each(function(i, tr) {
-                    var val = $(tr).find("td:nth-child(5)").text();
-                    console.log(val)
-                    var dateVal = moment(val, "DD/MM/YYYY");
-                    var visible = (dateVal.isBetween(dateFrom, dateTo, null, [])) ? "" : "none"; // [] for inclusive
-                    console.log(visible)
-                    $(tr).css('display', visible);
-                });
-            }
+            //     $('#tablelaporan tbody tr').each(function(i, tr) {
+            //         var val = $(tr).find("td:nth-child(5)").text();
+            //         console.log(val)
+            //         var dateVal = moment(val, "DD/MM/YYYY");
+            //         var visible = (dateVal.isBetween(dateFrom, dateTo, null, [])) ? "" : "none"; // [] for inclusive
+            //         console.log(visible)
+            //         $(tr).css('display', visible);
+            //     });
+            // }
 
             function filterTabel() {
                 var from = $('#tanggalmulai').val();
                 var to = $('#tanggalsampai').val();
 
-                from = from || '1970-01-01'; // default from to a old date if it is not set
-                to = to || '2999-12-31';
+                to = to || moment(moment().toDate()).format('YYYY/MM/DD');
+                from = from || to.subtract(2, 'years');
 
                 var dateFrom = moment(from);
                 var dateTo = moment(to);
@@ -332,7 +338,7 @@ include "services/database.php";
                 $('#tablelaporan tbody tr').hide();
                 $('#tablelaporan tbody tr').filter(function(i, v) {
                     //filter tanggal
-                    var val = $(this).find("td:nth-child(5)").text();
+                    var val = $(this).find("td:nth-child(4)").text();
                     var dateVal = moment(val, "YYYY/MM/DD");
                     var visible = (dateVal.isBetween(dateFrom, dateTo, null, [])) ? true : false;
 
@@ -341,10 +347,15 @@ include "services/database.php";
                     // console.log(visible);
                     return rex.test($t.text()) && visible;
                 }).show();
+
+                google.charts.setOnLoadCallback(drawChartsalesman);
+
             }
             $('#tanggalmulai').on("change", filterTabel);
             $('#tanggalsampai').on("change", filterTabel);
-            $('#myInput').keyup(filterTabel);
+
+
+            // $('#myInput').keyup(filterTabel);
 
             // $('#myInput').keyup(function() {
             //     var from = $('#tanggalmulai').val();
@@ -421,11 +432,11 @@ include "services/database.php";
             })
 
 
-            $(document).on('change', '#selectorbulan', function() {
-                var value = $(this).find(":selected").html();
-                angkaselector = value;
-                console.log(selector.toString() + " " + angkaselector.toString());
-            });
+            // $(document).on('change', '#selectorbulan', function() {
+            //     var value = $(this).find(":selected").html();
+            //     angkaselector = value;
+            //     console.log(selector.toString() + " " + angkaselector.toString());
+            // });
 
             //download as pdf
             // $("#downloadbutton").click(function(){
@@ -439,20 +450,27 @@ include "services/database.php";
         });
 
         //buat chart
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Work', test],
-                ['Friends', 2],
-                ['Eat', 2],
-                ['TV', 2],
-                ['Gym', 2],
-                ['Sleep', 8]
-            ]);
+        function drawChartsalesman() {
+            var arr = [];
+            var arr2 = [
+                ['Name', 'Deal']
+            ]
+            $("#tablelaporan tbody tr td:nth-child(2)").each(function() {
+                if ($.inArray($(this).text(), arr) == -1)
+                    arr.push($(this).text());
+            });
+            console.log(arr)
+            $.each(arr, function(index, value) {
+                var many=$('#tablelaporan tbody tr').filter(function(index2,value2){
+                    return $(value2).find('td:nth-child(2)').html()==value
+                }).length;
+                arr2.push([value,many]);
+            });
+            var data = google.visualization.arrayToDataTable(arr2);
 
             // Optional; add a title and set the width and height of the chart
             var options = {
-                'title': 'My Average Day',
+                'title': 'Most Productive Salesman',
                 'width': 550,
                 'height': 400
             };
@@ -465,7 +483,6 @@ include "services/database.php";
                 $('#piechart').append(content);
             })
             chart.draw(data, options);
-
         }
 
         //function download html to PDF
