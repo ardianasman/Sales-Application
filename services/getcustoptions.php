@@ -1,16 +1,17 @@
 <?php
     include "./database.php";
     header("Content-Type: application/json");
-    if ($_SERVER['REQUEST_METHOD'] == "POST")
-    {
-        $sql = "SELECT * FROM `order`";
+    if($_SERVER['REQUEST_METHOD'] == "POST"){
+        $idsales = $_SESSION['id'];
+        $sql = "SELECT * FROM `order` WHERE `id_sales` = ?";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([$idsales]);
 
         $result = array();
-        while($row = $stmt->fetch()){
-            array_push($result,$row);
+         while($row = $stmt->fetch()) {
+            array_push($result, $row);
         }
+
         echo json_encode($result);
     }
     else
@@ -22,4 +23,5 @@
 
         echo json_encode($error);
     }
+
 ?>

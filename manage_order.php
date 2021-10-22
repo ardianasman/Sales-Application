@@ -1,5 +1,9 @@
 <?php
     include "./services/database.php";
+    if(!isset($_SESSION['id'])){
+        header("Location: login.php");
+    }
+    $id = $_SESSION['id'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -23,13 +27,15 @@
                     console.log(res);
                     $("#order-list").html('');
                     var table = $("<table id='data_table' class='table'></table>");
-                    var title = $("<thead><tr><td><b>Order ID</b></td><td><b>Sales ID</b></td></tr></thead>");
+                    var title = $("<thead><tr><td><b>Order ID</b></td><td><b>Customer ID</b></td><td><b>Sales ID</b></td></tr></thead>");
                     table.append(title);
                     res.forEach(function(item){
                         var html = $(`
                             <tr>
                             <td>`+ item['id_order'] +`</td>
+                            <td>`+ item['id_customer'] +`</td>
                             <td>` + item['id_sales'] + `</td>
+                            <td><a href="./edit_order.php?ids=`+ item['id_order'] +`" class="btn btn-primary">Edit</a></td>
                             </tr>
                         `);                           
                         table.append(html);
@@ -47,6 +53,7 @@
 <body onload="getItem()">
     <div class="container">
         <div class="transparent">
+            <button onclick="location.href = `add_order.php`">Add Order</button>
             <div id="order-list" class="transparent">
             </div>
         </div>
