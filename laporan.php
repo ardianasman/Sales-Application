@@ -53,56 +53,58 @@ include "services/database.php";
 </head>
 
 <body>
-    <div class="container pt-5 pb-5" id="capture">
-        <div class="col-12">
-            <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
-            <div class="d-flex justify-content-center mt-4">
-                <label class="ms-4 me-2 d-flex align-items-center">Dari:</label>
-                <!-- <select id="selectortahun">
-                    <option></option>
-                    <option>Tahun</option>
-                    <option>Bulan</option>
-                </select>
-                <label class="mx-2">Pilih:</label>
-                <select id="selectorbulan">
-                    <option>Select selector</option>
-                </select> -->
-                <input type="date" id="tanggalmulai" name="tanggalmulai">
-                <label class="ms-4 me-2 d-flex align-items-center">Sampai:</label>
-                <input type="date" id="tanggalsampai" name="tanggalsampai">
-                <!-- <button type="button" class="btn btn-primary ms-4" id="datefilterbutton">Filter</button> -->
+    <div class="container pt-5 pb-5">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h1>Sales App</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h4>Laporan Sales</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
+                <div class="d-flex justify-content-center mt-4">
+                    <label class="ms-4 me-2 d-flex align-items-center">Dari:</label>
+                    <input type="date" id="tanggalmulai" name="tanggalmulai">
+                    <label class="ms-4 me-2 d-flex align-items-center">Sampai:</label>
+                    <input type="date" id="tanggalsampai" name="tanggalsampai">
+                    <button type="button" class="btn btn-primary ms-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
+                    
+                </div>
 
             </div>
-
         </div>
-
-
-        <div class="col-12 d-flex justify-content-center">
-            <table cellpadding="3" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th class="d-flex justify-content-center">Search text</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr id="filter_global">
-                        <td class="d-flex justify-content-end">Global search</td>
-                        <td align="center"><input type="text" class="global_filter" id="global_filter"></td>
-                    </tr>
-                    <!-- <tr id="filter_col1" data-column="0">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <table cellpadding="3" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="d-flex justify-content-center">Search text</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="filter_global">
+                            <td class="d-flex justify-content-end">Global search</td>
+                            <td align="center"><input type="text" class="global_filter" id="global_filter"></td>
+                        </tr>
+                        <!-- <tr id="filter_col1" data-column="0">
                         <td class="d-flex justify-content-end">Column - Name</td>
                         <td align="center"><input type="text" class="column_filter" id="col0_filter"></td>
                     </tr> -->
-                    <tr id="filter_col2" data-column="1">
-                        <td class="d-flex justify-content-end">Nama Sales</td>
-                        <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
-                    </tr>
-                    <tr id="filter_col3" data-column="2">
-                        <td class="d-flex justify-content-end">Nama Costumer</td>
-                        <td align="center"><input type="text" class="column_filter" id="col2_filter"></td>
-                    </tr>
-                    <!-- <tr id="filter_col4" data-column="3">
+                        <tr id="filter_col2" data-column="1">
+                            <td class="d-flex justify-content-end">Nama Sales</td>
+                            <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
+                        </tr>
+                        <tr id="filter_col3" data-column="2">
+                            <td class="d-flex justify-content-end">Nama Costumer</td>
+                            <td align="center"><input type="text" class="column_filter" id="col2_filter"></td>
+                        </tr>
+                        <!-- <tr id="filter_col4" data-column="3">
                         <td class="d-flex justify-content-end">Tanggal Order</td>
                         <td align="center"><input type="text" class="column_filter" id="col3_filter"></td>
                     </tr>
@@ -110,31 +112,36 @@ include "services/database.php";
                         <td class="d-flex justify-content-end">Tanggal Jatuh Tempo</td>
                         <td align="center"><input type="text" class="column_filter" id="col4_filter"></td>
                     </tr> -->
-                    <tr id="filter_col6" data-column="6">
-                        <td class="d-flex justify-content-end">Status Order</td>
-                        <td align="center"><input type="text" class="column_filter" id="col6_filter"></td>
-                    </tr>
-                </tbody>
-            </table>
+                        <tr id="filter_col6" data-column="6">
+                            <td class="d-flex justify-content-end">Status Order</td>
+                            <td align="center"><input type="text" class="column_filter" id="col6_filter"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col-12 d-flex justify-content-center">
-            <table id="tablelaporan" class="table table-striped table-hover" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Sales</th>
-                        <th>Nama Customer</th>
-                        <th>Tanggal Order</th>
-                        <th>Tanggal Jatuh Tempo</th>
-                        <th>Total Harga</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <table id="tablelaporan" class="table table-striped table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Sales</th>
+                            <th>Nama Customer</th>
+                            <th>Tanggal Order</th>
+                            <th>Tanggal Jatuh Tempo</th>
+                            <th>Total Harga</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <div id="piechart"></div>
@@ -186,21 +193,40 @@ include "services/database.php";
         }
 
         function load_data() {
+            // console.log("loading data");
             var tanggal_mulai_order = $('#tanggalmulai').val();
             var tanggal_selesai_order = $('#tanggalsampai').val();
+            console.log(tanggal_mulai_order);
+            console.log(tanggal_selesai_order);
+            var today=new Date();
+            var dulu=new Date();
+            tanggal_selesai_order = tanggal_selesai_order || today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+            today=new Date(tanggal_selesai_order);
+            dulu.setDate(today.getDate());
+            dulu.setMonth(today.getMonth());
+            dulu.setYear(today.getFullYear()-2);
+            tanggal_mulai_order = tanggal_mulai_order || dulu.getFullYear()+'/'+(dulu.getMonth()+1)+'/'+dulu.getDate();
+            dulu=new Date(tanggal_mulai_order);
 
-            tanggal_mulai_order = tanggal_mulai_order || '1970/01/01'; // default from to a old date if it is not set
-            tanggal_selesai_order = tanggal_selesai_order || moment(moment().toDate()).format('YYYY/MM/DD');
+            $('#tanggalsampai').val(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate());
+            $('#tanggalmulai').val(dulu.getFullYear()+'-'+(dulu.getMonth()+1)+'-'+dulu.getDate());
+
+            tanggal_mulai_order=dulu.getFullYear()+'/'+(dulu.getMonth()+1)+'/'+dulu.getDate();
+            tanggal_selesai_order=today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+            
+
+
             $.ajax({
                 url: "services/getlaporan.php",
                 method: "POST",
                 data: {
-                    tanggal_mulai_order: tanggal_mulai_order,
-                    tanggal_selesai_order,
-                    tanggal_selesai_order
+                    tanggal_mulai_order:tanggal_mulai_order,
+                    tanggal_selesai_order:tanggal_selesai_order
                 },
                 success: function(data) {
                     $('#tablelaporan tbody').html('');
+                    $('#tablelaporan').dataTable().fnClearTable();
+                    $('#tablelaporan').dataTable().fnDestroy();
                     var co = 1;
                     html = "";
                     var i;
@@ -230,6 +256,7 @@ include "services/database.php";
                         "serverSide": false,
                         "stateSave": true,
                     });
+                    google.charts.setOnLoadCallback(drawChartsalesman);
                 },
                 error: function(data) {
                     console.log(data);
@@ -299,6 +326,7 @@ include "services/database.php";
 
 
 
+
             // function filterRows() {
             //     var from = $('#tanggalmulai').val();
             //     var to = $('#tanggalsampai').val();
@@ -323,36 +351,37 @@ include "services/database.php";
             //     });
             // }
 
-            function filterTabel() {
-                var from = $('#tanggalmulai').val();
-                var to = $('#tanggalsampai').val();
+            // function filterTabel() {
+            //     var from = $('#tanggalmulai').val();
+            //     var to = $('#tanggalsampai').val();
+                
 
-                to = to || moment(moment().toDate()).format('YYYY/MM/DD');
-                from = from || to.subtract(2, 'years');
+            //     to = to || moment(moment().toDate()).format('YYYY/MM/DD');
+            //     from = from || to.subtract(2, 'years');
 
-                var dateFrom = moment(from);
-                var dateTo = moment(to);
+            //     var dateFrom = moment(from);
+            //     var dateTo = moment(to);
 
-                var rex = new RegExp($('#myInput').val(), 'i');
+            //     var rex = new RegExp($('#myInput').val(), 'i');
 
-                $('#tablelaporan tbody tr').hide();
-                $('#tablelaporan tbody tr').filter(function(i, v) {
-                    //filter tanggal
-                    var val = $(this).find("td:nth-child(4)").text();
-                    var dateVal = moment(val, "YYYY/MM/DD");
-                    var visible = (dateVal.isBetween(dateFrom, dateTo, null, [])) ? true : false;
+            //     $('#tablelaporan tbody tr').hide();
+            //     $('#tablelaporan tbody tr').filter(function(i, v) {
+            //         //filter tanggal
+            //         var val = $(this).find("td:nth-child(4)").text();
+            //         var dateVal = moment(val, "YYYY/MM/DD");
+            //         var visible = (dateVal.isBetween(dateFrom, dateTo, null, [])) ? true : false;
 
-                    //filter nama
-                    var $t = $(this).children(":eq(" + "0" + ")");
-                    // console.log(visible);
-                    return rex.test($t.text()) && visible;
-                }).show();
+            //         //filter nama
+            //         var $t = $(this).children(":eq(" + "0" + ")");
+            //         // console.log(visible);
+            //         return rex.test($t.text()) && visible;
+            //     }).show();
 
-                google.charts.setOnLoadCallback(drawChartsalesman);
+            //     google.charts.setOnLoadCallback(drawChartsalesman);
 
-            }
-            $('#tanggalmulai').on("change", filterTabel);
-            $('#tanggalsampai').on("change", filterTabel);
+            // }
+            // $('#tanggalmulai').on("change", filterTabel);
+            // $('#tanggalsampai').on("change", filterTabel);
 
 
             // $('#myInput').keyup(filterTabel);
@@ -459,18 +488,17 @@ include "services/database.php";
                 if ($.inArray($(this).text(), arr) == -1)
                     arr.push($(this).text());
             });
-            console.log(arr)
             $.each(arr, function(index, value) {
-                var many=$('#tablelaporan tbody tr').filter(function(index2,value2){
-                    return $(value2).find('td:nth-child(2)').html()==value
+                var many = $('#tablelaporan tbody tr').filter(function(index2, value2) {
+                    return $(value2).find('td:nth-child(2)').html() == value
                 }).length;
-                arr2.push([value,many]);
+                arr2.push([value, many]);
             });
             var data = google.visualization.arrayToDataTable(arr2);
 
             // Optional; add a title and set the width and height of the chart
             var options = {
-                'title': 'Most Productive Salesman',
+                'title': 'Salesman Productivity Percentage',
                 'width': 550,
                 'height': 400
             };
@@ -527,7 +555,7 @@ include "services/database.php";
             doc.addPage();
             doc.addImage(chart1, 'png', 0, 0, parseInt(img.width), parseInt(img.height), undefined, 'none');
             //convert to pdf
-            doc.save("yea.pdf");
+            doc.save("laporan.pdf");
             table.page.len(lengthnow).draw();
 
 
