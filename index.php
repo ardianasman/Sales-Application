@@ -21,6 +21,9 @@ if (!isset($_SESSION['id'])) {
     <!-- CSS Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/8762c0f933.js" crossorigin="anonymous"></script>
+
 <style media="screen">
 
     .bg-home-sales{
@@ -78,14 +81,14 @@ if (!isset($_SESSION['id'])) {
     <div class="col-12 bg-home-sales p-sm-3 ">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparent ">
-                <a class="judul" href="#">Prototype Sales</a>
+                <a class="judul" href="index.php">Prototype Sales</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ml-auto">
                         <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                        <a class="nav-item nav-link" href="show_image_upload.php">Activity</a>
+                        <a class="nav-item nav-link" href="show_activity.php">Activity</a>
                         <a class="nav-item nav-link" href="#">Customer</a>
                         <a class="nav-item nav-link" href="logout.php">Logout</a>
                     </div>
@@ -97,7 +100,7 @@ if (!isset($_SESSION['id'])) {
             <h2 class="tulisanDua"><?php echo $_SESSION['nama']; ?></h2>
 
             <div class="col-12 mt-lg-5 pt-lg-5 ml-lg-5">
-                <button type="button" id="ac-button" name="see-ac-button" class="btn" style="margin-top: 150px;"> See Activity</button>
+                <a href="show_activity.php"><button type="button" id="ac-button" name="see-ac-button" class="btn">See Activity <i class="fas fa-arrow-right"></i></button></a>
             </div>
             
         </div>
