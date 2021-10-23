@@ -45,7 +45,7 @@
         </div>
         <div class="row pt-4">
             <div class="col-12 table-responsive-sm">
-                <table class="table table-hover table-striped table-bordered">
+                <table id="tableImage" class="table table-hover table-striped table-bordered">
                     <thead>
                         <tr>
                             <th width="5%" data-sortable="true">No</th>
@@ -99,7 +99,8 @@ function load_data() {
 
                 co++;
                 $("#user-content").append(row);
-            });
+            })
+            $('#tableImage').DataTable();
             },
             error: function(data) {
 

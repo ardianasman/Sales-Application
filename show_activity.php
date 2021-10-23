@@ -14,7 +14,8 @@
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/8762c0f933.js" crossorigin="anonymous"></script>
 
-
+    <!-- Data Tables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 
     <style>
         td,th{
@@ -79,7 +80,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-
+<!-- DataTable Query -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
 
 <script>
@@ -114,7 +116,8 @@ function load_data() {
 
                 co++;
                 $("#user-content").append(row);
-            });
+            })
+            $('#sortTable').DataTable();
             },
             error: function(data) {
 
@@ -124,7 +127,7 @@ function load_data() {
 
 $(document).ready(function(){
     load_data();
-    // $('#sortTable').DataTable();
+    // 
 });
 
 
