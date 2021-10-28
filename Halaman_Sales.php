@@ -198,7 +198,7 @@
             <div class="p-3" style="margin-left: 280px;">
                 <form class="grid-container p-1" style="width: 1060px;">
                     <div><img src="image/profile.jpg" alt="profile" width="300px"></div>
-                    <div class="mt-4 ml-3">
+                    <div class="mt-4 ml-3" id="sales-content">
                         <h2 class="mb-3">Gloria Endhy</h2>
                         <div class="fs-5 mb-3">Email : c14190009@john.petra.ac.id</div>
                         <div class="fs-5 mt-3 mb-3">No Telp : 083849888000</div>
@@ -212,8 +212,48 @@
                     <div class="mt-4 ml-3" style="text-align: right;"><span class="fs-6">18-10-2021</span></div>
                 </form>
             </div>
-
-            
         </div>
+
+        <script>
+            function load_data() {
+                var id = <?php echo $_GET['id'] ?>;
+                $.ajax({
+                    url: "/ProyekManpro/services/get_sales.php",
+                    method: "GET",
+                    success: function(data) {
+                        var cek=false;
+                        var co = 1;
+                        $("#sales-content").html('');
+                        data.forEach(function(sales){
+                            if(sales['id_sales'] == id){
+                                var col1 = $("<h2 class='mb-3'>" + sales['nama'] + "</h2>");
+                                var col2 = $("<div class='fs-5 mb-3'> Email : " + sales['email'] + "</div>")
+                                var col3 = $("<div class='fs-5 mt-3 mb-3'>No Telp : " + sales['no_telp'] + "</div>");
+                                var col4 = $("<div class='fs-5 mt-3 mb-3'>Alamat : " + sales['alamat'] + "</div>");
+                                var col5 = $("<span class='fs-5'>Target Penjualan : " + sales['target_penjualan'] + "</span>");
+                                var edit = $("<a href='Edit_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-dark btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>Edit<svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
+
+                                $("#sales-content").append(col1);
+                                $("#sales-content").append(col2);
+                                $("#sales-content").append(col3);
+                                $("#sales-content").append(col4);
+                                $("#sales-content").append(col5);
+                                $("#sales-content").append(edit);
+                            }
+
+                            cek = true;
+                            co++;
+                        });
+                    },
+                    error: function(data) {
+                        alert("load data error!");
+                    }
+                });
+            }
+            $(document).ready(function(){
+                load_data();
+            });
+        </script>
+
     </body>
 </html>

@@ -228,7 +228,7 @@
                 </form>
                 
                 <form class="d-flex mt-4 align-items-center">
-                    <button class="btn btn-outline-danger" type="button" id="add-sales-btn">+ Add</button>
+                    <a href="Add_DataSales.php"><button class="btn btn-outline-danger" type="button" id="add-sales-btn">+ Add</button></a>
                 </form>
                 <table class="table col-sm-auto mt-4" style="text-align: center;">
                     <thead>
@@ -251,119 +251,6 @@
             </div>
         </div>
 
-        <!-- Add Sales MODAL -->
-        <div class="modal fade show" id="add-sales-modal" tabindex="-1" role="dialog" aria-hidden="true" aria-modal="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h4 class="modal-title" style="color: black;">Add Sales</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Nama</span>
-                            </div>
-                            <input type="text" class="form-control" id="nama" name="nama" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Alamat</span>
-                            </div>
-                            <input type="text" class="form-control" id="alamat" name="alamat" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">No Telp</span>
-                            </div>
-                            <input type="text" class="form-control" id="no_telp" name="no_telp" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
-                            </div>
-                            <input type="text" class="form-control" id="email" name="email" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Mulai Bekerja</span>
-                            </div>
-                            <input type="date" class="form-control" id="tanggal_mulai_kerja" name="tanggal_mulai_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Berhenti Bekerja</span>
-                            </div>
-                            <input type="date" class="form-control" id="tanggal_berhenti_kerja" name="tanggal_berhenti_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                    </div>
-                        
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-warning mt-5" id="add-sales-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Edit Product MODAL -->
-        <div class="modal fade show" id="edit-sales-modal" tabindex="-1" role="dialog" aria-hidden="true" aria-modal="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h4 class="modal-title" style="color: black;">Edit Product</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="edit-id_sales" name="id" value="">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Nama</span>
-                            </div>
-                            <input type="text" class="form-control" id="edit-nama" name="nama" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Alamat</span>
-                            </div>
-                            <input type="text" class="form-control" id="edit-alamat" name="alamat" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">No Telp</span>
-                            </div>
-                            <input type="text" class="form-control" id="edit-no_telp" name="no_telp" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
-                            </div>
-                            <input type="text" class="form-control" id="edit-email" name="email" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Mulai Bekerja</span>
-                            </div>
-                            <input type="date" class="form-control" id="edit-tanggal_mulai_kerja" name="tanggal_mulai_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Berhenti Bekerja</span>
-                            </div>
-                            <input type="date" class="form-control" id="edit-tanggal_berhenti_kerja" name="tanggal_berhenti_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                    </div>
-                        
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-warning mt-5" id="edit-sales-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <script>
             function load_data() {
                 $.ajax({
@@ -381,19 +268,10 @@
                             var col4 = $("<td scope='col'>" + sales['target'] + "</td>");
                             var col5 = $("<td scope='col'>" + sales['status'] + "</td>");
                             var btn = $('<td scope="col"></td>');
-                            var lihat = $('<a href="Halaman_Sales.php"><svg class="bi me-2" width="16" height="16" id="lihat-btn" style="color: black;"><use xlink:href="#open"/></svg></a>')
-                            var edit = $('<a href="#" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>')
+                            var lihat = $('<a href="Halaman_Sales.php?id=' + sales['id_sales'] + '"><svg class="bi me-2" width="16" height="16" id="lihat-btn" style="color: black;"><use xlink:href="#open"/></svg></a>')
+                            var edit = $('<a href="Edit_DataSales.php?id=' + sales['id_sales'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>')
                             var del = $('<a href="#" id="delete-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#trash"/></svg></a>')
 
-                            edit.data('id_sales', sales['id_sales']);
-                            edit.data('nama', sales['nama']);
-                            edit.data('alamat', sales['alamat']);
-                            edit.data('no_telp', sales['no_telp']);
-                            edit.data('email', sales['email']);
-                            edit.data('tanggal_mulai_kerja', sales['tanggal_mulai_kerja']);
-                            edit.data('tanggal_berhenti_kerja', sales['tanggal_berhenti_kerja']);
-
-                            $("#edit-product-submit-btn").data('id_produk', sales['id_produk']);
                             del.data('id_sales', sales['id_sales']);
 
                             col1.appendTo(row);
@@ -426,101 +304,6 @@
             }
             $(document).ready(function(){
                 load_data();
-            });
-
-            //Tampilan Modal Add Sales
-            $("#add-sales-btn").click(function(){
-                $("#add-sales-modal").modal();
-            });
-
-            //Button Add
-            $("#add-sales-submit-btn").click(function(){
-                var nama = $("#nama").val();
-                var alamat = $("#alamat").val()
-                var no_telp = $("#no_telp").val()
-                var email = $("#email").val()
-                var tanggal_mulai_kerja = $("#tanggal_mulai_kerja").val()
-                var tanggal_berhenti_kerja = $("#tanggal_berhenti_kerja").val()
-
-                $.ajax({
-                    url: '/ProyekManpro/services/add_sales.php',
-                    method: 'POST',
-                    data: {
-                        nama : nama,
-                        alamat : alamat,
-                        no_telp : no_telp,
-                        email : email,
-                        tanggal_mulai_kerja : tanggal_mulai_kerja,
-                        tanggal_berhenti_kerja : tanggal_berhenti_kerja
-                    },
-                    
-                    success: function(data) {
-                        $("#nama").val('');
-                        $("#alamat").val('');
-                        $("#no_telp").val('');
-                        $("#email").val('');
-                        $("#tanggal_mulai_kerja").val('');
-                        $("#tanggal_berhenti_kerja").val('');
-                        $("#add-sales-modal").modal('toggle');
-                        load_data();
-                    },
-                    error: function($xhr, textStatus, errorThrown) {
-                        alert($xhr.responseJSON['error']);
-                    }
-                });
-            });
-
-            //Tampilan Edit Product
-            $("#sales-content").on("click", "[id='edit-btn']", function(){
-                var id_sales = $(this).data('id_sales');
-                var nama = $(this).data('nama');
-                var alamat = $(this).data('alamat');
-                var no_telp = $(this).data('no_telp');
-                var email = $(this).data('email');
-                var tanggal_mulai_kerja = $(this).data('tanggal_mulai_kerja');
-                var tanggal_berhenti_kerja = $(this).data('tanggal_berhenti_kerja');
-                
-                $("#edit-id_sales").val(id_sales);
-                $("#edit-nama").val(nama);
-                $("#edit-alamat").val(alamat);
-                $("#edit-no_telp").val(no_telp);
-                $("#edit-email").val(email);
-                $("#edit-tanggal_mulai_kerja").val(tanggal_mulai_kerja);
-                $("#edit-tanggal_berhenti_kerja").val(tanggal_berhenti_kerja);
-
-                $("#edit-sales-modal").modal();
-            });
-
-            //Simpan Edit Button
-            $("#edit-sales-submit-btn").click(function(){
-                var id_sales = $("#edit-id_sales").val();
-                var nama = $("#edit-nama").val();
-                var alamat = $("#edit-alamat").val();
-                var no_telp = $("#edit-no_telp").val();
-                var email = $("#edit-email").val();
-                var tanggal_mulai_kerja = $("#edit-tanggal_mulai_kerja").val();
-                var tanggal_berhenti_kerja = $("#edit-tanggal_berhenti_kerja").val();
-                
-                $.ajax({
-                    url: '/ProyekManpro/services/edit_sales.php',
-                    method: 'POST',
-                    data: {
-                        id_sales : id_sales,
-                        nama : nama,
-                        alamat : alamat,
-                        no_telp : no_telp,
-                        email : email,
-                        tanggal_mulai_kerja : tanggal_mulai_kerja,
-                        tanggal_berhenti_kerja : tanggal_berhenti_kerja
-                    },
-                    success: function(data) {
-                        $("#edit-sales-modal").modal('toggle');
-                        load_data();
-                    },
-                    error: function($xhr, textStatus, errorThrown) {
-                        alert($xhr.responseJSON['error']);
-                    }
-                });
             });
 
             // DELETE

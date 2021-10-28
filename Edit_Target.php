@@ -209,9 +209,9 @@
                         <h2 class="mb-3">Gloria Endhy</h2>
                         <div class="fs-5 mt-3 mb-3">Target Penjualan : </div>
                         <span class="fs-5 mb-3">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <input type="text" class="form-control" id="target_penjualan" name="target_penjualan" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                         </span>
-                        <button class="btn btn-success mt-5" type="button">
+                        <button class="btn btn-success mt-5" id="submit-btn" type="button">
                             Submit
                         </button>
                     </div>
@@ -219,5 +219,76 @@
                 </form>
             </div>
         </div>
+
+        <script>
+            function load_data() {
+                var id = <?php echo $_GET['id'] ?>;
+                $.ajax({
+                    url: "/ProyekManpro/services/get_sales.php",
+                    method: "GET",
+                    success: function(data) {
+                        var cek=false;
+                        var co = 1;
+                        data.forEach(function(sales){
+                            if(sales['id_sales'] == id){
+                                var id_sales = sales['id_sales'];
+                                var nama = sales['nama'];
+
+                                $("#id_sales").val(id_sales);
+                                $("#nama").val(nama);
+                                $("#alamat").val(alamat);
+                                $("#no_telp").val(no_telp);
+                                $("#email").val(email);
+                                $("#tanggal_mulai_kerja").val(tanggal_mulai_kerja);
+                                $("#tanggal_berhenti_kerja").val(tanggal_berhenti_kerja);
+                                $("#sales-submit-btn").data('id_sales', sales['id_sales']);
+                            }
+                            
+                            cek = true;
+                            co++;
+                        });
+                    },
+                    error: function(data) {
+                        alert("load data error!");
+                    }
+                });
+            }
+            $(document).ready(function(){
+                load_data();
+            });
+
+            //Button simpan
+            $("#submit-btn").click(function(){
+                var id_sales = $("#id_sales").val();
+                var nama = $("#nama").val();
+                var alamat = $("#alamat").val();
+                var no_telp = $("#no_telp").val();
+                var email = $("#email").val();
+                var tanggal_mulai_kerja = $("#tanggal_mulai_kerja").val();
+                var tanggal_berhenti_kerja = $("#tanggal_berhenti_kerja").val();
+
+                $.ajax({
+                    url: '/ProyekManpro/services/edit_sales.php',
+                    method: 'POST',
+                    data: {
+                        id_sales : id_sales,
+                        nama : nama,
+                        alamat : alamat,
+                        no_telp : no_telp,
+                        email : email,
+                        tanggal_mulai_kerja : tanggal_mulai_kerja,
+                        tanggal_berhenti_kerja : tanggal_berhenti_kerja
+                    },
+                    
+                    success: function(data) {
+                        window.location.replace("DataSales_Manajer.php");
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+            });
+        </script>
+
     </body>
 </html>

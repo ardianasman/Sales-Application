@@ -1,8 +1,6 @@
 <?php
-    $_SESSION['id_produk'] = '';
     include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
 ?>
-
 <!doctype html>
     <head>
         <meta charset="utf-8">
@@ -16,10 +14,7 @@
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Data Produk</title>
-
-        <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
-        <meta name="theme-color" content="#7952b3"> -->
+        <title>Edit Sales</title>
 
         <style>
             .bd-placeholder-img {
@@ -53,6 +48,10 @@
                 display: grid;
                 grid-template-columns: max-content auto;
                 grid-gap: 10px;
+            }
+            .modal-backdrop {
+                z-index: -1;
+                background-color: white;
             }
 
             .b-example-divider {
@@ -134,7 +133,6 @@
                 border-style: inset;
                 border-width: 1px;
             }
-            
         </style>
     </head>
 
@@ -171,13 +169,6 @@
             <symbol id="trash" viewBox="0 0 16 16">
                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
             </symbol>
-            <symbol id="plus" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-            </symbol>
-            <symbol id="open" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"/>
-                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"/>
-            </symbol>
         </svg>
 
         <div class="d-flex">
@@ -193,13 +184,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="DataProduct_Manajer.php" class="nav-link active">
+                        <a href="DataProduct_Manajer.php" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#product"/></svg>
                         Product
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="DataSales_Manajer.php" class="nav-link text-white" aria-current="page">
+                        <a href="DataSales_Manajer.php" class="nav-link active" aria-current="page">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people"/></svg>
                         Sales
                         </a>
@@ -221,8 +212,8 @@
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
             <div class="p-3" style="margin-left: 280px;">
-                <form class="p-2 grid-container" style="width: 1040px;">
-                    <div style="font-weight: bold; font-size: 35px;">Data Produk</div>
+                <form class="p-2 grid-container mb-5" style="width: 1040px;">
+                    <div style="font-weight: bold; font-size: 35px;">Edit Data Sales</div>
                     <div style="text-align: right;">
                         <?php $sql="SELECT DAY(CURRENT_DATE), MONTH(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
                             $stmt=$pdo->prepare($sql);
@@ -231,72 +222,79 @@
                             echo $res['DAY(CURRENT_DATE)'], "-", $res['MONTH(CURRENT_DATE)'], "-", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
-                
-                <form class="d-flex mt-4 align-items-center">
-                    <!-- <a href="Add_DataProduct.php"><button class="btn btn-outline-danger" type="button">+ Add</button></a> -->
-                    <a href="Add_DataProduct.php"><button class="btn btn-outline-danger" type="button" id="add-product-btn">+ Add</button></a>
-                </form>
-                <table class="table col-sm-auto mt-4" style="text-align: center;">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Kode Produk</th>
-                            <th scope="col">Nama Produk</th>
-                            <th scope="col">Harga</th>
-                            <th scope="col">Attributes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="product-content">
-
-                    </tbody>
-                </table>
-                <div id="divproduct-content">
-
+                <div class="input-group input-group mb-3">
+                    <input type="hidden" id="id_sales" name="id_sales" value="">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Nama</span>
+                    </div>
+                    <input type="text" class="form-control" id="nama" name="nama" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
+                <div class="input-group input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Alamat</span>
+                    </div>
+                    <input type="text" class="form-control" id="alamat" name="alamat" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">No Telp</span>
+                    </div>
+                    <input type="text" class="form-control" id="no_telp" name="no_telp" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Email</span>
+                    </div>
+                    <input type="text" class="form-control" id="email" name="email" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Mulai Bekerja</span>
+                    </div>
+                    <input type="date" class="form-control" id="tanggal_mulai_kerja" name="tanggal_mulai_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Berhenti Bekerja</span>
+                    </div>
+                    <input type="date" class="form-control" id="tanggal_berhenti_kerja" name="tanggal_berhenti_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <button type="button" class="btn btn-warning mt-5" id="edit-sales-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Submit</button>
             </div>
         </div>
 
-        <script>
+        <script type="text/javascript">
             function load_data() {
+                var id = <?php echo $_GET['id'] ?>;
                 $.ajax({
-                    url: "/ProyekManpro/services/get_product.php",
+                    url: "/ProyekManpro/services/get_sales.php",
                     method: "GET",
                     success: function(data) {
                         var cek=false;
                         var co = 1;
-                        $("#product-content").html('');
-                        data.forEach(function(product){
-                            var row = $("<tr></tr>");
-                            var col1 = $("<td scope='col' >" + co + "</td>");
-                            var col2 = $("<td scope='col'>" + product['id_produk'] + "</td>")
-                            var col3 = $("<td scope='col'>" + product['nama_produk'] + "</td>");
-                            var col4 = $("<td scope='col'>" + product['harga_produk'] + "</td>");
-                            var btn = $('<td scope="col"></td>');
-                            var edit = $('<a href="Edit_DataProduct.php?id=' + product['id_produk'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>');
-                            var del = $('<a href="#" id="delete-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#trash"/></svg></a>');
+                        data.forEach(function(sales){
+                            if(sales['id_sales'] == id){
+                                var id_sales = sales['id_sales'];
+                                var nama = sales['nama'];
+                                var alamat = sales['alamat'];
+                                var no_telp = sales['no_telp'];
+                                var email = sales['email'];
+                                var tanggal_mulai_kerja = sales['tanggal_mulai_kerja'];
+                                var tanggal_berhenti_kerja = sales['tanggal_berhenti_kerja'];
+
+                                $("#id_sales").val(id_sales);
+                                $("#nama").val(nama);
+                                $("#alamat").val(alamat);
+                                $("#no_telp").val(no_telp);
+                                $("#email").val(email);
+                                $("#tanggal_mulai_kerja").val(tanggal_mulai_kerja);
+                                $("#tanggal_berhenti_kerja").val(tanggal_berhenti_kerja);
+                                $("#sales-submit-btn").data('id_sales', sales['id_sales']);
+                            }
                             
-                            del.data('id_produk', product['id_produk']);
-
-                            col1.appendTo(row);
-                            col2.appendTo(row);
-                            col3.appendTo(row);
-                            col4.appendTo(row);
-                            edit.appendTo(btn);
-                            del.appendTo(btn);
-                            btn.appendTo(row);
-
                             cek = true;
                             co++;
-                            $("#product-content").append(row);
                         });
-                        if(!cek){
-                            $("#divproduct-content").html('');
-                            var div = $("<tr><td scope='col'>Belum Ada Data</td></tr>")
-                            // var div = $("<div class='mt-2' style='margin-left: 380px; font-weight: bolder;'>Belum Ada Data</div>");
-                            $("#divproduct-content").append(div);
-                        }else{
-                            $("#divproduct-content").remove();
-                        }
                     },
                     error: function(data) {
                         alert("load data error!");
@@ -307,44 +305,38 @@
                 load_data();
             });
 
-            // DELETE
-            $("#product-content").on("click", "[id='delete-btn']", function(){
-                var id_produk = $(this).data('id_produk');
-                $.confirm({
-                    title: 'Confirm!',
-                    content: 'You cannot recover deleted data!',
-                    buttons: {
-                        confirm: {
-                            text: 'Confirm',
-                            btnClass: 'btn-success',
-                            keys: ['enter'],
-                            action: function(){
-                                $.ajax({
-                                    url: '/ProyekManpro/services/delete_product.php',
-                                    method: 'POST',
-                                    data: {
-                                        id_produk: id_produk
-                                    },
-                                    success: function(data) {
-                                        load_data();
-                                    },
-                                    error: function($xhr, textStatus, errorThrown) {
-                                        alert($xhr.responseJSON['error']);
-                                    }
-                                });
-                            }
-                        },
-                        cancel: {
-                            text: 'Cancel',
-                            btnClass: 'btn-secondary',
-                            keys: ['shift'],
-                            action: function(){
-                                // alert("Cancel");
-                            }
-                        }
+            //Button simpan
+            $("#edit-sales-submit-btn").click(function(){
+                var id_sales = $("#id_sales").val();
+                var nama = $("#nama").val();
+                var alamat = $("#alamat").val();
+                var no_telp = $("#no_telp").val();
+                var email = $("#email").val();
+                var tanggal_mulai_kerja = $("#tanggal_mulai_kerja").val();
+                var tanggal_berhenti_kerja = $("#tanggal_berhenti_kerja").val();
+
+                $.ajax({
+                    url: '/ProyekManpro/services/edit_sales.php',
+                    method: 'POST',
+                    data: {
+                        id_sales : id_sales,
+                        nama : nama,
+                        alamat : alamat,
+                        no_telp : no_telp,
+                        email : email,
+                        tanggal_mulai_kerja : tanggal_mulai_kerja,
+                        tanggal_berhenti_kerja : tanggal_berhenti_kerja
+                    },
+                    
+                    success: function(data) {
+                        window.location.replace("DataSales_Manajer.php");
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
                     }
                 });
             });
+
         </script>
     </body>
 </html>
