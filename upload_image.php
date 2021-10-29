@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     date_default_timezone_set('Asia/Jakarta');
 
     $tanggal = date('Y/m/d H:i:s');
-    $conf_id = $_POST['confirm-id-pembelian'];
+    $conf_id = $_POST['confirm-id-aktivitas'];
     $lokasi = $_POST['lokasi'];
     $visited="";
     $radioVal = $_POST["flexRadioDefault"];
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         header("HTTP/1.1 400 Bad Request");
         $result['status'] = 0;
-        $result['error'] = 'Tanggal & Id Pembelian & Lokasi Must Have Value!';
+        $result['error'] = 'Tanggal & Id Customer & Lokasi Must Have Value!';
         
     } else {
        
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // if everything is ok, try to upload file
         } else {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            $sql = "UPDATE aktivitas_sales SET jadwal_kunjungan= ?, status_kunjungan= ?, lokasi = ? ,foto_kunjungan= ? WHERE id_order=?";
+            $sql = "UPDATE aktivitas_sales SET jadwal_kunjungan= ?, status_kunjungan= ?, lokasi = ? ,foto_kunjungan= ? WHERE id_aktivitas=?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$tanggal,$visited,$lokasi,$target_file,$conf_id]);
             

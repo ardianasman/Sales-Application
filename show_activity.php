@@ -61,10 +61,10 @@
                         <tr>
                             <th width="5%">No</th>
                             <th width="25%">Nama Customer</th>
-                            <th width="10%">Id Order</th>
-                            <th width="20%">Tanggal Order</th>
+                            <th width="10%">Id Aktivitas</th>
+                            <th width="15%">Nomor Telp</th>
                             <th width="25%">Alamat Customer</th>
-                            <th wdith="15%">Tools</th>
+                            <th wdith="20%">Tools</th>
                         </tr>
                     </thead>
                     <tbody id="user-content">
@@ -97,8 +97,8 @@ function load_data() {
                 var row = $("<tr></tr>");
                 var col1 = $("<td>" + co + "</td>");
                 var col2 = $("<td>" + simpan['nama_customer'] + "</td>");
-                var col3 = $("<td>" + simpan['id_order'] + "</td>");
-                var col4 = $("<td>"+ simpan['tanggal_order'] +"</td>");
+                var col3 = $("<td>" + simpan['id_aktivitas'] + "</td>");
+                var col4 = $("<td>"+ simpan['no_telp'] +"</td>");
                 var col5 = $("<td>"+ simpan['alamat_customer'] +"</td>");
 
                 col1.appendTo(row);
