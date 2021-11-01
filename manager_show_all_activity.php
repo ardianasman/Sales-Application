@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaksi Sales</title>
+    <title>Aktivitas Sales</title>
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="css/navbar.css"> 
 
@@ -21,7 +21,7 @@
     <div class="container">
         <div class="row pt-4">
             <div class="col-6">
-                <h3 class="title">Transaksi Penjualan Sales</h3>
+                <h3 class="title">Aktivitas Sales</h3>
             </div>
             <div class="col-6">
                 <div class="text-right">
@@ -35,12 +35,12 @@
                     <thead>
                         <tr>
                             <th width="5%" data-sortable="true">No</th>
-                            <th width="5%" data-sortable="true">ID Order</th>
+                            <th width="5%" data-sortable="true">ID Aktivitas</th>
+                            <th width="15%" data-sortable="true">Nama Customer</th>
                             <th width="15%" data-sortable="true">Nama Sales</th>
-                            <th width="25%" data-sortable="true">Nama Customer</th>
-                            <th width="15%" data-sortable="true">Tanggal Order</th>
-                            <th wdith="20%" data-sortable="true">Tanggal Jatuh Tempo</th>
-                            <th wdith="15%" data-sortable="true">Total Harga</th>
+                            <th width="5%" data-sortable="true">Status Kunjungan</th>
+                            <th wdith="40%" data-sortable="true">Foto Kunjungan</th>
+                            <th wdith="15%" data-sortable="true">Jadwal Kunjungan</th>
                         </tr>
                     </thead>
                     <tbody id="user-content">
@@ -65,7 +65,7 @@
 
 function load_data() {
     $.ajax({
-        url: "/ProyekManpro/services/manager_get_all_order.php",
+        url: "/ProyekManpro/services/manager_get_all_activity.php",
             method: "GET",
             success: function(data) {
             var co = 1;
@@ -73,13 +73,14 @@ function load_data() {
             data.forEach(function(aktivitas){
                 var row = $("<tr></tr>");
                 var col1 = $("<td>" + co + "</td>");
-                var col2 = $("<td>" + aktivitas['id_order'] + "</td>");
-                var col3 = $("<td>" + aktivitas['nama_sales'] + "</td>");
-                var col4 = $("<td>" + aktivitas['nama_cust'] + "</td>");
-                var col5 = $("<td>" + aktivitas['tanggal_order'] + "</td>");
-                var col6 = $("<td>" + aktivitas['tanggal_jatuh_tempo'] + "</td>");
+                var col2 = $("<td>" + aktivitas['id_aktivitas'] + "</td>");
+                var col3 = $("<td>" + aktivitas['nama'] + "</td>");
+                var col4 = $("<td>" + aktivitas['nama_sales'] + "</td>");
+                var target_file = aktivitas['foto_kunjungan'];
+                var col5 = $("<td><img src='" + target_file  + "' style='width:250px; height:auto;'></td>");
+                var col6 = $("<td>" + aktivitas['foto_kunjungan'] + "</td>");
                 //var changeHarga = 
-                var col7 = $("<td>" + aktivitas['total_harga'] + "</td>");
+                var col7 = $("<td>" + aktivitas['jadwal_kunjungan'] + "</td>");
 
                 col1.appendTo(row);
                 col2.appendTo(row);

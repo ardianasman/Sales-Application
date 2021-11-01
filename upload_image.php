@@ -84,6 +84,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $sql = "UPDATE aktivitas_sales SET jadwal_kunjungan= ?, status_kunjungan= ?, lokasi = ? ,foto_kunjungan= ? WHERE id_aktivitas=?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$tanggal,$visited,$lokasi,$target_file,$conf_id]);
+
+            $simpanidcust = "SELECT id_customer FROM aktivitas_sales WHERE id_aktivitas = ?";
+            $test_1 = $pdo->prepare($simpanidcust);
+            $test_1->execute([$conf_id]);
+            $tmpid = $test_1->fetch(PDO::FETCH_ASSOC);
+            $idcustomerasli = $tmpid['id_customer'];
+            echo $idcustomerasli;
+
+            $sql_1 = "UPDATE customer SET terakhir_dikunjungi = ? WHERE id_customer = ?";
+            $test_2 = $pdo->prepare($sql_1);
+            $test_2->execute([$tanggal,$idcustomerasli]);
             
         } else {
             echo "Sorry, there was an error uploading your file.";
