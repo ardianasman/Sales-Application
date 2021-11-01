@@ -49,6 +49,7 @@ include "services/database.php";
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
@@ -137,7 +138,13 @@ include "services/database.php";
                     <tbody>
 
                     </tbody>
+                    
                 </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h4>Total Seluruh Pendapatan: <span id="totalpendapatan"></span></h4>
             </div>
         </div>
 
@@ -159,6 +166,15 @@ include "services/database.php";
         var selector = "";
         var angkaselector = "";
 
+        function updatependapatan(){
+            var sum=0;
+            $('#tablelaporan tbody tr').each(function(i, tr) {
+                    var val = parseInt($(tr).find("td:nth-child(6)").text());
+                    sum+=val;
+                });
+            // var sum = $('#tablelaporan').DataTable().rows({filter:'applied'}).column(5).data().sum();
+            $('#totalpendapatan').html(sum.toLocaleString());
+        }
         //function to sort each column
         function comparer(index) {
             return function(a, b) {
@@ -179,7 +195,7 @@ include "services/database.php";
                 true
             ).draw();
             google.charts.setOnLoadCallback(drawChartsalesman);
-
+            updatependapatan();
         }
 
         function filterColumn(i) {
@@ -189,15 +205,16 @@ include "services/database.php";
                 true
             ).draw();
             google.charts.setOnLoadCallback(drawChartsalesman);
-
+            updatependapatan();
         }
+        
 
         function load_data() {
             // console.log("loading data");
             var tanggal_mulai_order = $('#tanggalmulai').val();
             var tanggal_selesai_order = $('#tanggalsampai').val();
-            console.log(tanggal_mulai_order);
-            console.log(tanggal_selesai_order);
+            // console.log(tanggal_mulai_order);
+            // console.log(tanggal_selesai_order);
             var today=new Date();
             var dulu=new Date();
             tanggal_selesai_order = tanggal_selesai_order || today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
@@ -205,11 +222,31 @@ include "services/database.php";
             dulu.setDate(today.getDate());
             dulu.setMonth(today.getMonth());
             dulu.setYear(today.getFullYear()-2);
+
+            //format date
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            hariini = yyyy + '-' + mm + '-' + dd;
+            
+
             tanggal_mulai_order = tanggal_mulai_order || dulu.getFullYear()+'/'+(dulu.getMonth()+1)+'/'+dulu.getDate();
             dulu=new Date(tanggal_mulai_order);
 
-            $('#tanggalsampai').val(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate());
-            $('#tanggalmulai').val(dulu.getFullYear()+'-'+(dulu.getMonth()+1)+'-'+dulu.getDate());
+            //format date buat sampai
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+            sampaihari = yyyy + '-' + mm + '-' + dd;
+            //format date buat dari
+            dd = String(dulu.getDate()).padStart(2, '0');
+            mm = String(dulu.getMonth() + 1).padStart(2, '0');
+            yyyy = dulu.getFullYear();
+            darihari=yyyy + '-' + mm + '-' + dd;
+
+            $('#tanggalsampai').val(hariini);
+            $('#tanggalmulai').val(darihari);
 
             tanggal_mulai_order=dulu.getFullYear()+'/'+(dulu.getMonth()+1)+'/'+dulu.getDate();
             tanggal_selesai_order=today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
@@ -257,6 +294,7 @@ include "services/database.php";
                         "stateSave": true,
                     });
                     google.charts.setOnLoadCallback(drawChartsalesman);
+                    updatependapatan();
                 },
                 error: function(data) {
                     console.log(data);
@@ -548,6 +586,12 @@ include "services/database.php";
                 html: '#tablelaporan',
                 startY: 115
             });
+
+            //jumlah penjualan
+            var jumlahtotal=$('#totalpendapatan').html();
+            doc.autoTable({html: '#table'});
+            let finalY = doc.lastAutoTable.finalY; // The y position on the page
+            doc.text(43, finalY, "Total Penjualan: "+jumlahtotal);
 
             //print image
             var img = $("#piechart img");
