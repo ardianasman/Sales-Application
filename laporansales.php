@@ -77,6 +77,23 @@ include "services/database.php";
         </div>
     </nav>
     <div class="container pt-5 pb-5">
+    <div class="row">
+            <div class="col-12 col-md-6 selectedlaporan">
+                <div class="d-flex justify-content-end">
+                    <a class="containeropsi d-flex justify-content-center align-items-center" href="laporan.php">
+                        Laporan Penjualan Sales
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-12 col-md-6 selectedlaporan">
+                <div class="d-flex justify-content-start">
+                    <a class="containeropsi d-flex justify-content-center selectedopsi align-items-center" href="#">
+                        Laporan Target Sales
+                    </a>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <h1>Sales App</h1>
@@ -113,7 +130,7 @@ include "services/database.php";
                 <div class="col-12">
                     <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
                     <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-primary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
+                        <button type="button" class="btn btn-outline-secondary ml-4" id="updatebutton" onclick="load_data()">Update Bulan</button>
                     </div>
                 </div>
             </div>
@@ -415,6 +432,10 @@ include "services/database.php";
             // var dateTo = moment(to);
             var bulan=$('#inputbulan').find(":selected").text();;
             var tahun=$('#inputtahun').val();
+            var stats=$('#dropdown1').find(":selected").text();
+            if(stats==""){
+                stats="All";
+            }
 
             window.jsPDF = window.jspdf.jsPDF;
             window.html2canvas = html2canvas
@@ -427,14 +448,18 @@ include "services/database.php";
             doc.setFontSize(15)
             var texttanggal = "Target Sales Bulan "+bulan+" Tahun "+tahun;
             var xOffset2 = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(texttanggal) * doc.internal.getFontSize() / 2);
+            doc.setFontSize(15)
+            var textstats = "Status: "+stats;
+            var xOffset3 = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(textstats) * doc.internal.getFontSize() / 2);
 
             doc.setFontSize(25);
             doc.text(text, xOffset, 75);
             doc.setFontSize(15)
             doc.text(texttanggal, xOffset2, 95)
+            doc.text(textstats, xOffset3, 115)
             doc.autoTable({
                 html: '#tablelaporan',
-                startY: 115
+                startY: 135
             });
 
             // //jumlah penjualan
@@ -461,6 +486,27 @@ include "services/database.php";
 <style>
     #tablelaporan th {
         cursor: pointer;
+    }
+    .containeropsi {
+        width: 200px;
+        cursor: pointer;
+        border: 3px solid rgb(147,120,97);
+        color:black;
+        border-radius: 10px;
+        height:50px;
+        transition:ease .5s;
+    }
+
+    .containeropsi.selectedopsi{
+        color:white;
+        background:rgb(147,120,97);
+    }
+
+    .containeropsi:hover {
+        text-decoration: none;
+        background-color:rgb(147,120,97);
+        color:white;
+        transition:ease .5s;
     }
 </style>
 

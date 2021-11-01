@@ -78,6 +78,23 @@ include "services/database.php";
     </nav>
     <div class="container pt-5 pb-5">
         <div class="row">
+            <div class="col-12 col-md-6 selectedlaporan">
+                <div class="d-flex justify-content-end">
+                    <a class="containeropsi d-flex justify-content-center selectedopsi align-items-center" href="#">
+                        Laporan Penjualan Sales
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-12 col-md-6 selectedlaporan">
+                <div class="d-flex justify-content-start">
+                    <a class="containeropsi d-flex justify-content-center my-auto align-items-center" href="laporansales.php">
+                        Laporan Target Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <h1>Sales App</h1>
             </div>
@@ -95,7 +112,7 @@ include "services/database.php";
                     <input type="date" id="tanggalmulai" name="tanggalmulai">
                     <label class="ml-4 mr-2 d-flex align-items-center">Sampai:</label>
                     <input type="date" id="tanggalsampai" name="tanggalsampai">
-                    <button type="button" class="btn btn-primary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
+                    <button type="button" class="btn btn-outline-secondary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
 
                 </div>
 
@@ -312,15 +329,13 @@ include "services/database.php";
                         html += row;
 
                     })
-                    $('#tablelaporan').DataTable(
-                        {
+                    $('#tablelaporan').DataTable({
                         dom: 'lrtip',
                         // "processing": true,
                         // "serverSide": false,
                         // "stateSave": true,
                         "autoWidth": false
-                    }
-                    );
+                    });
                     google.charts.setOnLoadCallback(drawChartsalesman);
                     updatependapatan();
                 },
@@ -629,7 +644,7 @@ include "services/database.php";
             doc.addPage();
             doc.addImage(chart1, 'png', 0, 0, parseInt(img.width), parseInt(img.height), undefined, 'none');
             //convert to pdf
-            var savename="LaporanSales_"+from+" - "+to+".pdf";
+            var savename = "LaporanSales_" + from + " - " + to + ".pdf";
             doc.save(savename);
             // table.page.len(lengthnow).draw();
 
@@ -682,6 +697,28 @@ include "services/database.php";
 <style>
     #tablelaporan th {
         cursor: pointer;
+    }
+
+    .containeropsi {
+        width: 200px;
+        cursor: pointer;
+        border: 3px solid rgb(147,120,97);
+        color:black;
+        border-radius: 10px;
+        height:50px;
+        transition:ease .5s;
+    }
+
+    .containeropsi.selectedopsi{
+        color:white;
+        background:rgb(147,120,97);
+    }
+
+    .containeropsi:hover {
+        text-decoration: none;
+        background-color:rgb(147,120,97);
+        color:white;
+        transition:ease .5s;
     }
 </style>
 
