@@ -84,21 +84,38 @@ include "services/database.php";
         </div>
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
-                <h4>Laporan Penjualan Sales</h2>
+                <h4>Laporan Target Sales</h2>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
                 <div class="d-flex justify-content-center mt-4">
-                    <label class="ml-4 mr-2 d-flex align-items-center">Dari:</label>
-                    <input type="date" id="tanggalmulai" name="tanggalmulai">
-                    <label class="ml-4 mr-2 d-flex align-items-center">Sampai:</label>
-                    <input type="date" id="tanggalsampai" name="tanggalsampai">
-                    <button type="button" class="btn btn-primary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
+                    <div class="input-group mb-3" style="width:50%;">
+                        <select class="custom-select" id="inputbulan">
+                            <option value="1">Januari</option>
+                            <option value="2">Febuari</option>
+                            <option value="3">Maret</option>
+                            <option value="4">April</option>
+                            <option value="5">Mei</option>
+                            <option value="6">Juni</option>
+                            <option value="7">Juli</option>
+                            <option value="8">Agustus</option>
+                            <option value="9">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                        </select>
+                        <select class="custom-select ml-3" id="inputtahun">
 
+                        </select>
+                    </div>
                 </div>
-
+                <div class="col-12">
+                    <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -229,61 +246,77 @@ include "services/database.php";
             updatependapatan();
         }
 
-        //add commas to string
+        //add opsi Tahun
+        function addopsi() {
+            var thisyear=new Date().getFullYear();
+            var thismonth=new Date().getMonth();
+            for (let i = thisyear-50; i <=thisyear ; i++) {
+                var o = new Option(i, i);
+                $(o).html(i);
+                $("#inputtahun").append(o);
+            }
+            $('#inputbulan').val(thismonth);
+            $('#inputtahun').val(thisyear);
+        }
+
+
 
 
 
 
         function load_data() {
-            // console.log("loading data");
-            var tanggal_mulai_order = $('#tanggalmulai').val();
-            var tanggal_selesai_order = $('#tanggalsampai').val();
-            // console.log(tanggal_mulai_order);
-            // console.log(tanggal_selesai_order);
-            var today = new Date();
-            var dulu = new Date();
-            tanggal_selesai_order = tanggal_selesai_order || today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
-            today = new Date(tanggal_selesai_order);
-            dulu.setDate(today.getDate());
-            dulu.setMonth(today.getMonth());
-            dulu.setYear(today.getFullYear() - 2);
+            // // console.log("loading data");
+            // var tanggal_mulai_order = $('#tanggalmulai').val();
+            // var tanggal_selesai_order = $('#tanggalsampai').val();
+            // // console.log(tanggal_mulai_order);
+            // // console.log(tanggal_selesai_order);
+            // var today = new Date();
+            // var dulu = new Date();
+            // tanggal_selesai_order = tanggal_selesai_order || today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+            // today = new Date(tanggal_selesai_order);
+            // dulu.setDate(today.getDate());
+            // dulu.setMonth(today.getMonth());
+            // dulu.setYear(today.getFullYear() - 2);
 
-            //format date
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            var yyyy = today.getFullYear();
+            // //format date
+            // var dd = String(today.getDate()).padStart(2, '0');
+            // var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            // var yyyy = today.getFullYear();
 
-            hariini = yyyy + '-' + mm + '-' + dd;
-
-
-            tanggal_mulai_order = tanggal_mulai_order || dulu.getFullYear() + '/' + (dulu.getMonth() + 1) + '/' + dulu.getDate();
-            dulu = new Date(tanggal_mulai_order);
-
-            //format date buat sampai
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0');
-            var yyyy = today.getFullYear();
-            sampaihari = yyyy + '-' + mm + '-' + dd;
-            //format date buat dari
-            dd = String(dulu.getDate()).padStart(2, '0');
-            mm = String(dulu.getMonth() + 1).padStart(2, '0');
-            yyyy = dulu.getFullYear();
-            darihari = yyyy + '-' + mm + '-' + dd;
-
-            $('#tanggalsampai').val(hariini);
-            $('#tanggalmulai').val(darihari);
-
-            tanggal_mulai_order = dulu.getFullYear() + '/' + (dulu.getMonth() + 1) + '/' + dulu.getDate();
-            tanggal_selesai_order = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+            // hariini = yyyy + '-' + mm + '-' + dd;
 
 
+            // tanggal_mulai_order = tanggal_mulai_order || dulu.getFullYear() + '/' + (dulu.getMonth() + 1) + '/' + dulu.getDate();
+            // dulu = new Date(tanggal_mulai_order);
+
+            // //format date buat sampai
+            // var dd = String(today.getDate()).padStart(2, '0');
+            // var mm = String(today.getMonth() + 1).padStart(2, '0');
+            // var yyyy = today.getFullYear();
+            // sampaihari = yyyy + '-' + mm + '-' + dd;
+            // //format date buat dari
+            // dd = String(dulu.getDate()).padStart(2, '0');
+            // mm = String(dulu.getMonth() + 1).padStart(2, '0');
+            // yyyy = dulu.getFullYear();
+            // darihari = yyyy + '-' + mm + '-' + dd;
+
+            // $('#tanggalsampai').val(hariini);
+            // $('#tanggalmulai').val(darihari);
+
+            // tanggal_mulai_order = dulu.getFullYear() + '/' + (dulu.getMonth() + 1) + '/' + dulu.getDate();
+            // tanggal_selesai_order = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
+            addopsi();
+
+            var bulan=$('#inputbulan').val();
+            var tahun=$('#inputtahun').val();
 
             $.ajax({
-                url: "services/getlaporan.php",
+                url: "services/gettargetsales.php",
                 method: "POST",
                 data: {
-                    tanggal_mulai_order: tanggal_mulai_order,
-                    tanggal_selesai_order: tanggal_selesai_order
+                    bulan: bulan,
+                    tahun: tahun
                 },
                 success: function(data) {
                     $('#tablelaporan tbody').html('');
@@ -331,52 +364,14 @@ include "services/database.php";
 
 
         $(document).ready(function() {
-            // $('#tablelaporan').DataTable();
-            load_data();
-            // var oTable = $('#tablelaporan').DataTable({
-            //     "columnDefs": [{
-            //         "targets": [1, 2, 3, 4, 5, 6, 7, 8],
-            //         "searchable": false
-            //     }]
-            // });
 
+            load_data();
 
             google.charts.load('current', {
                 'packages': ['corechart']
             });
             google.charts.setOnLoadCallback(drawChartsalesman);
 
-            // $("#myInput").on("keyup", function() {
-            //     var value = $(this).val().toLowerCase();
-            //     $("#tablelaporan tbody tr").filter(function() {
-            //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            //     });
-            // });
-
-
-
-            // $('#tablelaporan tfoot th').each(function() {
-            //     var title = $(this).text();
-            //     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-            // });
-
-            // // DataTable
-            // var table = $('#tablelaporan').DataTable({
-            //     initComplete: function() {
-            //         // Apply the search
-            //         this.api().columns().every(function() {
-            //             var that = this;
-
-            //             $('input', this.footer()).on('keyup change clear', function() {
-            //                 if (that.search() !== this.value) {
-            //                     that
-            //                         .search(this.value)
-            //                         .draw();
-            //                 }
-            //             });
-            //         });
-            //     }
-            // });
 
             //individual search
             $('input.global_filter').on('keyup click', function() {
@@ -391,125 +386,7 @@ include "services/database.php";
 
 
 
-            // function filterRows() {
-            //     var from = $('#tanggalmulai').val();
-            //     var to = $('#tanggalsampai').val();
 
-            //     if (!from && !to) { // no value for from and to
-            //         return;
-            //     }
-
-            //     from = from || '1970/01/01'; // default from to a old date if it is not set
-            //     to = to || '2999/12/31';
-
-            //     var dateFrom = moment(from);
-            //     var dateTo = moment(to);
-
-            //     $('#tablelaporan tbody tr').each(function(i, tr) {
-            //         var val = $(tr).find("td:nth-child(5)").text();
-            //         console.log(val)
-            //         var dateVal = moment(val, "DD/MM/YYYY");
-            //         var visible = (dateVal.isBetween(dateFrom, dateTo, null, [])) ? "" : "none"; // [] for inclusive
-            //         console.log(visible)
-            //         $(tr).css('display', visible);
-            //     });
-            // }
-
-            // function filterTabel() {
-            //     var from = $('#tanggalmulai').val();
-            //     var to = $('#tanggalsampai').val();
-
-
-            //     to = to || moment(moment().toDate()).format('YYYY/MM/DD');
-            //     from = from || to.subtract(2, 'years');
-
-            //     var dateFrom = moment(from);
-            //     var dateTo = moment(to);
-
-            //     var rex = new RegExp($('#myInput').val(), 'i');
-
-            //     $('#tablelaporan tbody tr').hide();
-            //     $('#tablelaporan tbody tr').filter(function(i, v) {
-            //         //filter tanggal
-            //         var val = $(this).find("td:nth-child(4)").text();
-            //         var dateVal = moment(val, "YYYY/MM/DD");
-            //         var visible = (dateVal.isBetween(dateFrom, dateTo, null, [])) ? true : false;
-
-            //         //filter nama
-            //         var $t = $(this).children(":eq(" + "0" + ")");
-            //         // console.log(visible);
-            //         return rex.test($t.text()) && visible;
-            //     }).show();
-
-            //     google.charts.setOnLoadCallback(drawChartsalesman);
-
-            // }
-            // $('#tanggalmulai').on("change", filterTabel);
-            // $('#tanggalsampai').on("change", filterTabel);
-
-
-            // $('#myInput').keyup(filterTabel);
-
-            // $('#myInput').keyup(function() {
-            //     var from = $('#tanggalmulai').val();
-            //     var to = $('#tanggalsampai').val();
-
-            //     from = from || '1970-01-01'; // default from to a old date if it is not set
-            //     to = to || '2999-12-31';
-
-            //     var dateFrom = moment(from);
-            //     var dateTo = moment(to);
-
-            //     var rex = new RegExp($(this).val(), 'i');
-            //     $('#tablelaporan tbody tr').hide();
-            //     $('#tablelaporan tbody tr').filter(function(i, v) {
-            //         //filter tanggal
-            //         var val = $(this).find("td:nth-child(5)").text();
-            //         var dateVal = moment(val, "DD/MM/YYYY");
-            //         var visible = (dateVal.isBetween(dateFrom, dateTo, null, [])) ? true : false;
-
-            //         //filter nama
-            //         var $t = $(this).children(":eq(" + "0" + ")");
-            //         return rex.test($t.text()) && visible;
-            //     }).show();
-
-            //     // //ini untuk mengakses table yang aktif(setelah filter)
-            //     // jQuery.each($('#tablelaporan tbody tr'), function(i, val) {
-            //     //     if ($(this).css('display') != 'none') {
-            //     //         console.log(i);
-            //     //     }
-            //     // })
-            // })
-
-            //filter bulan/tahun
-            // $(document).on('change', '#selectortahun', function() {
-            //     $("#selectorbulan option").remove();
-            //     var value = $(this).find(":selected").html();
-            //     selector = value;
-            //     if (value == "Bulan") {
-            //         for (let i = 1; i <= 12; i++) {
-            //             $("#selectorbulan").append(
-            //                 `
-            //                 <option>${i}</option>
-            //                 `
-            //             )
-            //         }
-            //     } else if (value == "Tahun") {
-            //         for (let i = 1960; i <= 2021; i++) {
-            //             $("#selectorbulan").append(
-            //                 `
-            //                 <option>${i}</option>
-            //                 `
-            //             )
-            //         }
-            //     } else {
-            //         $("#selectorbulan").append(
-            //             `
-            //                 <option>Select Selector</option>
-            //                 `
-            //         )
-            //     }
-            // });
 
             //table sorting
             $('th').click(function() {
@@ -525,18 +402,6 @@ include "services/database.php";
             })
 
 
-            // $(document).on('change', '#selectorbulan', function() {
-            //     var value = $(this).find(":selected").html();
-            //     angkaselector = value;
-            //     console.log(selector.toString() + " " + angkaselector.toString());
-            // });
-
-            //download as pdf
-            // $("#downloadbutton").click(function(){
-            //     var tabel=$("#tablelaporan").html();
-            //     console.log(tabel);
-            //     html2pdf().from(invoice);
-            // });
 
 
 
@@ -634,44 +499,7 @@ include "services/database.php";
 
 
 
-            // html2canvas(document.querySelector("#capture")).then(canvas => {
-            //     var img=canvas.toDataURL("image/png");
-            //     var doc=new jsPDF();
-            //     doc.addImage(img,'PNG',20);
-            //     doc.save("test.pdf");
-            // });
 
-
-
-
-
-            // // var pdf = new jsPDF();
-            // // Default export is a4 paper, portrait, using millimeters for units
-            // const doc = new jsPDF();
-            // // var tabel = $("#tablelaporan").html();
-
-            // doc.text("Hello world!", 10, 10);
-            // doc.save("a4.pdf");
-
-
-
-
-            // 
-            // const doc = document.getElementsByTagName('div')[0];
-
-            // if (doc) {
-            //     console.log("div is ");
-            //     console.log(doc);
-            //     console.log("hellowww");
-
-
-
-            //     pdf.html($("#tablelaporan").html(), {
-            //         callback: function(pdf) {
-            //             pdf.save('DOC.pdf');
-            //         }
-            //     })
-            // }
         }
     </script>
 
