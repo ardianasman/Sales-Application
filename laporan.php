@@ -312,13 +312,15 @@ include "services/database.php";
                         html += row;
 
                     })
-                    $('#tablelaporan').DataTable({
+                    $('#tablelaporan').DataTable(
+                        {
                         dom: 'lrtip',
-                        "processing": true,
-                        "serverSide": false,
-                        "stateSave": true,
+                        // "processing": true,
+                        // "serverSide": false,
+                        // "stateSave": true,
                         "autoWidth": false
-                    });
+                    }
+                    );
                     google.charts.setOnLoadCallback(drawChartsalesman);
                     updatependapatan();
                 },
@@ -627,8 +629,9 @@ include "services/database.php";
             doc.addPage();
             doc.addImage(chart1, 'png', 0, 0, parseInt(img.width), parseInt(img.height), undefined, 'none');
             //convert to pdf
-            doc.save("laporan.pdf");
-            table.page.len(lengthnow).draw();
+            var savename="LaporanSales_"+from+" - "+to+".pdf";
+            doc.save(savename);
+            // table.page.len(lengthnow).draw();
 
 
 

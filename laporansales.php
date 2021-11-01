@@ -128,10 +128,10 @@ include "services/database.php";
                         </tr>
                     </thead>
                     <tbody>
-                        <tr id="filter_global">
+                        <!-- <tr id="filter_global">
                             <td class="d-flex justify-content-end">Global search</td>
                             <td align="center"><input type="text" class="global_filter" id="global_filter"></td>
-                        </tr>
+                        </tr> -->
                         <!-- <tr id="filter_col1" data-column="0">
                         <td class="d-flex justify-content-end">Column - Name</td>
                         <td align="center"><input type="text" class="column_filter" id="col0_filter"></td>
@@ -140,9 +140,16 @@ include "services/database.php";
                             <td class="d-flex justify-content-end">Nama Sales</td>
                             <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
                         </tr>
-                        <tr id="filter_col3" data-column="2">
-                            <td class="d-flex justify-content-end">Nama Costumer</td>
-                            <td align="center"><input type="text" class="column_filter" id="col2_filter"></td>
+                        <tr id="filter_col3" data-column="3">
+                            <td class="d-flex justify-content-end">Status</td>
+                            <td align="center">
+                                <select id="dropdown1">
+                                    <option value=""></option>
+                                    <option value="Sudah Terpenuhi">Sudah Terpenuhi</option>
+                                    <option value="Belum Terpenuhi">Belum Terpenuhi</option>
+                                </select>
+                            </td>
+
                         </tr>
                         <!-- <tr id="filter_col4" data-column="3">
                         <td class="d-flex justify-content-end">Tanggal Order</td>
@@ -152,25 +159,23 @@ include "services/database.php";
                         <td class="d-flex justify-content-end">Tanggal Jatuh Tempo</td>
                         <td align="center"><input type="text" class="column_filter" id="col4_filter"></td>
                     </tr> -->
-                        <tr id="filter_col6" data-column="6">
+                        <!-- <tr id="filter_col6" data-column="6">
                             <td class="d-flex justify-content-end">Status Order</td>
                             <td align="center"><input type="text" class="column_filter" id="col6_filter"></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
+
                 <table id="tablelaporan" class="table table-striped table-hover" style="width:100%;">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Nama Sales</th>
-                            <th>Nama Customer</th>
-                            <th>Tanggal Order</th>
-                            <th>Tanggal Jatuh Tempo</th>
-                            <th>Total Harga</th>
+                            <th>Target</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -179,18 +184,19 @@ include "services/database.php";
                 </table>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <h4>Total Seluruh Pendapatan: <span id="totalpendapatan"></span></h4>
             </div>
-        </div>
+        </div> -->
 
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <div id="piechart"></div>
             </div>
-        </div>
+        </div> -->
+
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <button type="button" class="btn btn-primary ms-4" id="downloadbutton" onclick="HTMLtoPDF()">Download as PDF</button>
@@ -232,8 +238,6 @@ include "services/database.php";
                 false,
                 true
             ).draw();
-            google.charts.setOnLoadCallback(drawChartsalesman);
-            updatependapatan();
         }
 
         function filterColumn(i) {
@@ -242,15 +246,21 @@ include "services/database.php";
                 false,
                 true
             ).draw();
-            google.charts.setOnLoadCallback(drawChartsalesman);
-            updatependapatan();
+        }
+
+        function filterterpenuhi() {
+            $('#tablelaporan').DataTable().column(3).data(
+                $('#col' + i + '_filter').val(),
+                false,
+                true
+            ).draw();
         }
 
         //add opsi Tahun
         function addopsi() {
-            var thisyear=new Date().getFullYear();
-            var thismonth=new Date().getMonth();
-            for (let i = thisyear-50; i <=thisyear ; i++) {
+            var thisyear = new Date().getFullYear();
+            var thismonth = new Date().getMonth();
+            for (let i = thisyear - 50; i <= thisyear; i++) {
                 var o = new Option(i, i);
                 $(o).html(i);
                 $("#inputtahun").append(o);
@@ -259,58 +269,15 @@ include "services/database.php";
             $('#inputtahun').val(thisyear);
         }
 
-
-
-
-
-
         function load_data() {
-            // // console.log("loading data");
-            // var tanggal_mulai_order = $('#tanggalmulai').val();
-            // var tanggal_selesai_order = $('#tanggalsampai').val();
-            // // console.log(tanggal_mulai_order);
-            // // console.log(tanggal_selesai_order);
-            // var today = new Date();
-            // var dulu = new Date();
-            // tanggal_selesai_order = tanggal_selesai_order || today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
-            // today = new Date(tanggal_selesai_order);
-            // dulu.setDate(today.getDate());
-            // dulu.setMonth(today.getMonth());
-            // dulu.setYear(today.getFullYear() - 2);
+            $('#dropdown1').on('change', function() {
+                console.log(this.value);
+                $('#tablelaporan').DataTable().columns(3).search($(this).val()).draw();
+            });
 
-            // //format date
-            // var dd = String(today.getDate()).padStart(2, '0');
-            // var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            // var yyyy = today.getFullYear();
-
-            // hariini = yyyy + '-' + mm + '-' + dd;
-
-
-            // tanggal_mulai_order = tanggal_mulai_order || dulu.getFullYear() + '/' + (dulu.getMonth() + 1) + '/' + dulu.getDate();
-            // dulu = new Date(tanggal_mulai_order);
-
-            // //format date buat sampai
-            // var dd = String(today.getDate()).padStart(2, '0');
-            // var mm = String(today.getMonth() + 1).padStart(2, '0');
-            // var yyyy = today.getFullYear();
-            // sampaihari = yyyy + '-' + mm + '-' + dd;
-            // //format date buat dari
-            // dd = String(dulu.getDate()).padStart(2, '0');
-            // mm = String(dulu.getMonth() + 1).padStart(2, '0');
-            // yyyy = dulu.getFullYear();
-            // darihari = yyyy + '-' + mm + '-' + dd;
-
-            // $('#tanggalsampai').val(hariini);
-            // $('#tanggalmulai').val(darihari);
-
-            // tanggal_mulai_order = dulu.getFullYear() + '/' + (dulu.getMonth() + 1) + '/' + dulu.getDate();
-            // tanggal_selesai_order = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
-
-            addopsi();
-
-            var bulan=$('#inputbulan').val();
-            var tahun=$('#inputtahun').val();
-
+            var bulan = $('#inputbulan').val();
+            var tahun = $('#inputtahun').val();
+            console.log('hello')
             $.ajax({
                 url: "services/gettargetsales.php",
                 method: "POST",
@@ -319,6 +286,7 @@ include "services/database.php";
                     tahun: tahun
                 },
                 success: function(data) {
+                    console.log("hello2");
                     $('#tablelaporan tbody').html('');
                     $('#tablelaporan').dataTable().fnClearTable();
                     $('#tablelaporan').dataTable().fnDestroy();
@@ -327,33 +295,27 @@ include "services/database.php";
                     var i;
                     data.forEach(function(line) {
                         var row = $("<tr></tr>");
-                        var col1 = $("<td>" + line['id_order'] + "</td>");
-                        var col2 = $("<td>" + line['nama_sales'] + "</td>");
-                        var col3 = $("<td>" + line['nama_customer'] + "</td>");
-                        var col4 = $("<td>" + line['tanggal_order'] + "</td>");
-                        var col5 = $("<td>" + line['tanggal_jatuh_tempo'] + "</td>");
-                        var col6 = $("<td>" + line['total_harga'].toLocaleString() + "</td>");
-                        var col7 = $("<td>" + line['status_order'] + "</td>");
+                        var col1 = $("<td>" + co + "</td>");
+                        var col2 = $("<td>" + line['nama'] + "</td>");
+                        var col3 = $("<td>" + line['target'].toLocaleString() + "</td>");
+                        stats = 'Sudah Terpenuhi';
+                        if (line['status'] == 0) {
+                            stats = 'Belum Terpenuhi';
+                        }
+                        var col4 = $("<td>" + stats + "</td>");
                         col1.appendTo(row);
                         col2.appendTo(row);
                         col3.appendTo(row);
                         col4.appendTo(row);
-                        col5.appendTo(row);
-                        col6.appendTo(row);
-                        col7.appendTo(row);
+                        co++;
                         $("#tablelaporan tbody").append(row);
                         html += row;
 
                     })
                     $('#tablelaporan').DataTable({
                         dom: 'lrtip',
-                        "processing": true,
-                        "serverSide": false,
-                        "stateSave": true,
                         "autoWidth": false
                     });
-                    google.charts.setOnLoadCallback(drawChartsalesman);
-                    updatependapatan();
                 },
                 error: function(data) {
                     console.log(data);
@@ -364,13 +326,14 @@ include "services/database.php";
 
 
         $(document).ready(function() {
-
+            addopsi();
             load_data();
+
 
             google.charts.load('current', {
                 'packages': ['corechart']
             });
-            google.charts.setOnLoadCallback(drawChartsalesman);
+            // google.charts.setOnLoadCallback(drawChartsalesman);
 
 
             //individual search
@@ -381,11 +344,6 @@ include "services/database.php";
             $('input.column_filter').on('keyup click', function() {
                 filterColumn($(this).parents('tr').attr('data-column'));
             });
-
-
-
-
-
 
 
             //table sorting
@@ -444,18 +402,19 @@ include "services/database.php";
 
         //function download html to PDF
         function HTMLtoPDF() {
-            var lengthnow = $('.dataTables_length select').val();
-            var table = $('#tablelaporan').DataTable();
-            table.page.len(1000).draw();
-            var from = $('#tanggalmulai').val();
-            var to = $('#tanggalsampai').val();
+            // var lengthnow = $('.dataTables_length select').val();
+            // var table = $('#tablelaporan').DataTable();
+            // table.page.len(1000).draw();
+            // var from = $('#tanggalmulai').val();
+            // var to = $('#tanggalsampai').val();
 
-            from = from || '1970/01/01';
-            to = to || moment(moment().toDate()).format('YYYY/MM/DD');
+            // from = from || '1970/01/01';
+            // to = to || moment(moment().toDate()).format('YYYY/MM/DD');
 
-            var dateFrom = moment(from);
-            var dateTo = moment(to);
-
+            // var dateFrom = moment(from);
+            // var dateTo = moment(to);
+            var bulan=$('#inputbulan').find(":selected").text();;
+            var tahun=$('#inputtahun').val();
 
             window.jsPDF = window.jspdf.jsPDF;
             window.html2canvas = html2canvas
@@ -466,39 +425,34 @@ include "services/database.php";
             var text = "Laporan PT.Sales App";
             var xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(text) * doc.internal.getFontSize() / 2);
             doc.setFontSize(15)
-            var texttanggal = from + " - " + to;
+            var texttanggal = "Target Sales Bulan "+bulan+" Tahun "+tahun;
             var xOffset2 = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(texttanggal) * doc.internal.getFontSize() / 2);
 
             doc.setFontSize(25);
             doc.text(text, xOffset, 75);
             doc.setFontSize(15)
-            doc.text(texttanggal, xOffset2, 90)
+            doc.text(texttanggal, xOffset2, 95)
             doc.autoTable({
                 html: '#tablelaporan',
                 startY: 115
             });
 
-            //jumlah penjualan
-            var jumlahtotal = $('#totalpendapatan').html();
-            doc.autoTable({
-                html: '#table'
-            });
-            let finalY = doc.lastAutoTable.finalY; // The y position on the page
-            doc.text(43, finalY, "Total Penjualan: " + jumlahtotal);
+            // //jumlah penjualan
+            // var jumlahtotal = $('#totalpendapatan').html();
+            // doc.autoTable({
+            //     html: '#table'
+            // });
+            // let finalY = doc.lastAutoTable.finalY; // The y position on the page
+            // doc.text(43, finalY, "Total Penjualan: " + jumlahtotal);
 
-            //print image
-            var img = $("#piechart img");
-            var chart1 = img.attr('src');
-            doc.addPage();
-            doc.addImage(chart1, 'png', 0, 0, parseInt(img.width), parseInt(img.height), undefined, 'none');
+            // //print image
+            // var img = $("#piechart img");
+            // var chart1 = img.attr('src');
+            // doc.addPage();
+            // doc.addImage(chart1, 'png', 0, 0, parseInt(img.width), parseInt(img.height), undefined, 'none');
             //convert to pdf
-            doc.save("laporan.pdf");
-            table.page.len(lengthnow).draw();
-
-
-
-
-
+            var savename="LaporanTarget"+bulan+tahun+".pdf";
+            doc.save(savename);
 
         }
     </script>
