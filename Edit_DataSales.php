@@ -169,6 +169,12 @@
             <symbol id="trash" viewBox="0 0 16 16">
                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
             </symbol>
+            <symbol id="activity" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+            </symbol>
+            <symbol id="basket" viewBox="0 0 16 16">
+                <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717L5.07 1.243zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3z"/>
+            </symbol>
         </svg>
 
         <div class="d-flex">
@@ -178,7 +184,7 @@
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a href="Profile_Manajer.php" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                         Profile
                         </a>
@@ -205,6 +211,18 @@
                         <a href="#" class="nav-link text-white">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#gem"/></svg>
                             Customers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manager_show_all_activity.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#activity"/></svg>
+                            Sales Activities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manager_show_order.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#basket"/></svg>
+                            Orders
                         </a>
                     </li>
                 </ul>

@@ -6,11 +6,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js" integrity="sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
+        <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Sidebars · Bootstrap v5.1</title>
+        <title>Halaman Sales</title>
 
         <style>
             .bd-placeholder-img {
@@ -117,6 +121,15 @@
 
             .fw-semibold { font-weight: 600; }
             .lh-tight { line-height: 1.25; }
+            hr {
+                display: block;
+                margin-top: 1em;
+                margin-bottom: 0.5em;
+                margin-left: auto;
+                margin-right: auto;
+                border-style: inset;
+                border-width: 1px;
+            }
         </style>
     </head>
 
@@ -153,16 +166,22 @@
             <symbol id="trash" viewBox="0 0 16 16">
                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
             </symbol>
+            <symbol id="activity" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+            </symbol>
+            <symbol id="basket" viewBox="0 0 16 16">
+                <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717L5.07 1.243zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3z"/>
+            </symbol>
         </svg>
 
         <div class="d-flex">
             <!-- SIDEBAR -->
             <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 280px; background-color: #61a3d6; position: fixed;">
-            <img src="image/LogoWhite.png" width="160px" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" style="margin-left: auto;">
-                <hr>
+            <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a href="Profile_Manajer.php" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                         Profile
                         </a>
@@ -191,6 +210,18 @@
                             Customers
                         </a>
                     </li>
+                    <li>
+                        <a href="manager_show_all_activity.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#activity"/></svg>
+                            Sales Activities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manager_show_order.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#basket"/></svg>
+                            Orders
+                        </a>
+                    </li>
                 </ul>
             </nav>
         
@@ -199,17 +230,15 @@
                 <form class="grid-container p-1" style="width: 1060px;">
                     <div><img src="image/profile.jpg" alt="profile" width="300px"></div>
                     <div class="mt-4 ml-3" id="sales-content">
-                        <h2 class="mb-3">Gloria Endhy</h2>
-                        <div class="fs-5 mb-3">Email : c14190009@john.petra.ac.id</div>
-                        <div class="fs-5 mt-3 mb-3">No Telp : 083849888000</div>
-                        <div class="fs-5 mt-3 mb-3">Alamat : Jalan Satu Dua No. 40, Surabaya</div>
-                        <span class="fs-5">Target Penjualan : Rp. 1.500.000,-</span>
-                        <a href="Edit_Target.php"><button class="btn btn-outline-dark btn-sm" style="margin-left: 20px; margin-top: -5px;" type="button">
-                            Edit
-                            <svg class="bi me-3" width="16" height="16"><use xlink:href="#edit"/></svg>
-                        </button></a>
+                        
                     </div>
-                    <div class="mt-4 ml-3" style="text-align: right;"><span class="fs-6">18-10-2021</span></div>
+                    <div class="mt-4 ml-3" style="text-align: right;">
+                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTH(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                            $stmt=$pdo->prepare($sql);
+                            $stmt->execute();
+                            $res=$stmt->fetch();  
+                            echo $res['DAY(CURRENT_DATE)'], "-", $res['MONTH(CURRENT_DATE)'], "-", $res['YEAR(CURRENT_DATE)']?>
+                    </div>
                 </form>
             </div>
         </div>
@@ -227,10 +256,11 @@
                         data.forEach(function(sales){
                             if(sales['id_sales'] == id){
                                 var col1 = $("<h2 class='mb-3'>" + sales['nama'] + "</h2>");
-                                var col2 = $("<div class='fs-5 mb-3'> Email : " + sales['email'] + "</div>")
-                                var col3 = $("<div class='fs-5 mt-3 mb-3'>No Telp : " + sales['no_telp'] + "</div>");
-                                var col4 = $("<div class='fs-5 mt-3 mb-3'>Alamat : " + sales['alamat'] + "</div>");
-                                var col5 = $("<span class='fs-5'>Target Penjualan : " + sales['target_penjualan'] + "</span>");
+                                var col2 = $("<div class='mb-3' style='font-size: 20px;'> Email : " + sales['email'] + "</div>")
+                                var col3 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>No Telp : " + sales['no_telp'] + "</div>");
+                                var col4 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>Alamat : " + sales['alamat'] + "</div>");
+                                var col5 = $("<span style='font-size: 20px;'>Target Penjualan : " + sales['target_penjualan'] + "</span>");
+                                var add = $("<a href='Add_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add<svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
                                 var edit = $("<a href='Edit_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-dark btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>Edit<svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
 
                                 $("#sales-content").append(col1);
@@ -238,6 +268,7 @@
                                 $("#sales-content").append(col3);
                                 $("#sales-content").append(col4);
                                 $("#sales-content").append(col5);
+                                $("#sales-content").append(add);
                                 $("#sales-content").append(edit);
                             }
 

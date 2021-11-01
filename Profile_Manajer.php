@@ -14,7 +14,10 @@
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Edit Produk</title>
+        <title>Sidebars · Bootstrap v5.1</title>
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
+        <meta name="theme-color" content="#7952b3">
 
         <style>
             .bd-placeholder-img {
@@ -184,13 +187,13 @@
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
-                        <a href="Profile_Manajer.php" class="nav-link text-white">
+                        <a href="Profile_Manajer.php" class="nav-link active">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                         Profile
                         </a>
                     </li>
                     <li>
-                        <a href="DataProduct_Manajer.php" class="nav-link active">
+                        <a href="DataProduct_Manajer.php" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#product"/></svg>
                         Product
                         </a>
@@ -228,97 +231,13 @@
                 </ul>
             </nav>
         
-            <!-- <div class="col-md-9 col-lg-8 m-3"> -->
-            <div class="p-3" style="margin-left: 280px;">
-                <form class="p-2 grid-container mb-5" style="width: 1040px;">
-                    <div style="font-weight: bold; font-size: 35px;">Edit Data Product</div>
-                    <div style="text-align: right;">
-                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTH(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
-                            $stmt=$pdo->prepare($sql);
-                            $stmt->execute();
-                            $res=$stmt->fetch();  
-                            echo $res['DAY(CURRENT_DATE)'], "-", $res['MONTH(CURRENT_DATE)'], "-", $res['YEAR(CURRENT_DATE)']?>
-                    </div>
-                </form>
-                <div class="input-group input-group mb-3">
-                    <input type="hidden" id="id_produk" name="id_produk" value="">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Nama Produk</span>
-                    </div>
-                    <input type="text" class="form-control" id="nama_produk" name="nama_produk" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Harga Produk</span>
-                    </div>
-                    <input type="text" class="form-control" id="harga_produk" name="harga_produk" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <button type="button" class="btn btn-secondary mt-5" id="edit-product-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Save</button>
-            </div>
+            <!-- Content Here -->
+
         </div>
 
-        <script type="text/javascript">
-            function load_data() {
-                var id = <?php echo $_GET['id'] ?>;
-                $.ajax({
-                    url: "/ProyekManpro/services/get_product.php",
-                    method: "GET",
-                    success: function(data) {
-                        var cek=false;
-                        var co = 1;
-                        data.forEach(function(product){
-                            if(product['id_produk'] == id){
-                                var id_produk = product['id_produk'];
-                                var nama_produk = product['nama_produk'];
-                                var harga_produk = product['harga_produk'];
-
-                                $("#id_produk").val(id_produk);
-                                $("#nama_produk").val(nama_produk);
-                                $("#harga_produk").val(harga_produk);
-                                $("#edit-product-submit-btn").data('id_produk', product['id_produk']);
-                            }
-                            
-                            cek = true;
-                            co++;
-                        });
-                    },
-                    error: function(data) {
-                        alert("load data error!");
-                    }
-                });
-            }
-            $(document).ready(function(){
-                load_data();
-            });
-
-            //Button simpan
-            $("#edit-product-submit-btn").click(function(){
-                var id_produk = $("#id_produk").val();
-                var nama_produk = $("#nama_produk").val();
-                var harga_produk = $("#harga_produk").val()
-
-                $.ajax({
-                    url: '/ProyekManpro/services/edit_product.php',
-                    method: 'POST',
-                    data: {
-                        id_produk : id_produk,
-                        nama_produk : nama_produk,
-                        harga_produk : harga_produk
-                    },
-                    
-                    success: function(data) {
-                        $("#id_produk").val('');
-                        $("#nama_produk").val('');
-                        $("#harga_produk").val('');
-
-                        window.location.replace("DataProduct_Manajer.php");
-                    },
-                    error: function($xhr, textStatus, errorThrown) {
-                        alert($xhr.responseJSON['error']);
-                    }
-                });
-            });
-
+        <script>
+            
         </script>
+
     </body>
 </html>
