@@ -39,21 +39,43 @@ include "services/database.php";
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script> -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <!-- <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script> -->
+    <script src="    https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+        <a class="judul" href="index.php">Prototype Sales</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link " href="#">Activity</a>
+                <a class="nav-item nav-link" href="#">Customer</a>
+                <a class="nav-item nav-link active" href="laporan.php">Laporan</a>
+                <a class="nav-item nav-link" href="logout.php">Logout</a>
+            </div>
+        </div>
+    </nav>
     <div class="container pt-5 pb-5">
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
@@ -69,12 +91,12 @@ include "services/database.php";
             <div class="col-12">
                 <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
                 <div class="d-flex justify-content-center mt-4">
-                    <label class="ms-4 me-2 d-flex align-items-center">Dari:</label>
+                    <label class="ml-4 mr-2 d-flex align-items-center">Dari:</label>
                     <input type="date" id="tanggalmulai" name="tanggalmulai">
-                    <label class="ms-4 me-2 d-flex align-items-center">Sampai:</label>
+                    <label class="ml-4 mr-2 d-flex align-items-center">Sampai:</label>
                     <input type="date" id="tanggalsampai" name="tanggalsampai">
-                    <button type="button" class="btn btn-primary ms-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
-                    
+                    <button type="button" class="btn btn-primary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
+
                 </div>
 
             </div>
@@ -122,8 +144,8 @@ include "services/database.php";
             </div>
         </div>
         <div class="row">
-            <div class="col-12 d-flex justify-content-center">
-                <table id="tablelaporan" class="table table-striped table-hover" style="width:100%">
+            <div class="col-12">
+                <table id="tablelaporan" class="table table-striped table-hover" style="width:100%;">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -136,9 +158,7 @@ include "services/database.php";
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
-                    
                 </table>
             </div>
         </div>
@@ -166,14 +186,15 @@ include "services/database.php";
         var selector = "";
         var angkaselector = "";
 
-        function updatependapatan(){
-            var sum=0;
+        function updatependapatan() {
+            var sum = 0;
             $('#tablelaporan tbody tr').each(function(i, tr) {
-                    var val = parseInt($(tr).find("td:nth-child(6)").text());
-                    sum+=val;
-                });
+                var val = parseInt($(tr).find("td:nth-child(6)").text().replace(/,/g, ''));
+                sum += val;
+            });
             // var sum = $('#tablelaporan').DataTable().rows({filter:'applied'}).column(5).data().sum();
             $('#totalpendapatan').html(sum.toLocaleString());
+
         }
         //function to sort each column
         function comparer(index) {
@@ -207,7 +228,11 @@ include "services/database.php";
             google.charts.setOnLoadCallback(drawChartsalesman);
             updatependapatan();
         }
-        
+
+        //add commas to string
+
+
+
 
         function load_data() {
             // console.log("loading data");
@@ -215,13 +240,13 @@ include "services/database.php";
             var tanggal_selesai_order = $('#tanggalsampai').val();
             // console.log(tanggal_mulai_order);
             // console.log(tanggal_selesai_order);
-            var today=new Date();
-            var dulu=new Date();
-            tanggal_selesai_order = tanggal_selesai_order || today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
-            today=new Date(tanggal_selesai_order);
+            var today = new Date();
+            var dulu = new Date();
+            tanggal_selesai_order = tanggal_selesai_order || today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+            today = new Date(tanggal_selesai_order);
             dulu.setDate(today.getDate());
             dulu.setMonth(today.getMonth());
-            dulu.setYear(today.getFullYear()-2);
+            dulu.setYear(today.getFullYear() - 2);
 
             //format date
             var dd = String(today.getDate()).padStart(2, '0');
@@ -229,10 +254,10 @@ include "services/database.php";
             var yyyy = today.getFullYear();
 
             hariini = yyyy + '-' + mm + '-' + dd;
-            
 
-            tanggal_mulai_order = tanggal_mulai_order || dulu.getFullYear()+'/'+(dulu.getMonth()+1)+'/'+dulu.getDate();
-            dulu=new Date(tanggal_mulai_order);
+
+            tanggal_mulai_order = tanggal_mulai_order || dulu.getFullYear() + '/' + (dulu.getMonth() + 1) + '/' + dulu.getDate();
+            dulu = new Date(tanggal_mulai_order);
 
             //format date buat sampai
             var dd = String(today.getDate()).padStart(2, '0');
@@ -243,22 +268,22 @@ include "services/database.php";
             dd = String(dulu.getDate()).padStart(2, '0');
             mm = String(dulu.getMonth() + 1).padStart(2, '0');
             yyyy = dulu.getFullYear();
-            darihari=yyyy + '-' + mm + '-' + dd;
+            darihari = yyyy + '-' + mm + '-' + dd;
 
             $('#tanggalsampai').val(hariini);
             $('#tanggalmulai').val(darihari);
 
-            tanggal_mulai_order=dulu.getFullYear()+'/'+(dulu.getMonth()+1)+'/'+dulu.getDate();
-            tanggal_selesai_order=today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
-            
+            tanggal_mulai_order = dulu.getFullYear() + '/' + (dulu.getMonth() + 1) + '/' + dulu.getDate();
+            tanggal_selesai_order = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
 
 
             $.ajax({
                 url: "services/getlaporan.php",
                 method: "POST",
                 data: {
-                    tanggal_mulai_order:tanggal_mulai_order,
-                    tanggal_selesai_order:tanggal_selesai_order
+                    tanggal_mulai_order: tanggal_mulai_order,
+                    tanggal_selesai_order: tanggal_selesai_order
                 },
                 success: function(data) {
                     $('#tablelaporan tbody').html('');
@@ -274,7 +299,7 @@ include "services/database.php";
                         var col3 = $("<td>" + line['nama_customer'] + "</td>");
                         var col4 = $("<td>" + line['tanggal_order'] + "</td>");
                         var col5 = $("<td>" + line['tanggal_jatuh_tempo'] + "</td>");
-                        var col6 = $("<td>" + line['total_harga'] + "</td>");
+                        var col6 = $("<td>" + line['total_harga'].toLocaleString() + "</td>");
                         var col7 = $("<td>" + line['status_order'] + "</td>");
                         col1.appendTo(row);
                         col2.appendTo(row);
@@ -292,6 +317,7 @@ include "services/database.php";
                         "processing": true,
                         "serverSide": false,
                         "stateSave": true,
+                        "autoWidth": false
                     });
                     google.charts.setOnLoadCallback(drawChartsalesman);
                     updatependapatan();
@@ -392,7 +418,7 @@ include "services/database.php";
             // function filterTabel() {
             //     var from = $('#tanggalmulai').val();
             //     var to = $('#tanggalsampai').val();
-                
+
 
             //     to = to || moment(moment().toDate()).format('YYYY/MM/DD');
             //     from = from || to.subtract(2, 'years');
@@ -588,10 +614,12 @@ include "services/database.php";
             });
 
             //jumlah penjualan
-            var jumlahtotal=$('#totalpendapatan').html();
-            doc.autoTable({html: '#table'});
+            var jumlahtotal = $('#totalpendapatan').html();
+            doc.autoTable({
+                html: '#table'
+            });
             let finalY = doc.lastAutoTable.finalY; // The y position on the page
-            doc.text(43, finalY, "Total Penjualan: "+jumlahtotal);
+            doc.text(43, finalY, "Total Penjualan: " + jumlahtotal);
 
             //print image
             var img = $("#piechart img");
