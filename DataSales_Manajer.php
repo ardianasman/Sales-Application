@@ -5,7 +5,6 @@
 <!doctype html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -237,18 +236,18 @@
                 <form class="p-2 grid-container" style="width: 1040px;">
                     <div style="font-weight: bold; font-size: 35px;">Data Sales</div>
                     <div style="text-align: right;">
-                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTH(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
                             $stmt=$pdo->prepare($sql);
                             $stmt->execute();
                             $res=$stmt->fetch();  
-                            echo $res['DAY(CURRENT_DATE)'], "-", $res['MONTH(CURRENT_DATE)'], "-", $res['YEAR(CURRENT_DATE)']?>
+                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
                 
                 <form class="d-flex mt-4 align-items-center">
                     <a href="Add_DataSales.php"><button class="btn btn-outline-danger" type="button" id="add-sales-btn">+ Add</button></a>
                 </form>
-                <table class="table col-sm-auto mt-4" style="text-align: center;">
+                <table id="tableImage" class="table col-sm-auto mt-4" style="text-align: center; position: static;">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -283,30 +282,57 @@
                             var col1 = $("<td scope='col' >" + co + "</td>");
                             var col2 = $("<td scope='col'>" + sales['nama'] + "</td>")
                             var col3 = $("<td scope='col'>" + "..." + "</td>");
-                            var col4 = $("<td scope='col'>" + sales['target'] + "</td>");
-                            if(sales['status']==0){
-                                var col5 = $("<td scope='col'>" + "Belum Terpenuhi" + "</td>");
-                            }
-                            else if(sales['status']==1){
-                                var col5 = $("<td scope='col'>" + "Terpenuhi" + "</td>");
-                            }
-                            var btn = $('<td scope="col"></td>');
-                            var lihat = $('<a href="Halaman_Sales.php?id=' + sales['id_sales'] + '"><svg class="bi me-2" width="16" height="16" id="lihat-btn" style="color: black;"><use xlink:href="#open"/></svg></a>')
-                            var edit = $('<a href="Edit_DataSales.php?id=' + sales['id_sales'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>')
-                            var del = $('<a href="#" id="delete-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#trash"/></svg></a>')
-
-                            del.data('id_sales', sales['id_sales']);
 
                             col1.appendTo(row);
                             col2.appendTo(row);
                             col3.appendTo(row);
-                            col4.appendTo(row);
-                            col5.appendTo(row);
-                            lihat.appendTo(btn);
-                            edit.appendTo(btn);
-                            del.appendTo(btn);
-                            btn.appendTo(row);
+                            
+                            $.ajax({
+                                url: "/ProyekManpro/services/get_curr_target.php",
+                                method: "GET",
+                                success: function(data) {
+                                    var cek=false;
+                                    var co = 1;
+                                    data.forEach(function(target){
+                                        if(target['id_sales']==sales['id_sales']){
+                                            var tar = target['target'];
+                                            var sta = target['status'];
 
+                                            var col4 = $("<td scope='col'>" + tar + "</td>");
+                                                if(sta==0){
+                                                    var col5 = $("<td scope='col'>" + "Belum Terpenuhi" + "</td>");
+                                                }
+                                                else if(sta==1){
+                                                    var col5 = $("<td scope='col'>" + "Terpenuhi" + "</td>");
+                                                }
+                                        }
+                                        else{
+                                                var col4 = $("<td scope='col'>--</td>");
+                                                var col5 = $("<td scope='col'>--</td>");
+                                            }
+                                        col4.appendTo(row);
+                                        col5.appendTo(row);
+                                        var btn = $('<td scope="col"></td>');
+                                        var lihat = $('<a href="Halaman_Sales.php?id=' + sales['id_sales'] + '"><svg class="bi me-2" width="16" height="16" id="lihat-btn" style="color: black;"><use xlink:href="#open"/></svg></a>')
+                                        var edit = $('<a href="Edit_DataSales.php?id=' + sales['id_sales'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>')
+                                        var del = $('<a href="#" id="delete-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#trash"/></svg></a>')
+
+                                        del.data('id_sales', sales['id_sales']);
+                                            
+                                        lihat.appendTo(btn);
+                                        edit.appendTo(btn);
+                                        del.appendTo(btn);
+                                        btn.appendTo(row);
+
+                                        cek = true;
+                                        co++;
+                                    });
+                                },
+                                error: function(data) {
+                                    alert("load data error!");
+                                }
+                            });
+                            
                             cek = true;
                             co++;
                             $("#sales-content").append(row);

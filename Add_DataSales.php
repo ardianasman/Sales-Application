@@ -233,11 +233,11 @@
                 <form class="p-2 grid-container mb-5" style="width: 1040px;">
                     <div style="font-weight: bold; font-size: 35px;">Add Data Sales</div>
                     <div style="text-align: right;">
-                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTH(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
                             $stmt=$pdo->prepare($sql);
                             $stmt->execute();
                             $res=$stmt->fetch();  
-                            echo $res['DAY(CURRENT_DATE)'], "-", $res['MONTH(CURRENT_DATE)'], "-", $res['YEAR(CURRENT_DATE)']?>
+                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
                 <div class="input-group input-group mb-3">
@@ -281,7 +281,7 @@
         </div>
 
         <script>
-            //Button Add Kos
+            //Button Add Sales
             $("#add-sales-submit-btn").click(function(){
                 var nama = $("#nama").val();
                 var alamat = $("#alamat").val()

@@ -18,9 +18,6 @@
         
         <title>Data Produk</title>
 
-        <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
-        <meta name="theme-color" content="#7952b3"> -->
-
         <style>
             .bd-placeholder-img {
                 font-size: 1.125rem;
@@ -134,7 +131,6 @@
                 border-style: inset;
                 border-width: 1px;
             }
-            
         </style>
     </head>
 
@@ -242,11 +238,11 @@
                 <form class="p-2 grid-container" style="width: 1040px;">
                     <div style="font-weight: bold; font-size: 35px;">Data Produk</div>
                     <div style="text-align: right;">
-                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTH(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
                             $stmt=$pdo->prepare($sql);
                             $stmt->execute();
                             $res=$stmt->fetch();  
-                            echo $res['DAY(CURRENT_DATE)'], "-", $res['MONTH(CURRENT_DATE)'], "-", $res['YEAR(CURRENT_DATE)']?>
+                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
                 
@@ -254,7 +250,7 @@
                     <!-- <a href="Add_DataProduct.php"><button class="btn btn-outline-danger" type="button">+ Add</button></a> -->
                     <a href="Add_DataProduct.php"><button class="btn btn-outline-danger" type="button" id="add-product-btn">+ Add</button></a>
                 </form>
-                <table class="table col-sm-auto mt-4" style="text-align: center;">
+                <table class="table col-sm-auto mt-4" style="text-align: center; position: static;">
                     <thead>
                         <tr>
                             <th scope="col">#</th>

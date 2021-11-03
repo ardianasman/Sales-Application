@@ -14,10 +14,7 @@
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Sidebars · Bootstrap v5.1</title>
-
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
-        <meta name="theme-color" content="#7952b3">
+        <title>Add Target</title>
 
         <style>
             .bd-placeholder-img {
@@ -234,130 +231,105 @@
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
             <div class="p-3" style="margin-left: 280px;">
                 <form class="p-2 grid-container mb-5" style="width: 1040px;">
-                    <div style="font-weight: bold; font-size: 35px;">Edit Target Sales</div>
+                    <div style="font-weight: bold; font-size: 35px;">Add Target Sales</div>
                     <div style="text-align: right;">
-                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTH(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
                             $stmt=$pdo->prepare($sql);
                             $stmt->execute();
                             $res=$stmt->fetch();  
-                            echo $res['DAY(CURRENT_DATE)'], "-", $res['MONTH(CURRENT_DATE)'], "-", $res['YEAR(CURRENT_DATE)']?>
+                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
-                <h5 id="nama-sales"></h5>
                 <div class="input-group input-group mb-3">
-                    <input type="hidden" id="id_sales" name="id_sales" value="">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Bulan</span>
                     </div>
-                    <input type="text" class="form-control" id="bulan" name="bulan" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
+                    <select class="custom-select col-4" id="bulan">
+                        <option selected>Pilih</option>
+                        <option value="1">Januari</option>
+                        <option value="2">Februari</option>
+                        <option value="3">Maret</option>
+                        <option value="4">April</option>
+                        <option value="5">Mei</option>
+                        <option value="6">Juni</option>
+                        <option value="7">Juli</option>
+                        <option value="8">Agustus</option>
+                        <option value="9">September</option>
+                        <option value="10">Oktober</option>
+                        <option value="11">November</option>
+                        <option value="12">Desember</option>
+                    </select>
                     <div class="input-group-prepend">
                         <span class="input-group-text">Tahun</span>
                     </div>
-                    <input type="text" class="form-control" id="alamat" name="alamat" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" class="form-control" id="tahun" name="tahun" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
                 <div class="input-group input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">No Telp</span>
+                        <span class="input-group-text">Target</span>
                     </div>
-                    <input type="text" class="form-control" id="no_telp" name="no_telp" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" class="form-control" id="target" name="target" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Email</span>
-                    </div>
-                    <input type="text" class="form-control" id="email" name="email" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Mulai Bekerja</span>
-                    </div>
-                    <input type="date" class="form-control" id="tanggal_mulai_kerja" name="tanggal_mulai_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Berhenti Bekerja</span>
-                    </div>
-                    <input type="date" class="form-control" id="tanggal_berhenti_kerja" name="tanggal_berhenti_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <button type="button" class="btn btn-warning mt-5" id="edit-sales-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Submit</button>
+                <button type="button" class="btn btn-warning mt-5" id="add-target-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Submit</button>
             </div>
         </div>
 
         <script>
-            function load_data() {
-                var id = <?php echo $_GET['id'] ?>;
+            //Button Add Sales
+            $("#add-target-submit-btn").click(function(){
                 $.ajax({
                     url: "/ProyekManpro/services/get_target.php",
                     method: "GET",
                     success: function(data) {
                         var cek=false;
                         var co = 1;
-                        $("#nama-sales").html('');
+                        var check = true
                         data.forEach(function(target){
-                            if(target['id_sales'] == id){
-                                var html = $(target['nama']);
-                                $("#nama-sales").append(html);
-
-                                var id_sales = target['id_sales'];
-                                var bulan = target['bulan'];
-                                var tahun = target['tahun'];
-                                var target = target['target'];
-
-                                $("#id_sales").val(id_sales);
-                                $("#nama").val(nama);
-                                $("#alamat").val(alamat);
-                                $("#no_telp").val(no_telp);
-                                $("#email").val(email);
-                                $("#tanggal_mulai_kerja").val(tanggal_mulai_kerja);
-                                $("#tanggal_berhenti_kerja").val(tanggal_berhenti_kerja);
-                                $("#sales-submit-btn").data('id_sales', sales['id_sales']);
+                            if(target['id_sales'] == <?php echo $_GET['id'] ?>){
+                                if(target['bulan']==$("#bulan").val() && target['tahun']==$("#tahun").val()){
+                                    check = false;
+                                }
                             }
-                            
                             cek = true;
                             co++;
                         });
+
+                        if(check){
+                            var id_sales = <?php echo $_GET['id'] ?>;
+                            var bulan = $("#bulan").val();
+                            var tahun = $("#tahun").val();
+                            var target = $("#target").val();
+                            $.ajax({
+                                url: '/ProyekManpro/services/add_target.php',
+                                method: 'POST',
+                                data: {
+                                    id_sales : id_sales,
+                                    bulan : bulan,
+                                    tahun : tahun,
+                                    target : target
+                                },
+                                
+                                success: function(data) {
+                                    $("#bulan").val('');
+                                    $("#tahun").val('');
+                                    $("#target").val('');
+                                    window.location.replace("Halaman_Sales.php?id=" + <?php echo $_GET['id'] ?>);
+                                },
+                                error: function($xhr, textStatus, errorThrown) {
+                                    alert($xhr.responseJSON['error']);
+                                }
+                            });
+                        }
+                        else{
+                            alert("Data untuk bulan dan tahun tersebut sudah ada!")
+                        }
                     },
                     error: function(data) {
                         alert("load data error!");
                     }
                 });
-            }
-            $(document).ready(function(){
-                load_data();
-            });
 
-            //Button simpan
-            $("#submit-btn").click(function(){
-                var id_sales = $("#id_sales").val();
-                var nama = $("#nama").val();
-                var alamat = $("#alamat").val();
-                var no_telp = $("#no_telp").val();
-                var email = $("#email").val();
-                var tanggal_mulai_kerja = $("#tanggal_mulai_kerja").val();
-                var tanggal_berhenti_kerja = $("#tanggal_berhenti_kerja").val();
-
-                $.ajax({
-                    url: '/ProyekManpro/services/edit_sales.php',
-                    method: 'POST',
-                    data: {
-                        id_sales : id_sales,
-                        nama : nama,
-                        alamat : alamat,
-                        no_telp : no_telp,
-                        email : email,
-                        tanggal_mulai_kerja : tanggal_mulai_kerja,
-                        tanggal_berhenti_kerja : tanggal_berhenti_kerja
-                    },
-                    
-                    success: function(data) {
-                        window.location.replace("DataSales_Manajer.php");
-                    },
-                    error: function($xhr, textStatus, errorThrown) {
-                        alert($xhr.responseJSON['error']);
-                    }
-                });
+                
             });
         </script>
 

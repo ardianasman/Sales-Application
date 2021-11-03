@@ -233,11 +233,11 @@
                         
                     </div>
                     <div class="mt-4 ml-3" style="text-align: right;">
-                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTH(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
                             $stmt=$pdo->prepare($sql);
                             $stmt->execute();
                             $res=$stmt->fetch();  
-                            echo $res['DAY(CURRENT_DATE)'], "-", $res['MONTH(CURRENT_DATE)'], "-", $res['YEAR(CURRENT_DATE)']?>
+                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
             </div>
@@ -256,22 +256,45 @@
                         data.forEach(function(sales){
                             if(sales['id_sales'] == id){
                                 var col1 = $("<h2 class='mb-3'>" + sales['nama'] + "</h2>");
-                                var col2 = $("<div class='mb-3' style='font-size: 20px;'> Email : " + sales['email'] + "</div>")
+                                var col2 = $("<div class='mb-3' style='font-size: 20px;'> Email : " + sales['email'] + "</div>");
                                 var col3 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>No Telp : " + sales['no_telp'] + "</div>");
                                 var col4 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>Alamat : " + sales['alamat'] + "</div>");
-                                var col5 = $("<span style='font-size: 20px;'>Target Penjualan : " + sales['target_penjualan'] + "</span>");
-                                var add = $("<a href='Add_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add<svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
-                                var edit = $("<a href='Edit_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-dark btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>Edit<svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
-
+                                
                                 $("#sales-content").append(col1);
                                 $("#sales-content").append(col2);
                                 $("#sales-content").append(col3);
                                 $("#sales-content").append(col4);
-                                $("#sales-content").append(col5);
-                                $("#sales-content").append(add);
-                                $("#sales-content").append(edit);
-                            }
+                                
+                                $.ajax({
+                                    url: "/ProyekManpro/services/get_curr_target.php",
+                                    method: "GET",
+                                    success: function(data) {
+                                        var cek=false;
+                                        var co = 1;
+                                        data.forEach(function(target){
+                                            if(target['id_sales']==sales['id_sales']){
+                                                if(target['target']!=0){
+                                                    var col5 = $("<span style='font-size: 20px;'>Target Penjualan : " + target['target'] + "</span>");
+                                                }
+                                                else{
+                                                    var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Belum Ada</span>");
+                                                }
+                                                var add = $("<a href='Add_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add</button></a>");
+                                                var edit = $("<a href='Edit_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-dark btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>Edit <svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
 
+                                                $("#sales-content").append(col5);
+                                                $("#sales-content").append(add);
+                                                $("#sales-content").append(edit);
+                                            }
+                                            cek = true;
+                                            co++;
+                                        });
+                                    },
+                                    error: function(data) {
+                                        alert("load data error!");
+                                    }
+                                });
+                            }
                             cek = true;
                             co++;
                         });

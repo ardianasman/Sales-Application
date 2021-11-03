@@ -231,7 +231,50 @@
                 </ul>
             </nav>
         
-            <!-- Content Here -->
+            <!-- <div class="col-md-9 col-lg-8 m-3"> -->
+            <div class="p-3" style="margin-left: 280px; position: static;">
+                <form class="grid-container p-1" style="width: 1060px;">
+                    <div style="font-weight: bold; font-size: 25px; margin-top: 15px;">
+                        Welcome, Manajer Alvaro Tanujaya
+                    </div>
+                    <span style="margin-left: 540px;"><img src="image/profile.jpg" alt="profile" width="80px"></span>
+                </form>
+                <hr style="width: 100%; text-align: left; background-color: grey;">
+                <div class="mt-4" style="text-align: center; font-size: 20px;">
+                    <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                        $stmt=$pdo->prepare($sql);
+                        $stmt->execute();
+                        $res=$stmt->fetch();  
+                        echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
+                </div>
+                <div class="mt-4 ml-3 mr-3 row justify-content-md-center" id="sales-content">
+                    <div class="col-sm-4 border border-right-0 border-secondary rounded-left" style="position: static;">
+                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Customer</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">8</div>
+                    </div>
+                    <div class="col-sm-4 border border-secondary" style="position: static;">
+                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Sales</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">10</div>
+                    </div>
+                    <div class="col-sm-4 border border-left-0 border-secondary rounded-right" style="position: static;">
+                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Product</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">12</div>
+                    </div>
+                </div>
+                <div class="mt-4" style="text-align: center; font-size: 18px; font-weight: bold;">
+                    Total Penjualan
+                </div>
+                <div class="mt-4 ml-3 mr-3 row justify-content-md-center" id="sales-content" style="align: center;">
+                    <div class="col-sm-4 border border-right-0 border-secondary rounded-left" style="position: static;">
+                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Total Penjualan Sekarang</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">8</div>
+                    </div>
+                    <div class="col-sm-4 border border-secondary rounded-right" style="position: static;">
+                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Target Penjualan</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">12</div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 

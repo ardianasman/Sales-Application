@@ -11,24 +11,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         "error" => ""
     );
 
-    $id_sales = $_POST['id_sales'];
-    $nama = $_POST['nama'];
-    $alamat = $_POST['alamat'];
-    $no_telp = $_POST['no_telp'];
-    $email = $_POST['email'];
-    $tanggal_mulai_kerja = $_POST['tanggal_mulai_kerja'];
-    $tanggal_berhenti_kerja = $_POST['tanggal_berhenti_kerja'];
+    $id_target = $_POST['id_target'];
+    $bulan = $_POST['bulan'];
+    $tahun = $_POST['tahun'];
+    $target = $_POST['target'];
+    $status = $_POST['status'];
 
-    if ($nama == '' || $alamat == '' || $no_telp == '' || $email == '' || $tanggal_mulai_kerja == '') {
+    if ($bulan == 'Pilih' || $tahun == '' || $target == '' || $status == 'Pilih') {
         header("HTTP/1.1 400 Bad Request");
         $result['status'] = 0;
         $result['error'] = 'Data Harus Terisi Semua Kecuali Data Berhenti Kerja!';
     } else {
-        $sql = "UPDATE sales 
-        SET nama = ?, alamat = ?, no_telp = ?, email = ?, tanggal_mulai_kerja = ?, tanggal_berhenti_kerja = ?
-        WHERE id_sales = ?";
+        $sql = "UPDATE target_penjualan 
+        SET bulan = ?, tahun = ?, target = ?, status = ?
+        WHERE id_target = ?";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$nama, $alamat, $no_telp, $email, $tanggal_mulai_kerja, $tanggal_berhenti_kerja, $id_sales]);
+        $stmt->execute([$bulan, $tahun, $target, $status, $id_target]);
     }
 
     echo json_encode($result);
