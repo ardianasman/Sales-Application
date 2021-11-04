@@ -6,14 +6,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js" integrity="sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
+        <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Sidebars · Bootstrap v5.1</title>
-
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
-        <meta name="theme-color" content="#7952b3">
+        <title>Edit Target</title>
 
         <style>
             .bd-placeholder-img {
@@ -45,8 +46,7 @@
             }
             .grid-container {
                 display: grid;
-                /* grid-template-columns: auto auto auto auto; */
-                grid-template-columns: max-content auto auto;
+                grid-template-columns: max-content auto;
                 grid-gap: 10px;
             }
             .modal-backdrop {
@@ -124,6 +124,15 @@
 
             .fw-semibold { font-weight: 600; }
             .lh-tight { line-height: 1.25; }
+            hr {
+                display: block;
+                margin-top: 1em;
+                margin-bottom: 0.5em;
+                margin-left: auto;
+                margin-right: auto;
+                border-style: inset;
+                border-width: 1px;
+            }
         </style>
     </head>
 
@@ -160,16 +169,25 @@
             <symbol id="trash" viewBox="0 0 16 16">
                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
             </symbol>
+            <symbol id="activity" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+            </symbol>
+            <symbol id="basket" viewBox="0 0 16 16">
+                <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717L5.07 1.243zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3z"/>
+            </symbol>
+            <symbol id="door" viewBox="0 0 16 16">
+                <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+            </symbol>
         </svg>
 
         <div class="d-flex">
             <!-- SIDEBAR -->
             <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 280px; background-color: #61a3d6; position: fixed;">
-            <img src="image/LogoWhite.png" width="160px" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" style="margin-left: auto;">
-                <hr>
+            <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a href="Profile_Manajer.php" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                         Profile
                         </a>
@@ -198,50 +216,103 @@
                             Customers
                         </a>
                     </li>
+                    <li>
+                        <a href="manager_show_all_activity.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#activity"/></svg>
+                            Sales Activities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manager_show_order.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#basket"/></svg>
+                            Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="logout_manajer.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#door"/></svg>
+                            Logout
+                        </a>
+                    </li>
                 </ul>
             </nav>
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
             <div class="p-3" style="margin-left: 280px;">
-                <form class="grid-container p-1" style="width: 1060px;">
-                    <div><img src="image/profile.jpg" alt="profile" width="300px"></div>
-                    <div class="mt-4 ml-3">
-                        <h2 class="mb-3">Gloria Endhy</h2>
-                        <div class="fs-5 mt-3 mb-3">Target Penjualan : </div>
-                        <span class="fs-5 mb-3">
-                            <input type="text" class="form-control" id="target_penjualan" name="target_penjualan" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </span>
-                        <button class="btn btn-success mt-5" id="submit-btn" type="button">
-                            Submit
-                        </button>
+                <form class="p-2 grid-container mb-5" style="width: 1040px;">
+                    <div style="font-weight: bold; font-size: 35px;">Edit Target Sales</div>
+                    <div style="text-align: right;">
+                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                            $stmt=$pdo->prepare($sql);
+                            $stmt->execute();
+                            $res=$stmt->fetch();  
+                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
-                    <div class="mt-4 ml-3" style="text-align: right;"><span class="fs-6">18-10-2021</span></div>
                 </form>
+                <div class="input-group input-group mb-3">
+                    <input type="hidden" id="id_target" name="id_target" value="">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Bulan</span>
+                    </div>
+                    <select class="custom-select col-4" id="bulan">
+                        <option selected>Pilih</option>
+                        <option value="1">Januari</option>
+                        <option value="2">Februari</option>
+                        <option value="3">Maret</option>
+                        <option value="4">April</option>
+                        <option value="5">Mei</option>
+                        <option value="6">Juni</option>
+                        <option value="7">Juli</option>
+                        <option value="8">Agustus</option>
+                        <option value="9">September</option>
+                        <option value="10">Oktober</option>
+                        <option value="11">November</option>
+                        <option value="12">Desember</option>
+                    </select>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Tahun</span>
+                    </div>
+                    <input type="text" class="form-control" id="tahun" name="tahun" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Target</span>
+                    </div>
+                    <input type="text" class="form-control" id="target" name="target" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Status</span>
+                    </div>
+                    <select class="custom-select col-6" id="status">
+                        <option selected>Pilih</option>
+                        <option value="0">Belum Terpenuhi</option>
+                        <option value="1">Terpenuhi</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-warning mt-5" id="edit-target-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Submit</button>
             </div>
         </div>
 
         <script>
             function load_data() {
-                var id = <?php echo $_GET['id'] ?>;
                 $.ajax({
-                    url: "/ProyekManpro/services/get_sales.php",
+                    url: "/ProyekManpro/services/get_curr_target.php",
                     method: "GET",
                     success: function(data) {
                         var cek=false;
                         var co = 1;
-                        data.forEach(function(sales){
-                            if(sales['id_sales'] == id){
-                                var id_sales = sales['id_sales'];
-                                var nama = sales['nama'];
-
-                                $("#id_sales").val(id_sales);
-                                $("#nama").val(nama);
-                                $("#alamat").val(alamat);
-                                $("#no_telp").val(no_telp);
-                                $("#email").val(email);
-                                $("#tanggal_mulai_kerja").val(tanggal_mulai_kerja);
-                                $("#tanggal_berhenti_kerja").val(tanggal_berhenti_kerja);
-                                $("#sales-submit-btn").data('id_sales', sales['id_sales']);
+                        data.forEach(function(target){
+                            if(target['id_sales'] == <?php echo $_GET['id'] ?>){
+                                var id_target = target['id_target'];
+                                var bulan = target['bulan'];
+                                var status = target['status'];
+                                var tahun = target['tahun'];
+                                var target = target['target'];
+                                
+                                $("#id_target").val(id_target);
+                                $("#bulan").val(bulan);
+                                $("#tahun").val(tahun);
+                                $("#target").val(target);
+                                $("#status").val(status);
                             }
                             
                             cek = true;
@@ -258,30 +329,26 @@
             });
 
             //Button simpan
-            $("#submit-btn").click(function(){
-                var id_sales = $("#id_sales").val();
-                var nama = $("#nama").val();
-                var alamat = $("#alamat").val();
-                var no_telp = $("#no_telp").val();
-                var email = $("#email").val();
-                var tanggal_mulai_kerja = $("#tanggal_mulai_kerja").val();
-                var tanggal_berhenti_kerja = $("#tanggal_berhenti_kerja").val();
+            $("#edit-target-submit-btn").click(function(){
+                var id_target = $("#id_target").val();
+                var bulan = $("#bulan").val();
+                var tahun = $("#tahun").val();
+                var target = $("#target").val();
+                var status = $("#status").val();
 
                 $.ajax({
-                    url: '/ProyekManpro/services/edit_sales.php',
+                    url: '/ProyekManpro/services/edit_target.php',
                     method: 'POST',
                     data: {
-                        id_sales : id_sales,
-                        nama : nama,
-                        alamat : alamat,
-                        no_telp : no_telp,
-                        email : email,
-                        tanggal_mulai_kerja : tanggal_mulai_kerja,
-                        tanggal_berhenti_kerja : tanggal_berhenti_kerja
+                        id_target : id_target,
+                        bulan : bulan,
+                        tahun : tahun, 
+                        target : target,
+                        status : status
                     },
                     
                     success: function(data) {
-                        window.location.replace("DataSales_Manajer.php");
+                        window.location.replace("Halaman_Sales.php?id=" + <?php echo $_GET['id'] ?>);
                     },
                     error: function($xhr, textStatus, errorThrown) {
                         alert($xhr.responseJSON['error']);

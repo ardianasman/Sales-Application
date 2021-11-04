@@ -50,8 +50,9 @@
                         <tr>
                             <th width="5%" data-sortable="true">No</th>
                             <th width="10%" data-sortable="true">ID Aktivitas</th>
+                            <th width="10%" data-sortable="true">Nama Customer</th>
                             <th width="50%" data-sortable="true">Gambar</th>
-                            <th width="25%" data-sortable="true">Nama Sales yang melakukan kunjungan</th>
+                            <th width="15%" data-sortable="true">Nama Sales yang melakukan kunjungan</th>
                             <th wdith="15%" data-sortable="true">Waktu kunjungan</th>
                         </tr>
                     </thead>
@@ -86,16 +87,18 @@ function load_data() {
                 var row = $("<tr></tr>");
                 var col1 = $("<td>" + co + "</td>");
                 var col2 = $("<td>" + aktivitas['id_aktivitas'] + "</td>");
+                var col3 = $("<td>" + aktivitas['Nama_Cust'] + "</td>");
                 var target_file = aktivitas['foto_kunjungan'];
-                var col3 = $("<td><img src='" + target_file  + "' style='width:400px; height:auto;'></td>");
-                var col4 = $("<td>" + aktivitas['nama'] + "</td>");
-                var col5 = $("<td>" + aktivitas['jadwal_kunjungan'] + "</td>");
+                var col4 = $("<td><img src='" + target_file  + "' style='width:400px; height:auto;'></td>");
+                var col5 = $("<td>" + aktivitas['nama'] + "</td>");
+                var col6 = $("<td>" + aktivitas['jadwal_kunjungan'] + "</td>");
 
                 col1.appendTo(row);
                 col2.appendTo(row);
                 col3.appendTo(row);
                 col4.appendTo(row);
                 col5.appendTo(row);
+                col6.appendTo(row);
 
                 co++;
                 $("#user-content").append(row);

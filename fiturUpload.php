@@ -69,11 +69,15 @@ session_start()
               
 
               <h3>Upload Bukti Kunjungan</h2>
+              <?php
+              $coba = $_GET['id'];
+              $_SESSION['simpan_id_aktivitas'] = $coba;
+              ?>
               <label for="tanggal"><b>Tanggal :  </b></label>
               <input type="text" readonly class="form-control-plaintext" id="date" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date('Y/m/d H:i:s'); ?>">
-              <label for="confirm-id-pembelian"><b>Id Pembelian :  </b></label>
-              <input type="text" id="confirm-id-pembelian" name="confirm-id-pembelian" class="form-control" placeholder="Konfirmasi Id Pembelian">
-              <label for="confirm-id-pembelian"><b>Lokasi :  </b></label>
+              <label for="confirm-id-aktivitas"><b>Id Aktivitas :  </b></label>
+              <input type="text" id="confirm-id-aktivitas" name="confirm-id-aktivitas" class="form-control" placeholder="Konfirmasi Id Aktivitas">
+              <label for="lokasi"><b>Lokasi :  </b></label>
               <input type="text" id="lokasi" name="lokasi" class="form-control" placeholder="Masukkan Lokasi Kunjungan (Alamat)">
               <label for="upload-foto"><b>Masukkan Foto Bukti :  </b></label>
               <br>

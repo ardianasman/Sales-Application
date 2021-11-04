@@ -1,13 +1,13 @@
-<?php 
+<?php
 
-include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php";
+include "database.php";
 
 header("Content-Type: application/json");
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $sql = "SELECT * FROM `sales`
-    WHERE id_manager=1";
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $bulan=$_POST['bulan'];
+    $tahun= $_POST['tahun'];
+    $sql = "SELECT s.nama,t.target,t.status FROM `target_penjualan` t JOIN `sales` s ON t.id_sales=s.id_sales WHERE t.bulan = $bulan AND t.tahun = $tahun";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
@@ -25,3 +25,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     echo json_encode($error);
 }
+?>

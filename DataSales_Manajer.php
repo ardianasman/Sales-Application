@@ -5,7 +5,6 @@
 <!doctype html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -174,6 +173,15 @@
                 <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"/>
                 <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"/>
             </symbol>
+            <symbol id="activity" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+            </symbol>
+            <symbol id="basket" viewBox="0 0 16 16">
+                <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717L5.07 1.243zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3z"/>
+            </symbol>
+            <symbol id="door" viewBox="0 0 16 16">
+                <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+            </symbol>
         </svg>
 
         <div class="d-flex">
@@ -183,7 +191,7 @@
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a href="Profile_Manajer.php" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                         Profile
                         </a>
@@ -212,6 +220,24 @@
                             Customers
                         </a>
                     </li>
+                    <li>
+                        <a href="manager_show_all_activity.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#activity"/></svg>
+                            Sales Activities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manager_show_order.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#basket"/></svg>
+                            Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="logout_manajer.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#door"/></svg>
+                            Logout
+                        </a>
+                    </li>
                 </ul>
             </nav>
         
@@ -220,12 +246,11 @@
                 <form class="p-2 grid-container" style="width: 1040px;">
                     <div style="font-weight: bold; font-size: 35px;">Data Sales</div>
                     <div style="text-align: right;">
-                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTH(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
                             $stmt=$pdo->prepare($sql);
                             $stmt->execute();
-                            $res=$stmt->fetch();
-                            echo $res['DAY(CURRENT_DATE)'], "-", $res['MONTH(CURRENT_DATE)'], "-", $res['YEAR(CURRENT_DATE)']?>
-                            
+                            $res=$stmt->fetch();  
+                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
                 
@@ -294,6 +319,15 @@
                             del.appendTo(btn);
                             btn.appendTo(row);
 
+                                        cek = true;
+                                        co++;
+                                    });
+                                },
+                                error: function(data) {
+                                    alert("load data error!");
+                                }
+                            });
+                            
                             cek = true;
                             co++;
                             $("#sales-content").append(row);

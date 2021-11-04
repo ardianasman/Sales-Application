@@ -11,17 +11,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         "error" => ""
     );
 
-    $nama_produk = $_POST['nama_produk'];
-    $harga_produk = $_POST['harga_produk'];
+    $id_sales = $_POST['id_sales'];
+    $bulan = $_POST['bulan'];
+    $tahun = $_POST['tahun'];
+    $target = $_POST['target'];
+    $status = 0;
 
-    if ($nama_produk == '' || $harga_produk == '') {
+    if ($bulan == 'Pilih' || $tahun == '' || $target == '') {
         header("HTTP/1.1 400 Bad Request");
         $result['status'] = 0;
-        $result['error'] = 'Data Harus Terisi Semua!';
+        $result['error'] = 'Data Harus Terisi Semua Kecuali Data Berhenti Kerja!';
     } else {
-        $sql = "INSERT INTO produk VALUES(NULL, ?, ?, ?)";
+        $sql = "INSERT INTO target_penjualan (id_target, id_sales, id_manager, bulan, target, tahun, status)
+                VALUES(NULL, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$_SESSION['id'], $nama_produk, $harga_produk]);
+        $stmt->execute([$id_sales, $_SESSION['id'], $bulan, $target, $tahun, $status]);
     }
 
     echo json_encode($result);
@@ -33,4 +37,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     echo json_encode($error);
 }
-?>

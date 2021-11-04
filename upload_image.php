@@ -16,9 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     date_default_timezone_set('Asia/Jakarta');
 
     $tanggal = date('Y/m/d H:i:s');
-    $conf_id = $_POST['confirm-id-pembelian'];
+    $conf_id = $_POST['confirm-id-aktivitas'];
     $lokasi = $_POST['lokasi'];
     $visited="";
+    $tmp_id_aktivitas = $_SESSION['simpan_id_aktivitas'];
     $radioVal = $_POST["flexRadioDefault"];
 
     if($radioVal == "first")
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         header("HTTP/1.1 400 Bad Request");
         $result['status'] = 0;
-        $result['error'] = 'Tanggal & Id Pembelian & Lokasi Must Have Value!';
+        $result['error'] = 'Tanggal & Id Customer & Lokasi Must Have Value!';
         
     } else {
        
@@ -75,15 +76,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $uploadOk = 0;
         }
 
+        //Check if confirmation id match with the actual one
+        if($tmp_id_aktivitas != $conf_id){
+            $uploadOk = 0;
+            echo "Confirmation Id Not Match";
+        }
+
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
         echo "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
         } else {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            $sql = "UPDATE aktivitas_sales SET jadwal_kunjungan= ?, status_kunjungan= ?, lokasi = ? ,foto_kunjungan= ? WHERE id_order=?";
+            $sql = "UPDATE aktivitas_sales SET jadwal_kunjungan= ?, status_kunjungan= ?, lokasi = ? ,foto_kunjungan= ? WHERE id_aktivitas=?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$tanggal,$visited,$lokasi,$target_file,$conf_id]);
+
+            $simpanidcust = "SELECT id_customer FROM aktivitas_sales WHERE id_aktivitas = ?";
+            $test_1 = $pdo->prepare($simpanidcust);
+            $test_1->execute([$conf_id]);
+            $tmpid = $test_1->fetch(PDO::FETCH_ASSOC);
+            $idcustomerasli = $tmpid['id_customer'];
+            echo $idcustomerasli;
+
+            $sql_1 = "UPDATE customer SET terakhir_dikunjungi = ? WHERE id_customer = ?";
+            $test_2 = $pdo->prepare($sql_1);
+            $test_2->execute([$tanggal,$idcustomerasli]);
             
         } else {
             echo "Sorry, there was an error uploading your file.";
@@ -93,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     echo json_encode($result);
-    header("Location:show_activity.php");
+    //header("Location:show_activity.php");
 } else {
     header("HTTP/1.1 400 Bad Request");
     $error = array(

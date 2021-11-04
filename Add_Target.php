@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Edit Produk</title>
+        <title>Add Target</title>
 
         <style>
             .bd-placeholder-img {
@@ -193,13 +193,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="DataProduct_Manajer.php" class="nav-link active">
+                        <a href="DataProduct_Manajer.php" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#product"/></svg>
                         Product
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="DataSales_Manajer.php" class="nav-link text-white" aria-current="page">
+                        <a href="DataSales_Manajer.php" class="nav-link active" aria-current="page">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people"/></svg>
                         Sales
                         </a>
@@ -240,7 +240,7 @@
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
             <div class="p-3" style="margin-left: 280px;">
                 <form class="p-2 grid-container mb-5" style="width: 1040px;">
-                    <div style="font-weight: bold; font-size: 35px;">Edit Data Product</div>
+                    <div style="font-weight: bold; font-size: 35px;">Add Target Sales</div>
                     <div style="text-align: right;">
                         <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
                             $stmt=$pdo->prepare($sql);
@@ -250,84 +250,99 @@
                     </div>
                 </form>
                 <div class="input-group input-group mb-3">
-                    <input type="hidden" id="id_produk" name="id_produk" value="">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Nama Produk</span>
+                        <span class="input-group-text">Bulan</span>
                     </div>
-                    <input type="text" class="form-control" id="nama_produk" name="nama_produk" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <select class="custom-select col-4" id="bulan">
+                        <option selected>Pilih</option>
+                        <option value="1">Januari</option>
+                        <option value="2">Februari</option>
+                        <option value="3">Maret</option>
+                        <option value="4">April</option>
+                        <option value="5">Mei</option>
+                        <option value="6">Juni</option>
+                        <option value="7">Juli</option>
+                        <option value="8">Agustus</option>
+                        <option value="9">September</option>
+                        <option value="10">Oktober</option>
+                        <option value="11">November</option>
+                        <option value="12">Desember</option>
+                    </select>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Tahun</span>
+                    </div>
+                    <input type="text" class="form-control" id="tahun" name="tahun" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
                 <div class="input-group input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Harga Produk</span>
+                        <span class="input-group-text">Target</span>
                     </div>
-                    <input type="text" class="form-control" id="harga_produk" name="harga_produk" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" class="form-control" id="target" name="target" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
-                <button type="button" class="btn btn-secondary mt-5" id="edit-product-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Save</button>
+                <button type="button" class="btn btn-warning mt-5" id="add-target-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Submit</button>
             </div>
         </div>
 
-        <script type="text/javascript">
-            function load_data() {
-                var id = <?php echo $_GET['id'] ?>;
+        <script>
+            //Button Add Sales
+            $("#add-target-submit-btn").click(function(){
                 $.ajax({
-                    url: "/ProyekManpro/services/get_product.php",
+                    url: "/ProyekManpro/services/get_target.php",
                     method: "GET",
                     success: function(data) {
                         var cek=false;
                         var co = 1;
-                        data.forEach(function(product){
-                            if(product['id_produk'] == id){
-                                var id_produk = product['id_produk'];
-                                var nama_produk = product['nama_produk'];
-                                var harga_produk = product['harga_produk'];
-
-                                $("#id_produk").val(id_produk);
-                                $("#nama_produk").val(nama_produk);
-                                $("#harga_produk").val(harga_produk);
-                                $("#edit-product-submit-btn").data('id_produk', product['id_produk']);
+                        var check = true
+                        data.forEach(function(target){
+                            if(target['id_sales'] == <?php echo $_GET['id'] ?>){
+                                if(target['bulan']==$("#bulan").val() && target['tahun']==$("#tahun").val()){
+                                    check = false;
+                                }
                             }
-                            
                             cek = true;
                             co++;
                         });
+
+                        if(check){
+                            var id_manager = <?php echo $_SESSION['id']; ?>;
+                            var id_sales = <?php echo $_GET['id'] ?>;
+                            var bulan = $("#bulan").val();
+                            var tahun = $("#tahun").val();
+                            var target = $("#target").val();
+                            $.ajax({
+                                url: '/ProyekManpro/services/add_target.php',
+                                method: 'POST',
+                                data: {
+                                    id_manager : id_manager,
+                                    id_sales : id_sales,
+                                    bulan : bulan,
+                                    tahun : tahun,
+                                    target : target
+                                },
+                                
+                                success: function(data) {
+                                    $("#bulan").val('');
+                                    $("#tahun").val('');
+                                    $("#target").val('');
+                                    window.location.replace("Halaman_Sales.php?id=" + <?php echo $_GET['id'] ?>);
+                                },
+                                error: function($xhr, textStatus, errorThrown) {
+                                    alert($xhr.responseJSON['error']);
+                                }
+                            });
+                        }
+                        else{
+                            alert("Data untuk bulan dan tahun tersebut sudah ada!")
+                        }
                     },
                     error: function(data) {
                         alert("load data error!");
                     }
                 });
-            }
-            $(document).ready(function(){
-                load_data();
+
+                
             });
-
-            //Button simpan
-            $("#edit-product-submit-btn").click(function(){
-                var id_produk = $("#id_produk").val();
-                var nama_produk = $("#nama_produk").val();
-                var harga_produk = $("#harga_produk").val()
-
-                $.ajax({
-                    url: '/ProyekManpro/services/edit_product.php',
-                    method: 'POST',
-                    data: {
-                        id_produk : id_produk,
-                        nama_produk : nama_produk,
-                        harga_produk : harga_produk
-                    },
-                    
-                    success: function(data) {
-                        $("#id_produk").val('');
-                        $("#nama_produk").val('');
-                        $("#harga_produk").val('');
-
-                        window.location.replace("DataProduct_Manajer.php");
-                    },
-                    error: function($xhr, textStatus, errorThrown) {
-                        alert($xhr.responseJSON['error']);
-                    }
-                });
-            });
-
         </script>
+
     </body>
 </html>
