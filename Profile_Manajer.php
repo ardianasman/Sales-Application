@@ -1,5 +1,8 @@
 <?php
     include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
+    if (!isset($_SESSION['id'])) {
+        header("Location:login_manajer.php");
+    }
 ?>
 <!doctype html>
     <head>
@@ -178,6 +181,9 @@
             <symbol id="basket" viewBox="0 0 16 16">
                 <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717L5.07 1.243zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3z"/>
             </symbol>
+            <symbol id="door" viewBox="0 0 16 16">
+                <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+            </symbol>
         </svg>
 
         <div class="d-flex">
@@ -228,6 +234,12 @@
                             Orders
                         </a>
                     </li>
+                    <li>
+                        <a href="logout_manajer.php" class="nav-link text-white">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#door"/></svg>
+                            Logout
+                        </a>
+                    </li>
                 </ul>
             </nav>
         
@@ -235,7 +247,7 @@
             <div class="p-3" style="margin-left: 280px; position: static;">
                 <form class="grid-container p-1" style="width: 1060px;">
                     <div style="font-weight: bold; font-size: 25px; margin-top: 15px;">
-                        Welcome, Manajer Alvaro Tanujaya
+                        Welcome, Manajer <?php echo $_SESSION['nama']; ?>
                     </div>
                     <span style="margin-left: 540px;"><img src="image/profile.jpg" alt="profile" width="80px"></span>
                 </form>
@@ -250,15 +262,33 @@
                 <div class="mt-4 ml-3 mr-3 row justify-content-md-center" id="sales-content">
                     <div class="col-sm-4 border border-right-0 border-secondary rounded-left" style="position: static;">
                         <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Customer</div>
-                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">8</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                            <?php $sql="SELECT COUNT(id_customer) as 'jumlah' FROM `customer`"; 
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->execute();
+                                $res=$stmt->fetch();  
+                                echo $res['jumlah']?>
+                        </div>
                     </div>
                     <div class="col-sm-4 border border-secondary" style="position: static;">
                         <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Sales</div>
-                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">10</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                            <?php $sql="SELECT COUNT(id_sales) as 'jumlah' FROM `sales`"; 
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->execute();
+                                $res=$stmt->fetch();  
+                                echo $res['jumlah']?>
+                        </div>
                     </div>
                     <div class="col-sm-4 border border-left-0 border-secondary rounded-right" style="position: static;">
                         <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Product</div>
-                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">12</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                            <?php $sql="SELECT COUNT(id_produk) as 'jumlah' FROM `produk`"; 
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->execute();
+                                $res=$stmt->fetch();  
+                                echo $res['jumlah']?>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-4" style="text-align: center; font-size: 18px; font-weight: bold;">
@@ -267,11 +297,36 @@
                 <div class="mt-4 ml-3 mr-3 row justify-content-md-center" id="sales-content" style="align: center;">
                     <div class="col-sm-4 border border-right-0 border-secondary rounded-left" style="position: static;">
                         <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Total Penjualan Sekarang</div>
-                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">8</div>
+                        <div style="font-weight: bold; font-size: 22px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                            <?php $sql="SELECT FORMAT(SUM(total_harga),'C') as 'total' FROM `order`
+                                LEFT JOIN sales ON `order`.id_sales=sales.id_sales
+                                WHERE sales.id_manager=1 && status_order=1 && MONTH(tanggal_order)=MONTH(CURRENT_DATE)"; 
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->execute();
+                                $res=$stmt->fetch();
+                                if($res['total']==NULL){
+                                    echo "Rp. 0";
+                                } else{
+                                    echo "Rp. ", $res['total'];
+                                } 
+                                ?>
+                        </div>
                     </div>
                     <div class="col-sm-4 border border-secondary rounded-right" style="position: static;">
                         <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Target Penjualan</div>
-                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">12</div>
+                        <div style="font-weight: bold; font-size: 22px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                            <?php $sql="SELECT FORMAT(SUM(target),'C') as 'total' FROM `target_penjualan` 
+                                    WHERE id_manager=1 && bulan=MONTH(CURRENT_DATE)"; 
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->execute();
+                                $res=$stmt->fetch();
+                                if($res['total']==NULL){
+                                    echo "Rp. 0";
+                                } else{
+                                    echo "Rp. ", $res['total'];
+                                } 
+                                ?>
+                        </div>
                     </div>
                 </div>
             </div>

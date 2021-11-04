@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         "error" => ""
     );
 
-    $id_manajer = 1;
     $nama_produk = $_POST['nama_produk'];
     $harga_produk = $_POST['harga_produk'];
 
@@ -22,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $sql = "INSERT INTO produk VALUES(NULL, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id_manajer, $nama_produk, $harga_produk]);
+        $stmt->execute([$_SESSION['id'], $nama_produk, $harga_produk]);
     }
 
     echo json_encode($result);
@@ -34,3 +33,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     echo json_encode($error);
 }
+?>

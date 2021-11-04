@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         "error" => ""
     );
 
-    $id_manajer = 1;
     $id_sales = $_POST['id_sales'];
     $bulan = $_POST['bulan'];
     $tahun = $_POST['tahun'];
@@ -26,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql = "INSERT INTO target_penjualan (id_target, id_sales, id_manager, bulan, target, tahun, status)
                 VALUES(NULL, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id_sales, $id_manajer, $bulan, $target, $tahun, $status]);
+        $stmt->execute([$id_sales, $_SESSION['id'], $bulan, $target, $tahun, $status]);
     }
 
     echo json_encode($result);
