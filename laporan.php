@@ -79,7 +79,7 @@ include "services/database.php";
     <div class="container pt-5 pb-5">
         <div class="row">
             <div class="col-12 col-md-6 selectedlaporan">
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-md-end justify-content-center">
                     <a class="containeropsi d-flex justify-content-center selectedopsi align-items-center" href="#">
                         Laporan Penjualan Sales
                     </a>
@@ -87,7 +87,7 @@ include "services/database.php";
                 </div>
             </div>
             <div class="col-12 col-md-6 selectedlaporan">
-                <div class="d-flex justify-content-start">
+                <div class="d-flex justify-content-md-start justify-content-center mt-3 mt-md-0">
                     <a class="containeropsi d-flex justify-content-center my-auto align-items-center" href="laporansales.php">
                         Laporan Target Sales
                     </a>
@@ -105,17 +105,25 @@ include "services/database.php";
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
+            <div class="col-12 col-md-4">
                 <div class="d-flex justify-content-center mt-4">
                     <label class="ml-4 mr-2 d-flex align-items-center">Dari:</label>
                     <input type="date" id="tanggalmulai" name="tanggalmulai">
+                    <!-- <label class="ml-4 mr-2 d-flex align-items-center">Sampai:</label>
+                    <input type="date" id="tanggalsampai" name="tanggalsampai">
+                    <button type="button" class="btn btn-outline-secondary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button> -->
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="d-flex justify-content-center mt-4">
                     <label class="ml-4 mr-2 d-flex align-items-center">Sampai:</label>
                     <input type="date" id="tanggalsampai" name="tanggalsampai">
-                    <button type="button" class="btn btn-outline-secondary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
-
                 </div>
-
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="button" class="btn btn-outline-secondary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -334,7 +342,10 @@ include "services/database.php";
                         // "processing": true,
                         // "serverSide": false,
                         // "stateSave": true,
-                        "autoWidth": false
+                        "autoWidth": false,
+                        "scrollX": true,
+                        "scrollY": 1000,
+                        "scrollCollapse": true
                     });
                     google.charts.setOnLoadCallback(drawChartsalesman);
                     updatependapatan();
@@ -361,7 +372,7 @@ include "services/database.php";
             google.charts.load('current', {
                 'packages': ['corechart']
             });
-            google.charts.setOnLoadCallback(drawChartsalesman);
+            // google.charts.setOnLoadCallback(drawChartsalesman);
 
             // $("#myInput").on("keyup", function() {
             //     var value = $(this).val().toLowerCase();
@@ -691,6 +702,12 @@ include "services/database.php";
             //     })
             // }
         }
+
+        //chart resizing
+        $(window).resize(function() {
+            console.log('resize');
+            drawChartsalesman();
+        });
     </script>
 
 </body>
@@ -702,23 +719,23 @@ include "services/database.php";
     .containeropsi {
         width: 200px;
         cursor: pointer;
-        border: 3px solid rgb(147,120,97);
-        color:black;
+        border: 3px solid rgb(147, 120, 97);
+        color: black;
         border-radius: 10px;
-        height:50px;
-        transition:ease .5s;
+        height: 50px;
+        transition: ease .5s;
     }
 
-    .containeropsi.selectedopsi{
-        color:white;
-        background:rgb(147,120,97);
+    .containeropsi.selectedopsi {
+        color: white;
+        background: rgb(147, 120, 97);
     }
 
     .containeropsi:hover {
         text-decoration: none;
-        background-color:rgb(147,120,97);
-        color:white;
-        transition:ease .5s;
+        background-color: rgb(147, 120, 97);
+        color: white;
+        transition: ease .5s;
     }
 </style>
 

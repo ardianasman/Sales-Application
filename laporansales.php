@@ -71,15 +71,15 @@ include "services/database.php";
                 <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link " href="#">Activity</a>
                 <a class="nav-item nav-link" href="#">Customer</a>
-                <a class="nav-item nav-link active" href="laporan.php">Laporan</a>
+                <a class="nav-item nav-link active" href="#">Laporan</a>
                 <a class="nav-item nav-link" href="logout.php">Logout</a>
             </div>
         </div>
     </nav>
     <div class="container pt-5 pb-5">
-    <div class="row">
+        <div class="row">
             <div class="col-12 col-md-6 selectedlaporan">
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-md-end justify-content-center">
                     <a class="containeropsi d-flex justify-content-center align-items-center" href="laporan.php">
                         Laporan Penjualan Sales
                     </a>
@@ -87,7 +87,7 @@ include "services/database.php";
                 </div>
             </div>
             <div class="col-12 col-md-6 selectedlaporan">
-                <div class="d-flex justify-content-start">
+                <div class="d-flex justify-content-md-start justify-content-center mt-3 mt-md-0">
                     <a class="containeropsi d-flex justify-content-center selectedopsi align-items-center" href="#">
                         Laporan Target Sales
                     </a>
@@ -331,7 +331,10 @@ include "services/database.php";
                     })
                     $('#tablelaporan').DataTable({
                         dom: 'lrtip',
-                        "autoWidth": false
+                        "autoWidth": false,
+                        "scrollX": true,
+                        "scrollY": 1000,
+                        "scrollCollapse": true
                     });
                 },
                 error: function(data) {
@@ -430,11 +433,11 @@ include "services/database.php";
 
             // var dateFrom = moment(from);
             // var dateTo = moment(to);
-            var bulan=$('#inputbulan').find(":selected").text();;
-            var tahun=$('#inputtahun').val();
-            var stats=$('#dropdown1').find(":selected").text();
-            if(stats==""){
-                stats="All";
+            var bulan = $('#inputbulan').find(":selected").text();;
+            var tahun = $('#inputtahun').val();
+            var stats = $('#dropdown1').find(":selected").text();
+            if (stats == "") {
+                stats = "All";
             }
 
             window.jsPDF = window.jspdf.jsPDF;
@@ -446,10 +449,10 @@ include "services/database.php";
             var text = "Laporan PT.Sales App";
             var xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(text) * doc.internal.getFontSize() / 2);
             doc.setFontSize(15)
-            var texttanggal = "Target Sales Bulan "+bulan+" Tahun "+tahun;
+            var texttanggal = "Target Sales Bulan " + bulan + " Tahun " + tahun;
             var xOffset2 = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(texttanggal) * doc.internal.getFontSize() / 2);
             doc.setFontSize(15)
-            var textstats = "Status: "+stats;
+            var textstats = "Status: " + stats;
             var xOffset3 = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(textstats) * doc.internal.getFontSize() / 2);
 
             doc.setFontSize(25);
@@ -476,7 +479,7 @@ include "services/database.php";
             // doc.addPage();
             // doc.addImage(chart1, 'png', 0, 0, parseInt(img.width), parseInt(img.height), undefined, 'none');
             //convert to pdf
-            var savename="LaporanTarget"+bulan+tahun+".pdf";
+            var savename = "LaporanTarget" + bulan + tahun + ".pdf";
             doc.save(savename);
 
         }
@@ -487,26 +490,27 @@ include "services/database.php";
     #tablelaporan th {
         cursor: pointer;
     }
+
     .containeropsi {
         width: 200px;
         cursor: pointer;
-        border: 3px solid rgb(147,120,97);
-        color:black;
+        border: 3px solid rgb(147, 120, 97);
+        color: black;
         border-radius: 10px;
-        height:50px;
-        transition:ease .5s;
+        height: 50px;
+        transition: ease .5s;
     }
 
-    .containeropsi.selectedopsi{
-        color:white;
-        background:rgb(147,120,97);
+    .containeropsi.selectedopsi {
+        color: white;
+        background: rgb(147, 120, 97);
     }
 
     .containeropsi:hover {
         text-decoration: none;
-        background-color:rgb(147,120,97);
-        color:white;
-        transition:ease .5s;
+        background-color: rgb(147, 120, 97);
+        color: white;
+        transition: ease .5s;
     }
 </style>
 
