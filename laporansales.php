@@ -88,14 +88,14 @@ include "services/database.php";
             </div>
             <div class="col-12 col-md-6 selectedlaporan">
                 <div class="d-flex justify-content-md-start justify-content-center mt-3 mt-md-0">
-                    <a class="containeropsi d-flex justify-content-center selectedopsi align-items-center" href="#">
+                    <a class="containeropsi d-flex justify-content-center selectedopsi align-items-center" href="laporan.php">
                         Laporan Target Sales
                     </a>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 d-flex justify-content-center">
+            <div class="col-12 mt-5 d-flex justify-content-center">
                 <h1>Sales App</h1>
             </div>
         </div>
@@ -130,18 +130,18 @@ include "services/database.php";
                 <div class="col-12">
                     <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
                     <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-outline-secondary ml-4" id="updatebutton" onclick="load_data()">Update Bulan</button>
+                        <button type="button" class="btn btn-outline-secondary ml-md-4" id="updatebutton" onclick="load_data()">Update Bulan</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-12 d-flex justify-content-center">
                 <table cellpadding="3" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
                     <thead>
                         <tr>
                             <th></th>
-                            <th class="d-flex justify-content-center">Search text</th>
+                            <th class="d-flex justify-content-center">Search</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -95,7 +95,7 @@ include "services/database.php";
             </div>
         </div>
         <div class="row">
-            <div class="col-12 d-flex justify-content-center">
+            <div class="col-12 mt-5 d-flex justify-content-center">
                 <h1>Sales App</h1>
             </div>
         </div>
@@ -105,34 +105,34 @@ include "services/database.php";
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-4">
-                <div class="d-flex justify-content-center mt-4">
-                    <label class="ml-4 mr-2 d-flex align-items-center">Dari:</label>
+            <div class="col-12 col-md-6">
+                <div class="d-flex justify-content-center justify-content-md-end mt-4">
+                    <label class="ml-md-4 mr-2 d-flex align-items-center">Dari:</label>
                     <input type="date" id="tanggalmulai" name="tanggalmulai">
                     <!-- <label class="ml-4 mr-2 d-flex align-items-center">Sampai:</label>
                     <input type="date" id="tanggalsampai" name="tanggalsampai">
                     <button type="button" class="btn btn-outline-secondary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button> -->
                 </div>
             </div>
-            <div class="col-12 col-md-4">
-                <div class="d-flex justify-content-center mt-4">
-                    <label class="ml-4 mr-2 d-flex align-items-center">Sampai:</label>
+            <div class="col-12 col-md-6">
+                <div class="d-flex justify-content-center justify-content-md-start mt-4">
+                    <label class="ml-md-4 mr-2 d-flex align-items-center">Sampai:</label>
                     <input type="date" id="tanggalsampai" name="tanggalsampai">
                 </div>
             </div>
-            <div class="col-12 col-md-4">
-                <div class="d-flex justify-content-center mt-4">
-                    <button type="button" class="btn btn-outline-secondary ml-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
+            <div class="col-12">
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="button" class="btn btn-outline-secondary ml-md-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-12 d-flex justify-content-center">
                 <table cellpadding="3" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
                     <thead>
                         <tr>
                             <th></th>
-                            <th class="d-flex justify-content-center">Search text</th>
+                            <th class="d-flex justify-content-center">Search</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -201,7 +201,7 @@ include "services/database.php";
         </div>
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
-                <button type="button" class="btn btn-primary ms-4" id="downloadbutton" onclick="HTMLtoPDF()">Download as PDF</button>
+                <button type="button" class="btn btn-primary" id="downloadbutton" onclick="HTMLtoPDF()">Download as PDF</button>
             </div>
         </div>
     </div>
