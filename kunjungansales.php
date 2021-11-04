@@ -1,3 +1,7 @@
+<?php
+    include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
+?>
+
 <!DOCTYPE html>
 
 <html>
@@ -16,6 +20,7 @@
 
         <!-- Data Tables -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
         <style>
             td,th{
@@ -24,6 +29,7 @@
         </style>
     </head>
     <body>
+
         <nav class="navbar navbar-expand-lg navbar-dark ">
         <a class="judul" href="index.php">Prototype Sales</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,10 +45,17 @@
         </div>
     </nav>
 
-<div class="container">
+    <div class="container">
+
             <div class="row pt-4">
                 <div class="col-6">
-                    <h3 class="title">List Nota</h3>
+                    <?php $id = $_GET['id']; ?>
+                        <?php $sql="SELECT nama FROM sales WHERE id_sales = '$id'"; 
+                            $stmt=$pdo->prepare($sql);
+                            $stmt->execute();
+                            $res=$stmt->fetch();
+                            echo "<h3>".$res["nama"]."</h3>"
+                        ?>
                 </div>
             </div>
             <div class="row pt-4">
@@ -50,12 +63,10 @@
                     <table class="table table-hover table-striped table-bordered" id="sortTable">
                         <thead>
                             <tr>
-                                <th width="10%">No Orderan</th>
-                                <th width="10%">ID Sales</th>
-                                <th width="10%">ID Customer</th>
-                                <th width="25%">Tanggal Order</th>
-                                <th width="25%">Tanggal Jatuh Tempo</th>
-                                <th width="20%">Total Harga</th>
+                                <th scope="col">Nama Customer</th>
+                                <th scope="col">Jadwal Kunjungan</th>
+                                <th scope="col">Action</th>
+
                             </tr>
                         </thead>
                         <tbody id="user-content">
@@ -64,8 +75,8 @@
                     </table>
                 </div>
             </div>
-             <a href="ListCustomer.php"><button class="btn btn-danger">Back</button></a>
-        </div>
+             <a href="DataSales_Manajer.php"><button class="btn btn-danger">Back</button></a>
+    </div>
 
 
          <!-- JS -->
@@ -77,7 +88,8 @@
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
         <!-- DataTable Query -->
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
@@ -87,25 +99,22 @@
             function load_data() {
                 var id = <?php echo $_GET['id'] ?>;
                 $.ajax({
-                    url: "services/get_detail_nota.php?id="+id,
+                    url: "services/get_kunjungansales.php?id="+id,
                     method: "GET",
                     success: function(data) {
                         $("#user-content").html('');
-                        data.forEach(function(nota){
+                        data.forEach(function(sales){
                             var row = $("<tr></tr>");
-                            var col2 = $("<td>" + nota['id_order'] + "</td>");
-                            var col3 = $("<td>" + nota['id_sales'] + "</td>");
-                            var col4 = $("<td>" + nota['id_customer'] + "</td>");
-                            var col5 = $("<td>" + nota['tanggal_order'] + "</td>");
-                            var col6 = $("<td>" + nota['tanggal_jatuh_tempo'] + "</td>");
-                            var col7 = $("<td>" + nota['total_harga'] + "</td>");
-
+                            var col2 = $("<td>" + sales['nama'] + "</td>");
+                            var col3 = $("<td>" + sales['jadwal_kunjungan'] + "</td>");
+                            var btn = $('<td scope="col"></td>');
+                            var btnacc = $(`<button data-id="` + sales['id_customer'] + `" id="accept_btn" class="btn btn-success">Terima</button>`);
+                            var btnreject = $(`<button data-id="` + sales['id_customer'] + `" id="reject_btn" class="btn btn-danger">Tolak</button>`);
                             col2.appendTo(row);
                             col3.appendTo(row);
-                            col4.appendTo(row);
-                            col5.appendTo(row);  
-                            col6.appendTo(row);  
-                            col7.appendTo(row);  
+                            btnacc.appendTo(btn);
+                            btnreject.appendTo(btn);
+                            btn.appendTo(row);
 
                             $("#user-content").append(row);
                         })
@@ -119,6 +128,48 @@
 
             $(document).ready(function(){
                 load_data();
+            });
+
+            $("#user-content").on("click", "[id='reject_btn']", function(){
+                var id_sales = <?php echo $_GET['id'] ?>;
+                var id_customer = $(this).attr('data-id');
+
+                $.ajax({
+                    url: '/ProyekManpro/services/tolakkunjungan.php',
+                    method: 'POST',
+                    data: {
+                        id_sales : id_sales,
+                        id_customer : id_customer
+                    },
+                    success: function(data) {
+                        load_data();
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+
+            });
+
+            $("#user-content").on("click", "[id='accept_btn']", function(){
+                var id_sales = <?php echo $_GET['id'] ?>;
+                var id_customer = $(this).attr('data-id');
+                
+                $.ajax({
+                    url: '/ProyekManpro/services/terimakunjungan.php',
+                    method: 'POST',
+                    data: {
+                        id_sales : id_sales,
+                        id_customer : id_customer
+                    },
+                    success: function(data) {
+                        load_data();
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+
             });
 
             

@@ -1,55 +1,74 @@
-<?php
-
-// session_start();
-
-// if(!isset($_SESSION['id'])){
-//     header("Location: login.php");
-// }
-
-?>
 <!DOCTYPE html>
+<html lang="en">
 <html>
-    <head>
-        <meta charset="utf-8">
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css"/>
-        <link rel="stylesheet" href="assets/linearicons/style.css"/>
+   <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/navbar.css"> 
 
-        <!-- JQuery Confirm -->
-        <link rel="stylesheet" href="assets/jquery-confirm/jquery-confirm.css"/>
-         <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!-- Our Custom CSS -->
-        <link rel="stylesheet" href="style4.css">
+    <!-- CSS Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/8762c0f933.js" crossorigin="anonymous"></script>
+
+    <!-- Data Tables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+
+    <style>
+        td,th{
+            text-align: center;
+        }
+    </style>
+
     </head>
     <body>
-        <div class="wrapper">
-                </nav>
-                <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+        <a class="judul" href="index.php">Prototype Sales</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link " href="index.php">Home</a><span class="sr-only">(current)</span>
+                <a class="nav-item nav-link " href="show_activity.php">Activity</a>
+                <a class="nav-item nav-link active" href="#">Customer</a>
+                <a class="nav-item nav-link" href="logout.php">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    <div class="container">
             <div class="row pt-4">
                 <div class="col-6">
                     <h3 class="title">List Customer</h3>
                 </div>
             </div>
             <div class="row pt-4">
-                <div class="col-12">
-                    <table class="table table-hover">
+                <div class="col-12 table-responsive-sm">
+                    <table class="table table-hover table-striped table-bordered" id="sortTable">
                         <thead>
                             <tr>
                                 <th width="10%">ID Customer</th>
-                                <th width="40%">Nama </th>
-                                <th width="30%">Alamat </th>
+                                <th width="30%">Nama </th>
+                                <th width="20%">Alamat </th>
                                 <th width="20%">No Telp</th>
+                                <th width="20%">Check Detail Nota</th>
                             </tr>
                         </thead>
-                        <tbody id="user-content">  
+                        <tbody id="user-content">
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
-
 
          <!-- JS -->
         <script src="assets/jquery/jquery-3.5.1.min.js"></script>
@@ -57,20 +76,22 @@
         <script src="assets/bootstrap/js/bootstrap.js"></script>
 
       
-        <!-- jQuery CDN -->
-         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-         <!-- Bootstrap Js CDN -->
-         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-         <!-- JQuery Confirm -->
-        <script src="assets/jquery-confirm/jquery-confirm.js"></script>
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <!-- DataTable Query -->
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
         <script>
 
             function load_data() {
                 $.ajax({
-                    url: "/services/get_customer.php",
+                    url: "services/get_customer.php",
                     method: "GET",
                     success: function(data) {
+                        var co = 1;
                         $("#user-content").html('');
                         data.forEach(function(cst){
                             var row = $("<tr></tr>");
@@ -92,8 +113,9 @@
                             tools.appendTo(row);
                             
                             $("#user-content").append(row);
-                        });
-                    },
+                        })
+                        $('#sortTable').DataTable();
+                        },
                     error: function(data) {
 
                     }

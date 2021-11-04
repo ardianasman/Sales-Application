@@ -35,7 +35,7 @@
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link active" href="#">Activity</a>
-                <a class="nav-item nav-link" href="#">Customer</a>
+                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
                 <a class="nav-item nav-link" href="logout.php">Logout</a>
             </div>
         </div>
