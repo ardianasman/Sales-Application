@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     FROM aktivitas_sales a 
     JOIN sales s ON a.id_sales = s.id_sales
     JOIN customer c ON a.`id_customer` = c.id_customer
-    WHERE a.id_sales = ? AND a.status_kunjungan = 0";
+    WHERE a.id_sales = ? AND a.status_kunjungan = 0 AND a.status_persetujuan = 1";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id_sales]);
 

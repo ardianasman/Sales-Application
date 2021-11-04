@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conf_id = $_POST['confirm-id-aktivitas'];
     $lokasi = $_POST['lokasi'];
     $visited="";
+    $tmp_id_aktivitas = $_SESSION['simpan_id_aktivitas'];
     $radioVal = $_POST["flexRadioDefault"];
 
     if($radioVal == "first")
@@ -75,6 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $uploadOk = 0;
         }
 
+        //Check if confirmation id match with the actual one
+        if($tmp_id_aktivitas != $conf_id){
+            $uploadOk = 0;
+            echo "Confirmation Id Not Match";
+        }
+
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
         echo "Sorry, your file was not uploaded.";
@@ -104,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     echo json_encode($result);
-    header("Location:show_activity.php");
+    //header("Location:show_activity.php");
 } else {
     header("HTTP/1.1 400 Bad Request");
     $error = array(

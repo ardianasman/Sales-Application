@@ -69,6 +69,10 @@ session_start()
               
 
               <h3>Upload Bukti Kunjungan</h2>
+              <?php
+              $coba = $_GET['id'];
+              $_SESSION['simpan_id_aktivitas'] = $coba;
+              ?>
               <label for="tanggal"><b>Tanggal :  </b></label>
               <input type="text" readonly class="form-control-plaintext" id="date" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date('Y/m/d H:i:s'); ?>">
               <label for="confirm-id-aktivitas"><b>Id Aktivitas :  </b></label>

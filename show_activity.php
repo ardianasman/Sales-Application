@@ -109,7 +109,7 @@ function load_data() {
 
                 // Tools
                 var tools = $("<td ></td>");
-                var add_btn = $('<a href = "fiturUpload.php"><button type="button" class="btn btn-secondary" >Add  <i class="fas fa-plus-circle"></i></button></a>');
+                var add_btn = $('<a href = "fiturUpload.php?id='+simpan['id_aktivitas']+'"><button type="button" class="btn btn-secondary" >Add  <i class="fas fa-plus-circle"></i></button></a>');
                             
                 add_btn.appendTo(tools);
                 tools.appendTo(row);
