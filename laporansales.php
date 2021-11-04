@@ -332,9 +332,7 @@ include "services/database.php";
                     $('#tablelaporan').DataTable({
                         dom: 'lrtip',
                         "autoWidth": false,
-                        "scrollX": true,
-                        "scrollY": 1000,
-                        "scrollCollapse": true
+                        "scrollX": true
                     });
                 },
                 error: function(data) {

@@ -343,9 +343,7 @@ include "services/database.php";
                         // "serverSide": false,
                         // "stateSave": true,
                         "autoWidth": false,
-                        "scrollX": true,
-                        "scrollY": 1000,
-                        "scrollCollapse": true
+                        "scrollX": true
                     });
                     google.charts.setOnLoadCallback(drawChartsalesman);
                     updatependapatan();
