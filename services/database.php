@@ -3,8 +3,8 @@
     $host = "127.0.0.1";
     $db = "salesapp";
     $user = "root";
-    $pass = "root";
-    $charset = "utf8mb4";
+    $pass = "";
+    $charset = "utf8";
 
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset;";
 

@@ -273,9 +273,10 @@
                     <div class="col-sm-4 border border-secondary" style="position: static;">
                         <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Sales</div>
                         <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
-                            <?php $sql="SELECT COUNT(id_sales) as 'jumlah' FROM `sales`"; 
+                            <?php $sql="SELECT COUNT(id_sales) as 'jumlah' FROM `sales`
+                                        WHERE id_manager=?"; 
                                 $stmt=$pdo->prepare($sql);
-                                $stmt->execute();
+                                $stmt->execute([$_SESSION['id']]);
                                 $res=$stmt->fetch();  
                                 echo $res['jumlah']?>
                         </div>
@@ -283,9 +284,10 @@
                     <div class="col-sm-4 border border-left-0 border-secondary rounded-right" style="position: static;">
                         <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Product</div>
                         <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
-                            <?php $sql="SELECT COUNT(id_produk) as 'jumlah' FROM `produk`"; 
+                            <?php $sql="SELECT COUNT(id_produk) as 'jumlah' FROM `produk`
+                                        WHERE id_manager=?"; 
                                 $stmt=$pdo->prepare($sql);
-                                $stmt->execute();
+                                $stmt->execute([$_SESSION['id']]);
                                 $res=$stmt->fetch();  
                                 echo $res['jumlah']?>
                         </div>
@@ -300,9 +302,9 @@
                         <div style="font-weight: bold; font-size: 22px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
                             <?php $sql="SELECT FORMAT(SUM(total_harga),'C') as 'total' FROM `order`
                                 LEFT JOIN sales ON `order`.id_sales=sales.id_sales
-                                WHERE sales.id_manager=1 && status_order=1 && MONTH(tanggal_order)=MONTH(CURRENT_DATE)"; 
+                                WHERE sales.id_manager=? && status_order=1 && MONTH(tanggal_order)=MONTH(CURRENT_DATE)"; 
                                 $stmt=$pdo->prepare($sql);
-                                $stmt->execute();
+                                $stmt->execute([$_SESSION['id']]);
                                 $res=$stmt->fetch();
                                 if($res['total']==NULL){
                                     echo "Rp. 0";
@@ -316,9 +318,9 @@
                         <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Target Penjualan</div>
                         <div style="font-weight: bold; font-size: 22px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
                             <?php $sql="SELECT FORMAT(SUM(target),'C') as 'total' FROM `target_penjualan` 
-                                    WHERE id_manager=1 && bulan=MONTH(CURRENT_DATE)"; 
+                                    WHERE id_manager=? && bulan=MONTH(CURRENT_DATE)"; 
                                 $stmt=$pdo->prepare($sql);
-                                $stmt->execute();
+                                $stmt->execute([$_SESSION['id']]);
                                 $res=$stmt->fetch();
                                 if($res['total']==NULL){
                                     echo "Rp. 0";

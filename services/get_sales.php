@@ -6,10 +6,10 @@ header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $sql = "SELECT * FROM `sales`
-    WHERE id_manager=1";
+    WHERE id_manager=?";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $stmt->execute([$_SESSION['id']]);
 
     $result = array();
     while($row = $stmt->fetch()) {

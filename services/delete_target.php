@@ -4,17 +4,18 @@ include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php";
 
 header("Content-Type: application/json");
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $sql = "SELECT * FROM `produk`
-            WHERE id_manager=?";
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    $result = array(
+        "status" => 1,
+        "error" => ""
+    );
+
+    $id_sales = $_POST['id_sales'];
+
+    $sql = "DELETE FROM target_penjualan WHERE id_sales = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['id']]);
-
-    $result = array();
-    while($row = $stmt->fetch()) {
-        array_push($result, $row);
-    }
+    $stmt->execute([$id_sales]);
 
     echo json_encode($result);
 } else {
@@ -22,6 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $error = array(
         'error' => 'Method not Allowed'
     );
-
+    
     echo json_encode($error);
 }

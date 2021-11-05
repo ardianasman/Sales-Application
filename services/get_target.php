@@ -9,10 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             target_penjualan.bulan, target_penjualan.tahun, target_penjualan.target, target_penjualan.status, 
             sales.nama FROM `target_penjualan`
             LEFT JOIN sales on target_penjualan.id_sales=sales.id_sales
-            WHERE sales.id_manager=1";
+            WHERE sales.id_manager=?";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $stmt->execute([$_SESSION['id']]);
 
     $result = array();
     while($row = $stmt->fetch()) {

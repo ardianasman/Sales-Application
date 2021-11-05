@@ -285,7 +285,6 @@
                                                 var col5 = $("<span style='font-size: 20px;'>Target Penjualan : " + target['target'] + "</span>");
                                                 $("#sales-content").append(col5);
                                                 cek = true;
-                                                alert("true");
                                             }
                                             co++;
                                         });

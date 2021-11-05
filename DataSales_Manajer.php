@@ -5,6 +5,7 @@
 <!doctype html>
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -13,8 +14,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
-            <!-- Data Tables -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">  
+        
         <title>Data Sales</title>
 
         <style>
@@ -257,30 +257,26 @@
                 <form class="d-flex mt-4 align-items-center">
                     <a href="Add_DataSales.php"><button class="btn btn-outline-danger" type="button" id="add-sales-btn">+ Add</button></a>
                 </form>
-               <div class="row pt-4">
-                <div class="col-12 table-responsive-sm">
-                    <table class="table table-hover table-striped table-bordered" id="sortTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nama</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Target Penjualan</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Rencana Kunjungan</th>
-                                <th scope="col">Attributes</th>
-                            </tr>
-                        </thead>
-                        <tbody id="sales-content">
+                <table id="tableImage" class="table col-sm-auto mt-4" style="text-align: center; position: static;">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Target Penjualan</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Attributes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sales-content">
 
-                        </tbody>
-                    </table>
+                    </tbody>
+                </table>
+                <div id="divsales-content">
+
                 </div>
-            </div>  
-           
+            </div>
         </div>
-                <!-- DataTable Query -->
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
         <script>
             function load_data() {
@@ -296,30 +292,71 @@
                             var col1 = $("<td scope='col' >" + co + "</td>");
                             var col2 = $("<td scope='col'>" + sales['nama'] + "</td>")
                             var col3 = $("<td scope='col'>" + "..." + "</td>");
-                            var col4 = $("<td scope='col'>" + sales['target'] + "</td>");
-                            var col5 = $("<td scope='col'>" + sales['status'] + "</td>");
-                            var btn = $('<td scope="col"></td>');
-                            var btn2 = $('<td scope="col"></td>');
-                            var cekRKS = $('<a href="kunjungansales.php?id='+sales['id_sales']+'"><button class="btn btn-success">Check</button></a>');
-                            var lihat = $('<a href="Halaman_Sales.php?id=' + sales['id_sales'] + '"><svg class="bi me-2" width="16" height="16" id="lihat-btn" style="color: black;"><use xlink:href="#open"/></svg></a>')
-                            var edit = $('<a href="Edit_DataSales.php?id=' + sales['id_sales'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>')
-                            var del = $('<a href="#" id="delete-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#trash"/></svg></a>')
-
-                            del.data('id_sales', sales['id_sales']);
 
                             col1.appendTo(row);
                             col2.appendTo(row);
                             col3.appendTo(row);
-                            col4.appendTo(row);
-                            col5.appendTo(row);
-                            cekRKS.appendTo(btn2)
-                            btn2.appendTo(row)
-                            lihat.appendTo(btn);
-                            edit.appendTo(btn);
-                            del.appendTo(btn);
-                            btn.appendTo(row);
+                            
+                            $.ajax({
+                                url: "/ProyekManpro/services/get_curr_target.php",
+                                method: "GET",
+                                success: function(data) {
+                                    
+                                    var cek=false;
+                                    var co = 1;
+                                    var x = <?php $sql="SELECT COUNT(sales.id_sales) as 'x' FROM target_penjualan
+                                            RIGHT JOIN sales ON target_penjualan.id_sales=sales.id_sales
+                                            WHERE sales.id_manager=? AND target_penjualan.bulan=MONTH(CURRENT_DATE) AND target_penjualan.tahun=YEAR(CURRENT_DATE)"; 
+                                            $stmt=$pdo->prepare($sql);
+                                            $stmt->execute([$_SESSION['id']]);
+                                            $res=$stmt->fetch();  
+                                            echo $res['x']?>;
+                                    data.forEach(function(target){
+                                        if(target['id_sales']==sales['id_sales']){
+                                            var tar = target['target'];
+                                            var sta = target['status'];
 
-                                        cek = true;
+                                            var col4 = $("<td scope='col'>" + tar + "</td>");
+                                            if(sta==0){
+                                                var col5 = $("<td scope='col'>" + "Belum Terpenuhi" + "</td>");
+                                            }
+                                            else if(sta==1){
+                                                var col5 = $("<td scope='col'>" + "Terpenuhi" + "</td>");
+                                            }
+                                            cek=true;
+                                            col4.appendTo(row);
+                                            col5.appendTo(row);
+                                            var btn = $('<td scope="col"></td>');
+                                            var lihat = $('<a href="Halaman_Sales.php?id=' + sales['id_sales'] + '" id="lihat-btn"><svg class="bi me-2" width="16" height="16" style="color: black;"><use xlink:href="#open"/></svg></a>')
+                                            var edit = $('<a href="Edit_DataSales.php?id=' + sales['id_sales'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>')
+                                            var del = $('<a href="#" id="delete-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#trash"/></svg></a>')
+
+                                            del.data('id_sales', sales['id_sales']);
+                                                
+                                            lihat.appendTo(btn);
+                                            edit.appendTo(btn);
+                                            del.appendTo(btn);
+                                            btn.appendTo(row);
+                                        }
+                                        
+                                        if(co==x && !cek){
+                                            var col4 = $("<td scope='col'>--</td>");
+                                            var col5 = $("<td scope='col'>--</td>");
+                                        
+                                            col4.appendTo(row);
+                                            col5.appendTo(row);
+                                            var btn = $('<td scope="col"></td>');
+                                            var lihat = $('<a href="Halaman_Sales.php?id=' + sales['id_sales'] + '" id="lihat-btn"><svg class="bi me-2" width="16" height="16" style="color: black;"><use xlink:href="#open"/></svg></a>')
+                                            var edit = $('<a href="Edit_DataSales.php?id=' + sales['id_sales'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>')
+                                            var del = $('<a href="#" id="delete-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#trash"/></svg></a>')
+
+                                            del.data('id_sales', sales['id_sales']);
+                                                
+                                            lihat.appendTo(btn);
+                                            edit.appendTo(btn);
+                                            del.appendTo(btn);
+                                            btn.appendTo(row);
+                                        }
                                         co++;
                                     });
                                 },
@@ -348,6 +385,19 @@
             }
             $(document).ready(function(){
                 load_data();
+                // $("#lihat-btn").on("click", ".stretched-link", function(){
+                //     var id_=this.id_;
+                //     $.ajax({
+                //         type: 'POST',
+                //         url: '/ProyekManpro/services/getID.php', 
+                //         data: {
+                //             id_ : id_
+                //         },
+                //         success: function(response) {
+                //         },
+                //         error: function(jqXHR, textStatus, errorThrown){}
+                //     });
+                // });
             });
 
             // DELETE
@@ -362,6 +412,19 @@
                             btnClass: 'btn-success',
                             keys: ['enter'],
                             action: function(){
+                                $.ajax({
+                                    url: '/ProyekManpro/services/delete_target.php',
+                                    method: 'POST',
+                                    data: {
+                                        id_sales : id_sales
+                                    },
+                                    success: function(data) {
+                                       
+                                    },
+                                    error: function($xhr, textStatus, errorThrown) {
+                                        alert($xhr.responseJSON['error']);
+                                    }
+                                });
                                 $.ajax({
                                     url: '/ProyekManpro/services/delete_sales.php',
                                     method: 'POST',
