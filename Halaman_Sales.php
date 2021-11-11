@@ -3,16 +3,21 @@
 ?>
 <!doctype html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
-        <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/navbar.css"> 
+
+        <!-- CSS Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- FontAwesome -->
+        <script src="https://kit.fontawesome.com/8762c0f933.js" crossorigin="anonymous"></script>
+
+        <!-- Data Tables -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
         
         <title>Halaman Sales</title>
 
@@ -251,6 +256,42 @@
                 </form>
             </div>
         </div>
+        <div class="container">
+            <div class="row pt-4">
+                <div class="col-12 table-responsive-sm">
+                    <table class="table table-hover table-striped table-bordered" id="sortTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nama Customer</th>
+                                <th scope="col">Jadwal Kunjungan</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="user-content">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+             <a href="DataSales_Manajer.php"><button class="btn btn-danger">Back</button></a>
+        </div>
+        
+         <!-- JS -->
+        <script src="assets/jquery/jquery-3.5.1.min.js"></script>
+        <script src="assets/popper/popper.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.js"></script>
+
+      
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+        <!-- DataTable Query -->
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
 
         <script>
             function load_data() {
@@ -268,6 +309,7 @@
                                 var col2 = $("<div class='mb-3' style='font-size: 20px;'> Email : " + sales['email'] + "</div>");
                                 var col3 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>No Telp : " + sales['no_telp'] + "</div>");
                                 var col4 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>Alamat : " + sales['alamat'] + "</div>");
+                                
                                 
                                 $("#sales-content").append(col1);
                                 $("#sales-content").append(col2);
@@ -302,6 +344,31 @@
                                         alert("load data error!");
                                     }
                                 });
+                                $.ajax({
+                                    url: "services/get_kunjungansales.php?id="+id,
+                                    method: "GET",
+                                    success: function(data) {
+                                        $("#user-content").html('');
+                                        data.forEach(function(sales){
+                                            var row = $("<tr></tr>");
+                                            var col2 = $("<td>" + sales['nama'] + "</td>");
+                                            var col3 = $("<td>" + sales['jadwal_kunjungan'] + "</td>");
+                                            var btn = $('<td scope="col"></td>');
+                                            var btnacc = $(`<button data-id="` + sales['id_customer'] + `" id="accept_btn" class="btn btn-success">Terima</button>`);
+                                            var btnreject = $(`<button data-id="` + sales['id_customer'] + `" id="reject_btn" class="btn btn-danger">Tolak</button>`);
+                                            col2.appendTo(row);
+                                            col3.appendTo(row);
+                                            btnacc.appendTo(btn);
+                                            btnreject.appendTo(btn);
+                                            btn.appendTo(row)
+                                            $("#user-content").append(row);
+                                        })
+                                    $('#sortTable').DataTable();
+                                    },
+                                    error: function(data) {
+
+}
+                                                });                                
                             }
                             cek = true;
                             co++;
