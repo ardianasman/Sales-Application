@@ -26,10 +26,8 @@
                     </div>
                     <div class="col-12 daftar">
                         <div class="row">
-                            <div class="col-8 daftartext d-flex justify-content-left align-items-center">Belum punya akun?</div>
-                            <div class="col-4">
-                                <a class="buttondaftar d-flex justify-content-center align-items-center" href="/register">Daftar</a>
-                            </div>
+                            <div class="col-12 daftartext d-flex justify-content-left align-items-center">Aplikasi Sales 2021</div>
+                            
                         </div>
 
                     </div>
