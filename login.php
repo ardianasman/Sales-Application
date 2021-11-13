@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-12 mt-5 d-flex justify-content-center">
                         <div class="insidecontainer">
-                            <form class="login-form" method="POST">
+                            <!-- <form class="login-form" method="POST"> -->
                                 <div class="form-group">
                                     <div class="inputcontainer">
                                         <p>
@@ -75,7 +75,7 @@
                                 <button disabled class="signinbutton">
                                     Masuk
                                 </button>
-                            </form>
+                            <!-- </form> -->
                         </div>
                     </div>
                 </div>
@@ -102,8 +102,10 @@
 
                 if (cekemail == true && cekpass == true) {
                     $(".signinbutton").attr("disabled", false);
+                    $(".signinbutton").css("cursor", "pointer");
                 } else {
                     $(".signinbutton").attr("disabled", true);
+                    $(".signinbutton").css("cursor", "default");
                 }
             });
             $("#password").on("input", function() {
@@ -115,8 +117,10 @@
 
                 if (cekemail == true && cekpass == true) {
                     $(".signinbutton").attr("disabled", false);
+                    $(".signinbutton").css("cursor", "pointer");
                 } else {
                     $(".signinbutton").attr("disabled", true);
+                    $(".signinbutton").css("cursor", "default");
                 }
             });
         });
