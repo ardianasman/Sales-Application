@@ -182,7 +182,7 @@
 
         <div class="d-flex">
             <!-- SIDEBAR -->
-            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 280px; background-color: #61a3d6; position: fixed;">
+            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 20%; background-color: #61a3d6; position: fixed;">
             <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
@@ -238,7 +238,7 @@
             </nav>
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
-            <div class="p-3" style="margin-left: 280px;">
+            <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
                 <form class="p-2 grid-container mb-5" style="width: 1040px;">
                     <div style="font-weight: bold; font-size: 35px;">Add Target Sales</div>
                     <div style="text-align: right;">

@@ -184,7 +184,7 @@
 
         <div class="d-flex">
             <!-- SIDEBAR -->
-            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 280px; background-color: #61a3d6; position: fixed;">
+            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 20%; background-color: #61a3d6; position: fixed;">
             <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
@@ -240,7 +240,7 @@
             </nav>
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
-            <div class="p-3" style="margin-left: 280px;">
+            <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
                 <form class="grid-container p-1" style="width: 1060px;">
                     <div><img src="image/profile.jpg" alt="profile" width="300px"></div>
                     <div class="mt-4 ml-3" id="sales-content">
@@ -254,27 +254,25 @@
                             echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row pt-4">
-                <div class="col-12 table-responsive-sm">
-                    <table class="table table-hover table-striped table-bordered" id="sortTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nama Customer</th>
-                                <th scope="col">Jadwal Kunjungan</th>
-                                <th scope="col">Action</th>
+                <div class="row pt-4">
+                    <div class="col-12 table-responsive-sm">
+                        <table class="table table-hover table-striped table-bordered" id="sortTable">
+                            <thead>
+                                <tr>
+                                    <th width="25%" scope="col">Nama Customer</th>
+                                    <th width="20%" scope="col">Jadwal Kunjungan</th>
+                                    <th width="20%" scope="col">Action</th>
 
-                            </tr>
-                        </thead>
-                        <tbody id="user-content">
+                                </tr>
+                            </thead>
+                            <tbody id="user-content">
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                <a href="DataSales_Manajer.php"><button class="btn btn-danger">Back</button></a>
             </div>
-             <a href="DataSales_Manajer.php"><button class="btn btn-danger">Back</button></a>
         </div>
         
          <!-- JS -->
@@ -324,7 +322,7 @@
                                         var co = 1;
                                         data.forEach(function(target){
                                             if(target['id_sales']==sales['id_sales']){
-                                                var col5 = $("<span style='font-size: 20px;'>Target Penjualan : " + target['target'] + "</span>");
+                                                var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Rp. " + target['target'] + "</span>");
                                                 $("#sales-content").append(col5);
                                                 cek = true;
                                             }

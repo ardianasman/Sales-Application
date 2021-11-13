@@ -28,7 +28,7 @@ if (!isset($_SESSION['id'])) {
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <title>Sidebars · Bootstrap v5.1</title>
+    <title>Laporan</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
     <meta name="theme-color" content="#7952b3">

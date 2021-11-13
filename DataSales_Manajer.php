@@ -4,8 +4,10 @@
 
 <!doctype html>
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -186,7 +188,7 @@
 
         <div class="d-flex">
             <!-- SIDEBAR -->
-            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 280px; background-color: #61a3d6; position: fixed;">
+            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 20%; background-color: #61a3d6; position: fixed;">
             <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
@@ -242,7 +244,7 @@
             </nav>
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
-            <div class="p-3" style="margin-left: 280px;">
+            <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
                 <form class="p-2 grid-container" style="width: 1040px;">
                     <div style="font-weight: bold; font-size: 35px;">Data Sales</div>
                     <div style="text-align: right;">
@@ -257,26 +259,33 @@
                 <form class="d-flex mt-4 align-items-center">
                     <a href="Add_DataSales.php"><button class="btn btn-outline-danger" type="button" id="add-sales-btn">+ Add</button></a>
                 </form>
-                <table id="tableImage" class="table col-sm-auto mt-4" style="text-align: center; position: static;">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Target Penjualan</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Attributes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="sales-content">
+                <div class="row pt-4">
+                    <div class="col-12 table-responsive-sm">
+                        <table id="tableImage" class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="5%" data-sortable="true">#</th>
+                                    <th width="20%" data-sortable="true">Nama</th>
+                                    <th width="20%" data-sortable="true">Location</th>
+                                    <th width="20%" data-sortable="true">Target Penjualan</th>
+                                    <th width="20%" data-sortable="true">Status</th>
+                                    <th wdith="10%" data-sortable="true">Attributes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sales-content">
 
-                    </tbody>
-                </table>
-                <div id="divsales-content">
+                            </tbody>
+                        </table>
+                        <div id="divsales-content">
 
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- DataTable Query -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
         <script>
             function load_data() {
@@ -316,7 +325,7 @@
                                             var tar = target['target'];
                                             var sta = target['status'];
 
-                                            var col4 = $("<td scope='col'>" + tar + "</td>");
+                                            var col4 = $("<td scope='col'>Rp. " + tar + "</td>");
                                             if(sta==0){
                                                 var col5 = $("<td scope='col'>" + "Belum Terpenuhi" + "</td>");
                                             }
@@ -369,6 +378,7 @@
                             co++;
                             $("#sales-content").append(row);
                         });
+                        $('#tableImage').DataTable();
                         if(!cek){
                             $("#divsales-content").html('');
                             var div = $("<tr><td scope='col'>Belum Ada Data</td></tr>")
