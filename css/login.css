@@ -1,0 +1,218 @@
+body {
+    background: white;
+}
+
+.logo {
+    height: 100px;
+    width: 100px;
+}
+
+.form-group {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.form-control {
+    border-radius: .2rem;
+    background-color: transparent !important;
+    color:black;
+    transition:ease .5s;
+    width:100%;
+}
+#username,#password,#confirmpassword{
+    border:none;
+}
+.form-control:active{
+    background-color: transparent !important;
+}
+.form-control:focus{
+    background-color: white;
+    color:black;
+    box-shadow: none;
+    width:100%;
+    transition:ease .5s;
+}
+
+.cards{
+    display: flex;
+    height:850px;
+    width:auto;
+    max-width: 800px;
+    background:black;
+    border-radius:20px;
+}
+.motto{
+    font-weight: bold;
+    font-size: 4rem;
+    height:90%;
+    width:100%;
+    margin-bottom: 0;
+    display: block;
+    padding:50px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url("../assets/pics/bgnew.jpg");
+    background-repeat:no-repeat;
+    background-size: 100% 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    color:white;
+    padding-top:100px;
+}
+.daftar{
+    background: #68a4d4;
+    height:10%;
+    width:100%;
+    margin-top: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.daftartext{
+    color:white;
+    height:100%; 
+    padding-left:10%;
+    margin-top:3.5%;
+    font-size: 18px;
+}
+.buttondaftar{
+    margin-top:9%;
+    margin-left: 20%;
+    background:#203756;
+    color:white;
+    width: 116px;
+    height: 44px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.checkpassword{
+    color:greenyellow;
+    visibility: hidden;
+}
+
+.col-12.logo{
+height:20%;
+}
+
+.yodalogo{
+    width: 150px;
+    height:auto;
+}
+
+.insidecontainer{
+    margin-top:50px;
+    width: 55%;
+}
+
+.inputcontainer{
+    border:2px solid rgba(175,175,175,.3);
+    padding:5px;
+    border-radius:10px;
+    padding-left:10px;
+}
+.inputcontainer p{
+    margin-bottom:0;
+    margin-left:10px;
+    font-size: 14px;
+    color:rgba(175,175,175,.5);
+}
+
+.forgetpass a{
+    text-decoration: none;
+    color:#68a4d4;
+    font-size:14px;
+}
+.signinbutton{
+    width:100%;
+    height:50px;
+    margin-top:25px;
+    background-color: #68a4d4;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 10px;
+}
+button:disabled,
+button[disabled]{
+    background-color: #68a4d4;
+    color: white;
+    opacity: .5;
+}
+
+/* autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active
+{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.audio-arrow-box {
+    visibility: hidden;
+    position: fixed;
+    top: 48%;
+    right:80px;
+    background: white;
+    border-radius: 6px;
+    display: block;
+
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+
+    width: 160px;
+    height: 125px;
+    z-index: 99;
+    margin-left: 50px;
+}
+
+.audio-arrow-box::after {
+    z-index: -99;
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin-left: 0;
+    bottom: 0;
+    top: calc(25% - 5px);
+    left: 0;
+    box-sizing: border-box;
+    border: 5px solid #fff;
+    border-color: transparent transparent #fff #fff;
+    transform-origin: 0 0;
+    transform: rotate(45deg);
+}
+
+.audio-arrow-box::before {
+    z-index: 10;
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin-left: 0;
+    bottom: 0;
+    top: calc(25% - 5px);
+    left: 0;
+    box-sizing: border-box;
+    border: 5px solid black;
+    border-color: transparent transparent #fff #fff;
+    transform-origin: 0 0;
+    transform: rotate(45deg);
+}
+.audio-arrow-box ul{
+    list-style: none;
+    margin-bottom: 0;
+    padding-inline-start: 10px;
+    padding-top:10px;
+}
+.audio-arrow-box ul li .row .col-2{
+    color:red;
+}
+.audio-arrow-box ul li .row .col-10{
+    font-size:14px;
+}
+.inputcontainer.confirm{
+    background:lightgrey;
+}
