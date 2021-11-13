@@ -239,7 +239,7 @@
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
             <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
-                <form class="p-2 grid-container mb-5" style="width: 1040px;">
+                <form class="p-2 grid-container mb-5">
                     <div style="font-weight: bold; font-size: 35px;">Add Target Sales</div>
                     <div style="text-align: right;">
                         <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
@@ -294,7 +294,7 @@
                         var co = 1;
                         var check = true
                         data.forEach(function(target){
-                            if(target['id_sales'] == <?php echo $_GET['id'] ?>){
+                            if(target['x'] == <?php echo $_GET['id'] ?>){
                                 if(target['bulan']==$("#bulan").val() && target['tahun']==$("#tahun").val()){
                                     check = false;
                                 }

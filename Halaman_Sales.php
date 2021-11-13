@@ -241,7 +241,7 @@
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
             <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
-                <form class="grid-container p-1" style="width: 1060px;">
+                <form class="grid-container p-1">
                     <div><img src="image/profile.jpg" alt="profile" width="300px"></div>
                     <div class="mt-4 ml-3" id="sales-content">
                         
@@ -302,46 +302,29 @@
                         var co = 1;
                         $("#sales-content").html('');
                         data.forEach(function(sales){
-                            if(sales['id_sales'] == id){
+                            if(sales['x'] == id && ((sales['bulan'] == sales['mon'] && sales['tahun']==sales['year']) || !sales['target'])){
                                 var col1 = $("<h2 class='mb-3'>" + sales['nama'] + "</h2>");
                                 var col2 = $("<div class='mb-3' style='font-size: 20px;'> Email : " + sales['email'] + "</div>");
                                 var col3 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>No Telp : " + sales['no_telp'] + "</div>");
                                 var col4 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>Alamat : " + sales['alamat'] + "</div>");
-                                
-                                
+                                if(sales['target']){
+                                    var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Rp. " + sales['target'] + "</span>");
+                                    var add = $("<a href='Add_Target.php?id=" + sales['x'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add</button></a>");
+                                    var edit = $("<a href='Edit_Target.php?id=" + sales['x'] + "'><button class='btn btn-outline-dark btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>Edit <svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
+                                }
+                                else{
+                                    var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Belum Ada Data</span>");
+                                    var add = $("<a href='Add_Target.php?id=" + sales['x'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add</button></a>");
+                                }
+
                                 $("#sales-content").append(col1);
                                 $("#sales-content").append(col2);
                                 $("#sales-content").append(col3);
                                 $("#sales-content").append(col4);
+                                $("#sales-content").append(col5);
+                                $("#sales-content").append(add);
+                                $("#sales-content").append(edit);
                                 
-                                $.ajax({
-                                    url: "/ProyekManpro/services/get_curr_target.php",
-                                    method: "GET",
-                                    success: function(data) {
-                                        var cek=false;
-                                        var co = 1;
-                                        data.forEach(function(target){
-                                            if(target['id_sales']==sales['id_sales']){
-                                                var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Rp. " + target['target'] + "</span>");
-                                                $("#sales-content").append(col5);
-                                                cek = true;
-                                            }
-                                            co++;
-                                        });
-                                        if(!cek){
-                                            var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Belum Ada</span>");
-                                            $("#sales-content").append(col5);
-                                        }
-                                        var add = $("<a href='Add_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add</button></a>");
-                                        var edit = $("<a href='Edit_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-dark btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>Edit <svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
-
-                                        $("#sales-content").append(add);
-                                        $("#sales-content").append(edit);
-                                    },
-                                    error: function(data) {
-                                        alert("load data error!");
-                                    }
-                                });
                                 $.ajax({
                                     url: "services/get_kunjungansales.php?id="+id,
                                     method: "GET",
