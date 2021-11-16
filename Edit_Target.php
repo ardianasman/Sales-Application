@@ -295,7 +295,7 @@
         <script>
             function load_data() {
                 $.ajax({
-                    url: "/ProyekManpro/services/get_curr_target.php",
+                    url: "/ProyekManpro/services/get_sales.php",
                     method: "GET",
                     success: function(data) {
                         var cek=false;
@@ -306,7 +306,7 @@
                                 var bulan = target['bulan'];
                                 var status = target['status'];
                                 var tahun = target['tahun'];
-                                var target = target['tar'];
+                                var target = target['target'];
                                 
                                 $("#id_target").val(id_target);
                                 $("#bulan").val(bulan);

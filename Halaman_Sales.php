@@ -308,7 +308,7 @@
                                 var col3 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>No Telp : " + sales['no_telp'] + "</div>");
                                 var col4 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>Alamat : " + sales['alamat'] + "</div>");
                                 if(sales['target']){
-                                    var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Rp. " + sales['target'] + "</span>");
+                                    var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Rp. " + sales['target_ok'] + "</span>");
                                     var add = $("<a href='Add_Target.php?id=" + sales['x'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add</button></a>");
                                     var edit = $("<a href='Edit_Target.php?id=" + sales['x'] + "'><button class='btn btn-outline-dark btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>Edit <svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
                                 }
@@ -362,6 +362,47 @@
             }
             $(document).ready(function(){
                 load_data();
+            });
+            $("#user-content").on("click", "[id='reject_btn']", function(){
+                var id_sales = <?php echo $_GET['id'] ?>;
+                var id_customer = $(this).attr('data-id');
+
+                $.ajax({
+                    url: '/ProyekManpro/services/tolakkunjungan.php',
+                    method: 'POST',
+                    data: {
+                        id_sales : id_sales,
+                        id_customer : id_customer
+                    },
+                    success: function(data) {
+                        load_data();
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+
+            });
+
+            $("#user-content").on("click", "[id='accept_btn']", function(){
+                var id_sales = <?php echo $_GET['id'] ?>;
+                var id_customer = $(this).attr('data-id');
+                
+                $.ajax({
+                    url: '/ProyekManpro/services/terimakunjungan.php',
+                    method: 'POST',
+                    data: {
+                        id_sales : id_sales,
+                        id_customer : id_customer
+                    },
+                    success: function(data) {
+                        load_data();
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+
             });
         </script>
 

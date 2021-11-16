@@ -304,7 +304,7 @@
                                 var col3 = $("<td scope='col'>" + "..." + "</td>");
 
                                 if(sales['target']){
-                                    var col4 = $("<td scope='col'>Rp. " + sales['target'] + "</td>");
+                                    var col4 = $("<td scope='col'>Rp. " + sales['target_ok'] + "</td>");
                                 }
                                 else{
                                     var col4 = $("<td scope='col'>---</td>");
