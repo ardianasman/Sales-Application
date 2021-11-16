@@ -128,21 +128,34 @@
             console.log('hello')
             var username = $("#username").val();
             var password = $("#password").val();
-
-            $.ajax({
-                url: '/ProyekManpro/services/check_login.php',
-                method: 'POST',
-                data: {
-                    username: username,
-                    password: password
-                },
-                success: function(data) {
-                    window.location = data['redirect'];
-                },
-                error: function($xhr, textStatus, errorThrown) {
-                    alert($xhr.responseJSON['error']);
-                }
+            var posisi_lt = 0;
+            var posisi_lg = 0;
+            var timestamp = 0;
+            
+            navigator.geolocation.getCurrentPosition(function(position){
+                posisi_lt = position.coords.latitude;
+                posisi_lg = position.coords.longitude;
+                timestamp = position.timestamp;
+                alert(timestamp);
+                $.ajax({
+                    url: '/ProyekManpro/services/check_login.php',
+                    method: 'POST',
+                    data: {
+                        username: username,
+                        password: password,
+                        posisi_lt: posisi_lt,
+                        posisi_lg: posisi_lg
+                    },
+                    success: function(data) {
+                        window.location = data['redirect'];
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+                console.log(position);
             });
+            
         });
     </script>
 
@@ -150,3 +163,4 @@
 </body>
 
 </html>
+
