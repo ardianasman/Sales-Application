@@ -2,8 +2,6 @@
 
 include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php";
 
-session_start();
-
 
 header("Content-Type: application/json");
 
