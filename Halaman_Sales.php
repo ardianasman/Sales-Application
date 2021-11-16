@@ -6,11 +6,9 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="css/navbar.css"> 
-
+        
         <!-- CSS Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
         <!-- FontAwesome -->
         <script src="https://kit.fontawesome.com/8762c0f933.js" crossorigin="anonymous"></script>
@@ -254,6 +252,10 @@
                             echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
+                <div id="location-btn">
+
+                </div>
+                
                 <div class="row pt-4">
                     <div class="col-12 table-responsive-sm">
                         <table class="table table-hover table-striped table-bordered" id="sortTable">
@@ -284,7 +286,7 @@
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
         <!-- DataTable Query -->
@@ -317,6 +319,10 @@
                                     var add = $("<a href='Add_Target.php?id=" + sales['x'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add</button></a>");
                                 }
 
+                                $("#location-btn").html('');
+                                var loc = $('<a href="sales_location.php?id=' + sales['x'] + '"><button class="btn btn-success btn-block ml-5" style="width: 200px;">Track Sales Location</button></a>')
+                                $("#location-btn").append(loc);
+                                
                                 $("#sales-content").append(col1);
                                 $("#sales-content").append(col2);
                                 $("#sales-content").append(col3);
@@ -348,8 +354,8 @@
                                     },
                                     error: function(data) {
 
-}
-                                                });                                
+                                    }
+                                });                                
                             }
                             cek = true;
                             co++;
@@ -402,7 +408,6 @@
                         alert($xhr.responseJSON['error']);
                     }
                 });
-
             });
         </script>
 

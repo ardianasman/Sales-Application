@@ -25,7 +25,6 @@ if (!isset($_SESSION['id'])) {
     <!-- <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script> -->
     <script src="    https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
-    <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <title>Laporan</title>

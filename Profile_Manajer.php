@@ -17,10 +17,7 @@
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Sidebars · Bootstrap v5.1</title>
-
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
-        <meta name="theme-color" content="#7952b3">
+        <title>Welcome Manager</title>
 
         <style>
             .bd-placeholder-img {
