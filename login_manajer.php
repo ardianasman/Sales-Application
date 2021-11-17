@@ -26,8 +26,10 @@
                     </div>
                     <div class="col-12 daftar">
                         <div class="row">
-                            <div class="col-8 daftartext d-flex justify-content-left align-items-center">Aplikasi Sales 2021</div>
-                            
+                            <div class="col-8 daftartext d-flex justify-content-left align-items-center">Apakah anda sales?</div>
+                            <div class="col-4">
+                                <a class="buttondaftar d-flex justify-content-center align-items-center" href="login.php">Login Sales</a>
+                            </div>
                         </div>
 
                     </div>
@@ -47,34 +49,34 @@
                     <div class="col-12 mt-5 d-flex justify-content-center">
                         <div class="insidecontainer">
                             <!-- <form class="login-form" method="POST"> -->
-                                <div class="form-group">
-                                    <div class="inputcontainer">
-                                        <p>
-                                            Username
-                                        </p>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <input type="text" class="form-control" id="username" name="username" required>
-                                            </div>
+                            <div class="form-group">
+                                <div class="inputcontainer">
+                                    <p>
+                                        Username
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="text" class="form-control" id="username" name="username" required>
                                         </div>
                                     </div>
+                                </div>
 
-                                </div>
-                                <div class="form-group">
-                                    <div class="inputcontainer">
-                                        <p>
-                                            Password
-                                        </p>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <input type="password" class="form-control" id="password" name="password" required>
-                                            </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="inputcontainer">
+                                    <p>
+                                        Password
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="password" class="form-control" id="password" name="password" required>
                                         </div>
                                     </div>
                                 </div>
-                                <button disabled class="signinbutton">
-                                    Masuk
-                                </button>
+                            </div>
+                            <button disabled class="signinbutton">
+                                Masuk
+                            </button>
                             <!-- </form> -->
                         </div>
                     </div>
