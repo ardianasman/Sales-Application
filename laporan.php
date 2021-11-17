@@ -25,10 +25,9 @@ if (!isset($_SESSION['id'])) {
     <!-- <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script> -->
     <script src="    https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
-    <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <title>Sidebars · Bootstrap v5.1</title>
+    <title>Laporan</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
     <meta name="theme-color" content="#7952b3">

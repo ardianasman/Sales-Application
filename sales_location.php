@@ -1,21 +1,28 @@
 <?php
     include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
 ?>
-<!doctype html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
-        <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
-        
-        <title>Add Sales</title>
+<html>
+  <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <!-- MapBox -->
+        <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- CSS Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- FontAwesome -->
+        <script src="https://kit.fontawesome.com/8762c0f933.js" crossorigin="anonymous"></script>
+
+        <!-- Data Tables -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+        
+        <title>Location</title>
+        
         <style>
             .bd-placeholder-img {
                 font-size: 1.125rem;
@@ -46,14 +53,11 @@
             }
             .grid-container {
                 display: grid;
-                grid-template-columns: max-content auto;
+                /* grid-template-columns: auto auto auto auto; */
+                grid-template-columns: max-content auto auto;
                 grid-gap: 10px;
             }
-            .modal-backdrop {
-                z-index: -1;
-                background-color: white;
-            }
-
+            
             .b-example-divider {
                 flex-shrink: 0;
                 width: 1.5rem;
@@ -134,10 +138,9 @@
                 border-width: 1px;
             }
         </style>
-    </head>
-
-    <body>
-        <!-- SYMBOL -->
+  </head>
+  <body>
+      <!-- SYMBOL -->
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol id="home" viewBox="0 0 16 16">
                 <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
@@ -236,97 +239,76 @@
                     </li>
                 </ul>
             </nav>
-        
-            <!-- <div class="col-md-9 col-lg-8 m-3"> -->
             <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
-                <form class="p-2 grid-container mb-5">
-                    <div style="font-weight: bold; font-size: 35px;">Add Data Sales</div>
-                    <div style="text-align: right;">
-                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                <h3 style="text-align:center; font-weight: bolder;">Sales Location</h3>
+                <h5 style="text-align:center;">
+                    <?php $sql="SELECT nama from sales WHERE id_sales=?"; 
                             $stmt=$pdo->prepare($sql);
-                            $stmt->execute();
+                            $stmt->execute([$_GET['id']]);
                             $res=$stmt->fetch();  
-                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
-                    </div>
-                </form>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Nama</span>
-                    </div>
-                    <input type="text" class="form-control" id="nama" name="nama" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                            echo $res['nama']?>
+                </h5>
+                <hr style="width: 98%; text-align: left;">
+                <div class="pt-2">
+                    <h6 style="text-align:center;">
+                        Latitude : <p id="simpanlt"></p>
+                        Longitude : <p id="simpanlg"></p>
+                    </h6>
+                    <div id="map" class="pt-5" style="width:90%; height:400px; margin: auto;"></div>
                 </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Alamat</span>
-                    </div>
-                    <input type="text" class="form-control" id="alamat" name="alamat" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">No Telp</span>
-                    </div>
-                    <input type="text" class="form-control" id="no_telp" name="no_telp" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Email</span>
-                    </div>
-                    <input type="text" class="form-control" id="email" name="email" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Mulai Bekerja</span>
-                    </div>
-                    <input type="date" class="form-control" id="tanggal_mulai_kerja" name="tanggal_mulai_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Berhenti Bekerja</span>
-                    </div>
-                    <input type="date" class="form-control" id="tanggal_berhenti_kerja" name="tanggal_berhenti_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <button type="button" class="btn btn-warning mt-5" id="add-sales-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Submit</button>
             </div>
         </div>
 
-        <script>
-            //Button Add Sales
-            $("#add-sales-submit-btn").click(function(){
-                var id_manager = <?php echo $_SESSION['id']; ?>;
-                var nama = $("#nama").val();
-                var alamat = $("#alamat").val()
-                var no_telp = $("#no_telp").val();
-                var email = $("#email").val();
-                var tanggal_mulai_kerja = $("#tanggal_mulai_kerja").val();
-                var tanggal_berhenti_kerja = $("#tanggal_berhenti_kerja").val();
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
-                $.ajax({
-                    url: '/ProyekManpro/services/add_sales.php',
-                    method: 'POST',
-                    data: {
-                        id_manager : id_manager,
-                        nama : nama,
-                        alamat : alamat,
-                        no_telp : no_telp,
-                        email : email,
-                        tanggal_mulai_kerja : tanggal_mulai_kerja,
-                        tanggal_berhenti_kerja : tanggal_berhenti_kerja
-                    },
-                    
-                    success: function(data) {
-                        $("#nama").val('');
-                        $("#alamat").val('');
-                        $("#no_telp").val('');
-                        $("#email").val('');
-                        $("#tanggal_mulai_kerja").val('');
-                        $("#tanggal_berhenti_kerja").val('');
-                        window.location.replace("DataSales_Manajer.php");
-                    },
-                    error: function($xhr, textStatus, errorThrown) {
-                        alert($xhr.responseJSON['error']);
-                    }
-                });
+    <script>
+        $(document).ready(function(){
+            var id = <?php echo $_GET['id'] ?>;
+            mapboxgl.accessToken = 'pk.eyJ1IjoicmljaDIyMTEiLCJhIjoiY2t3MjdsYW1jMWc2aTJ4bm93aXM2M2o2dyJ9.c7ZebgZYwmK0xH-J0yhCVQ';
+
+            $.ajax({
+                url: '/ProyekManpro/services/get_location.php',
+                method: 'POST',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    //window.location = data['redirect'];
+                    console.log(data);
+                    $('#simpanlt').text(data['latitude']);
+                    $('#simpanlg').text(data['longitude']);
+                    // DRAW MAP
+                    let map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/mapbox/streets-v11',
+                        center: [data['latitude'], data['longitude']],
+                        zoom: 13
+                    });
+                    let marker = new mapboxgl.Marker()
+                        .setLngLat([data['latitude'], data['longitude']])
+                        .addTo(map);
+                    map.addControl(
+                        new mapboxgl.GeolocateControl({
+                        positionOptions: {
+                        enableHighAccuracy: true
+                        },
+                            // When active the map will receive updates to the device's location as it changes.
+                        trackUserLocation: true,
+                            // Draw an arrow next to the location dot to indicate which direction the device is heading.
+                        showUserHeading: true
+                        })
+                    );
+                },
+                error: function($xhr, textStatus, errorThrown) {
+                    alert($xhr.responseJSON['error']);
+                }
             });
-        </script>
-    </body>
+        });
+  </script>
+
+  
+  </body>
 </html>
+

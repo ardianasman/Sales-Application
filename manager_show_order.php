@@ -187,7 +187,7 @@
 
         <div class="d-flex">
             <!-- SIDEBAR -->
-            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 280px; background-color: #61a3d6; position: fixed;">
+            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 20%; background-color: #61a3d6; position: fixed;">
             <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
@@ -242,7 +242,7 @@
                 </ul>
             </nav>
 
-            <div class="container p-3" style="margin-left: 280px;">
+            <div class="container p-3" style="margin-left: 20%;width:80%; position: static;">
                 <div class="row pt-4">
                     <div class="col-6">
                         <h3 class="title">Transaksi Penjualan Sales</h3>
@@ -302,7 +302,7 @@
                             var col5 = $("<td>" + aktivitas['tanggal_order'] + "</td>");
                             var col6 = $("<td>" + aktivitas['tanggal_jatuh_tempo'] + "</td>");
                             //var changeHarga = 
-                            var col7 = $("<td>" + aktivitas['total_harga'] + "</td>");
+                            var col7 = $("<td>Rp. " + aktivitas['total_harga'] + "</td>");
 
                             col1.appendTo(row);
                             col2.appendTo(row);

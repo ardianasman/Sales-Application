@@ -5,8 +5,10 @@
 
 <!doctype html>
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -187,7 +189,7 @@
 
         <div class="d-flex">
             <!-- SIDEBAR -->
-            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 280px; background-color: #61a3d6; position: fixed;">
+            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 20%; background-color: #61a3d6; position: fixed;">
             <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
@@ -243,8 +245,8 @@
             </nav>
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
-            <div class="p-3" style="margin-left: 280px;">
-                <form class="p-2 grid-container" style="width: 1040px;">
+            <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
+                <form class="p-2 grid-container">
                     <div style="font-weight: bold; font-size: 35px;">Data Produk</div>
                     <div style="text-align: right;">
                         <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
@@ -259,25 +261,32 @@
                     <!-- <a href="Add_DataProduct.php"><button class="btn btn-outline-danger" type="button">+ Add</button></a> -->
                     <a href="Add_DataProduct.php"><button class="btn btn-outline-danger" type="button" id="add-product-btn">+ Add</button></a>
                 </form>
-                <table class="table col-sm-auto mt-4" style="text-align: center; position: static;">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Kode Produk</th>
-                            <th scope="col">Nama Produk</th>
-                            <th scope="col">Harga</th>
-                            <th scope="col">Attributes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="product-content">
+                <div class="row pt-4">
+                    <div class="col-12 table-responsive-sm">
+                        <table id="tableImage" class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="5%" data-sortable="true">#</th>
+                                    <th width="5%" data-sortable="true">Kode Produk</th>
+                                    <th width="15%" data-sortable="true">Nama Produk</th>
+                                    <th width="15%" data-sortable="true">Harga</th>
+                                    <th width="5%" data-sortable="true">Attributes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="product-content">
 
-                    </tbody>
-                </table>
-                <div id="divproduct-content">
+                            </tbody>
+                        </table>
+                        <div id="divproduct-content">
 
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- DataTable Query -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
         <script>
             function load_data() {
@@ -293,7 +302,7 @@
                             var col1 = $("<td scope='col' >" + co + "</td>");
                             var col2 = $("<td scope='col'>" + product['id_produk'] + "</td>")
                             var col3 = $("<td scope='col'>" + product['nama_produk'] + "</td>");
-                            var col4 = $("<td scope='col'>" + product['harga_produk'] + "</td>");
+                            var col4 = $("<td scope='col'>Rp. " + product['harga_produk'] + "</td>");
                             var btn = $('<td scope="col"></td>');
                             var edit = $('<a href="Edit_DataProduct.php?id=' + product['id_produk'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>');
                             var del = $('<a href="#" id="delete-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#trash"/></svg></a>');
@@ -312,6 +321,7 @@
                             co++;
                             $("#product-content").append(row);
                         });
+                        $('#tableImage').DataTable();
                         if(!cek){
                             $("#divproduct-content").html('');
                             var div = $("<tr><td scope='col'>Belum Ada Data</td></tr>")

@@ -25,48 +25,65 @@
         <script src="https://use.fontawesome.com/504410ced2.js"></script>
         <!--<link rel="stylesheet" href="css\managerorder.css"> -->
 
-        <script>
-            
-        </script>
+        <!--<script>
+             function toggle(){
+                $.ajax({
+                    url: "./services/getstatus.php",
+                    method: "POST",
+                    data: {
+                        id_order: $id_order
+                    },
+                    success: function(res){
+                        console.log(res['status_order']);
+                    }
+                    $('#ustat').prop('readonly', true);
+                }) masih error
+            } 
+        </script>-->
 </head>
 
-<body onload>
+<body onload="toggle()">
     <div class="transparent">
                 <?php
                     if($stmt->rowCount() == 1)
                     {
                         $item = $stmt->fetch();?>
-                        <form action = "../services/editorder.php" method="POST">
-                            <div id="item-list" class="item-list" style="text-align:center; width: 100%;">
-                                <div class="form-group">
-                                    <label>ID Order : </label>
-                                    <input class="form-control" name="idorder" value="<?php echo $item['id_order']; ?>">
+                        <form action = "./services/editorder.php" method="POST">
+                            <div id="item-list" class="item-list" style="width: 100%;">
+                                <div class="row">
+                                    <div class="col">
+                                        <label>ID Order : </label>
+                                        <input class="form-control" name="uid" style="text-align:center" value="<?php echo $item['id_order']; ?>" readonly>
+                                    </div>
+                                    <div class="col"> 
+                                        <label>ID Sales : </label>
+                                        <input class="form-control" id="idsales" name="idsales" style="text-align:center" value="<?php echo $item['id_sales']; ?>" readonly>
+                                    </div>  
+                                    <div class="col"> 
+                                        <label>ID Customer : </label>
+                                        <input class="form-control" id="idcust" name="idcust" style="text-align:center" value="<?php echo $item['id_customer']; ?>" readonly>
+                                    </div>     
                                 </div>
-                                <div class="form-group"> 
-                                    <label>ID Sales : </label>
-                                    <input class="form-control" id="idsales" name="idsales" value="<?php echo $item['id_sales']; ?>">
-                                </div>  
-                                <div class="form-group"> 
-                                    <label>ID Customer : </label>
-                                    <input class="form-control" id="idcust" name="idcust" value="<?php echo $item['id_customer']; ?>">
-                                </div>              
-                                <div class="form-group">
-                                    <label>Tanggal Order : </label>
-                                    <input type="date" class="form-control" id="tglorder" name="tglorder" value="<?php echo $item['tanggal_order']; ?>">
-                                </div>           
-                                <div class="form-group">
-                                    <label>Tanggal Jatuh Tempo : </label>
-                                    <input type="date" class="form-control" id="tgljatuh" name="tgljatuh" value="<?php echo $item['tanggal_jatuh_tempo']; ?>">
+                                <div class="row">         
+                                    <div class="col">
+                                        <label>Tanggal Order : </label>
+                                        <input type="date" class="form-control" id="utglorder" name="utglorder" value="<?php echo $item['tanggal_order']; ?>">
+                                    </div>           
+                                    <div class="col">
+                                        <label>Tanggal Jatuh Tempo : </label>
+                                        <input type="date" class="form-control" id="utgljatuhtempo" name="utgltempo" value="<?php echo $item['tanggal_jatuh_tempo']; ?>">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Total Harga : </label>
-                                    <input class="form-control" name="totalharga" value="<?php echo $item['total_harga']; ?>">
+                                    <input class="form-control w-25" name="utotal" value="<?php echo $item['total_harga']; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Status Order : </label>
-                                    <input class="form-control" name="status" value="<?php echo $item['status_order']; ?>">
+                                    <input class="form-control w-25" id="ustat" name="ustatus" value="<?php echo $item['status_order']; ?>">
                                 </div>
-                                <button class="btn btn-warning">Edit Product</button>
+                                <button class="btn btn-danger" onclick="window.history.go(-1)">Back</button>
+                                <button class="btn btn-warning">Edit Order</button>
                             </div>
                         </form>
                 <?php }

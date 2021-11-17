@@ -1,3 +1,13 @@
+<?php 
+
+session_start();
+
+if (!isset($_SESSION['id'])) {
+    header("Location:login.php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +36,7 @@
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link active" href="show_activity.php">Activity</a>
-                <a class="nav-item nav-link" href="#">Customer</a>
+                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
                 <a class="nav-item nav-link" href="logout.php">Logout</a>
             </div>
         </div>

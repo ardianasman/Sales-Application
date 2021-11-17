@@ -6,11 +6,9 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="css/navbar.css"> 
-
+        
         <!-- CSS Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
         <!-- FontAwesome -->
         <script src="https://kit.fontawesome.com/8762c0f933.js" crossorigin="anonymous"></script>
@@ -184,7 +182,7 @@
 
         <div class="d-flex">
             <!-- SIDEBAR -->
-            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 280px; background-color: #61a3d6; position: fixed;">
+            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 20%; background-color: #61a3d6; position: fixed;">
             <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
@@ -240,8 +238,8 @@
             </nav>
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
-            <div class="p-3" style="margin-left: 280px;">
-                <form class="grid-container p-1" style="width: 1060px;">
+            <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
+                <form class="grid-container p-1">
                     <div><img src="image/profile.jpg" alt="profile" width="300px"></div>
                     <div class="mt-4 ml-3" id="sales-content">
                         
@@ -254,27 +252,29 @@
                             echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row pt-4">
-                <div class="col-12 table-responsive-sm">
-                    <table class="table table-hover table-striped table-bordered" id="sortTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nama Customer</th>
-                                <th scope="col">Jadwal Kunjungan</th>
-                                <th scope="col">Action</th>
+                <div id="location-btn">
 
-                            </tr>
-                        </thead>
-                        <tbody id="user-content">
-
-                        </tbody>
-                    </table>
                 </div>
+                
+                <div class="row pt-4">
+                    <div class="col-12 table-responsive-sm">
+                        <table class="table table-hover table-striped table-bordered" id="sortTable">
+                            <thead>
+                                <tr>
+                                    <th width="25%" scope="col">Nama Customer</th>
+                                    <th width="20%" scope="col">Jadwal Kunjungan</th>
+                                    <th width="20%" scope="col">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="user-content">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <a href="DataSales_Manajer.php"><button class="btn btn-danger">Back</button></a>
             </div>
-             <a href="DataSales_Manajer.php"><button class="btn btn-danger">Back</button></a>
         </div>
         
          <!-- JS -->
@@ -286,7 +286,7 @@
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
         <!-- DataTable Query -->
@@ -304,46 +304,33 @@
                         var co = 1;
                         $("#sales-content").html('');
                         data.forEach(function(sales){
-                            if(sales['id_sales'] == id){
+                            if(sales['x'] == id && ((sales['bulan'] == sales['mon'] && sales['tahun']==sales['year']) || !sales['target'])){
                                 var col1 = $("<h2 class='mb-3'>" + sales['nama'] + "</h2>");
                                 var col2 = $("<div class='mb-3' style='font-size: 20px;'> Email : " + sales['email'] + "</div>");
                                 var col3 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>No Telp : " + sales['no_telp'] + "</div>");
                                 var col4 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>Alamat : " + sales['alamat'] + "</div>");
-                                
+                                if(sales['target']){
+                                    var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Rp. " + sales['target_ok'] + "</span>");
+                                    var add = $("<a href='Add_Target.php?id=" + sales['x'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add</button></a>");
+                                    var edit = $("<a href='Edit_Target.php?id=" + sales['x'] + "'><button class='btn btn-outline-dark btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>Edit <svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
+                                }
+                                else{
+                                    var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Belum Ada Data</span>");
+                                    var add = $("<a href='Add_Target.php?id=" + sales['x'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add</button></a>");
+                                }
+
+                                $("#location-btn").html('');
+                                var loc = $('<a href="sales_location.php?id=' + sales['x'] + '"><button class="btn btn-success btn-block ml-5" style="width: 200px;">Track Sales Location</button></a>')
+                                $("#location-btn").append(loc);
                                 
                                 $("#sales-content").append(col1);
                                 $("#sales-content").append(col2);
                                 $("#sales-content").append(col3);
                                 $("#sales-content").append(col4);
+                                $("#sales-content").append(col5);
+                                $("#sales-content").append(add);
+                                $("#sales-content").append(edit);
                                 
-                                $.ajax({
-                                    url: "/ProyekManpro/services/get_curr_target.php",
-                                    method: "GET",
-                                    success: function(data) {
-                                        var cek=false;
-                                        var co = 1;
-                                        data.forEach(function(target){
-                                            if(target['id_sales']==sales['id_sales']){
-                                                var col5 = $("<span style='font-size: 20px;'>Target Penjualan : " + target['target'] + "</span>");
-                                                $("#sales-content").append(col5);
-                                                cek = true;
-                                            }
-                                            co++;
-                                        });
-                                        if(!cek){
-                                            var col5 = $("<span style='font-size: 20px;'>Target Penjualan : Belum Ada</span>");
-                                            $("#sales-content").append(col5);
-                                        }
-                                        var add = $("<a href='Add_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-danger btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>+ Add</button></a>");
-                                        var edit = $("<a href='Edit_Target.php?id=" + sales['id_sales'] + "'><button class='btn btn-outline-dark btn-sm' style='margin-left: 20px; margin-top: -5px;' type='button'>Edit <svg class='bi me-3' width='16' height='16'><use xlink:href='#edit'/></svg></button></a>");
-
-                                        $("#sales-content").append(add);
-                                        $("#sales-content").append(edit);
-                                    },
-                                    error: function(data) {
-                                        alert("load data error!");
-                                    }
-                                });
                                 $.ajax({
                                     url: "services/get_kunjungansales.php?id="+id,
                                     method: "GET",
@@ -367,8 +354,8 @@
                                     },
                                     error: function(data) {
 
-}
-                                                });                                
+                                    }
+                                });                                
                             }
                             cek = true;
                             co++;
@@ -381,6 +368,46 @@
             }
             $(document).ready(function(){
                 load_data();
+            });
+            $("#user-content").on("click", "[id='reject_btn']", function(){
+                var id_sales = <?php echo $_GET['id'] ?>;
+                var id_customer = $(this).attr('data-id');
+
+                $.ajax({
+                    url: '/ProyekManpro/services/tolakkunjungan.php',
+                    method: 'POST',
+                    data: {
+                        id_sales : id_sales,
+                        id_customer : id_customer
+                    },
+                    success: function(data) {
+                        load_data();
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+
+            });
+
+            $("#user-content").on("click", "[id='accept_btn']", function(){
+                var id_sales = <?php echo $_GET['id'] ?>;
+                var id_customer = $(this).attr('data-id');
+                
+                $.ajax({
+                    url: '/ProyekManpro/services/terimakunjungan.php',
+                    method: 'POST',
+                    data: {
+                        id_sales : id_sales,
+                        id_customer : id_customer
+                    },
+                    success: function(data) {
+                        load_data();
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
             });
         </script>
 

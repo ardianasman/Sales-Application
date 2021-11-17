@@ -4,6 +4,10 @@
         header("Location: login.php");
     }
     $id = $_SESSION['id'];
+    if(isset($_GET['ids']))
+    {
+        $id_order = $_GET['ids'];
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -19,43 +23,74 @@
         <!--<link rel="stylesheet" href="css\managerorder.css"> -->
 
         <script>
-            function getCustOptions(){
+            function getCustId(){
                 $.ajax({
-                    url: "./services/getcustoptions.php",
+                    url: "./services/getcustid.php",
                     method: "POST",
                     success: function(res){
-                        console.log(res);
-                        $("#custid-list").html('');
-                        var listidcust = [];
+                        $("#data-list").html('');
+                        var opt = $("<select required></select>");
+                        var data = [];
                         res.forEach(function(item){
-                            var html = $(
-                                item['id_customer']
-                            );
-                            listidcust.append(html);
+                            var html = $(`
+                                <option>`+ item['id_customer'] +`</option>
+                            `);
+                            opt.append(html);
                         });
-                        $("#custid-list").append(listidcust);
+                        $("#data-list").append(opt);
                     },
                     error: function(){
                         alert('fail');
                     }
-                })
+                });
             }
         </script>
 </head>
 
-<body onload = "getCustOptions()">
+<body onload="getCustId()">
     <div class="transparent">
-        <form class="order-list" method="POST" action="./services/addorder.php" enctype="multipart/form-data">
-            <div class="form-content">  
-                <div class="form-group">
-                     <div class="col-12 col-md-10 col-lg-9" style="margin-left: auto; margin-right: auto">
-                        <label for="idorder"><b>ID Order</b></label>
-                        <input type="text" class="form-control" name="idorder" id="idorder" placeholder="Enter ID Order" required>
+            <form method="POST" action="./services/addorder.php" enctype="multipart/form-data">
+                <div class="form-content">  
+                    <div class="form-group">
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="idorder"><b">ID Order</b></label>
+                                <input type="text" class="form-control" style="text-align:center" name="idorder" id="idorder" value="<?php echo $id_order; ?>" readonly>
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="idsales"><b">ID Sales</b></label>
+                                <input type="text" class="form-control" style="text-align:center" name="idsales" id="idsales" value="<?php echo $id; ?>" readonly>
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="namasales"><b">Nama Sales</b></label>
+                                <input type="text" class="form-control" style="text-align:center" name="idsales" id="idsales" value="<?php echo $id; ?>" readonly>
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="idorder"><b">ID Customer</b></label>
+                                    <div id="data-list"> </div>
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="idtglorder"><b">Tanggal Order</b></label>
+                                <input type="date" class="form-control" style="text-align:center" name="idtglorder" id="idtglorder" value="<?php echo date('Y-m-d'); ?>">
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="idtempo"><b">Tanggal Jatuh Tempo</b></label>
+                                <input type="date" class="form-control" style="text-align:center" name="idtempo" id="idtempo" value="<?php echo date('Y-m-d'); ?>">
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="matauang"><b">Mata Uang</b></label>
+                                <input type="text" class="form-control" style="text-align:center" name="iduang" id="iduang" value="Rupiah" readonly>
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="diskon"><b">Diskon</b></label>
+                                <input type="number" class="form-control" style="text-align:center" name="iddiskon" id="iddiskon">
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="pajak"><b">Pajak</b></label>
+                                <input type="number" class="form-control" style="text-align:center" name="idpajak" id="idpajak">
+                            </div>
                     </div>
                 </div>
-                
-            </div>
-        </form>
+            </form>
     </div>
 </body>
 </html>

@@ -17,10 +17,7 @@
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Sidebars · Bootstrap v5.1</title>
-
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
-        <meta name="theme-color" content="#7952b3">
+        <title>Welcome Manager</title>
 
         <style>
             .bd-placeholder-img {
@@ -188,7 +185,7 @@
 
         <div class="d-flex">
             <!-- SIDEBAR -->
-            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 280px; background-color: #61a3d6; position: fixed;">
+            <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 20%; background-color: #61a3d6; position: fixed;">
             <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
@@ -244,12 +241,12 @@
             </nav>
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
-            <div class="p-3" style="margin-left: 280px; position: static;">
-                <form class="grid-container p-1" style="width: 1060px;">
+            <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
+                <form class="grid-container p-1">
                     <div style="font-weight: bold; font-size: 25px; margin-top: 15px;">
                         Welcome, Manajer <?php echo $_SESSION['nama']; ?>
                     </div>
-                    <span style="margin-left: 540px;"><img src="image/profile.jpg" alt="profile" width="80px"></span>
+                    <span><img src="image/profile.jpg" alt="profile" width="80px" style="float: right;"></span>
                 </form>
                 <hr style="width: 100%; text-align: left; background-color: grey;">
                 <div class="mt-4" style="text-align: center; font-size: 20px;">
