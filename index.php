@@ -91,6 +91,7 @@ if (!isset($_SESSION['id'])) {
                         <a class="nav-item nav-link" href="show_activity.php">Activity</a>
                         <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
                         <!-- <a class="nav-item nav-link" href="laporan.php">Laporan</a> -->
+                        <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
                         <a class="nav-item nav-link" href="logout.php">Logout</a>
                     </div>
                 </div>

@@ -37,6 +37,7 @@ if (!isset($_SESSION['id'])) {
                 <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link active" href="show_activity.php">Activity</a>
                 <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
+                <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
                 <a class="nav-item nav-link" href="logout.php">Logout</a>
             </div>
         </div>
