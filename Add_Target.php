@@ -251,6 +251,12 @@
                 </form>
                 <div class="input-group input-group mb-3">
                     <div class="input-group-prepend">
+                        <span class="input-group-text">ID Sales</span>
+                    </div>
+                    <select class="custom-select col-4" id="idsales">
+                        
+                    </select>
+                    <div class="input-group-prepend">
                         <span class="input-group-text">Bulan</span>
                     </div>
                     <select class="custom-select col-4" id="bulan">
@@ -284,6 +290,30 @@
         </div>
 
         <script>
+            function load_data() {
+                $.ajax({
+                    url: "/ProyekManpro/services/get_sales.php",
+                    method: "GET",
+                    success: function(data) {
+                        var cek=false;
+                        var co = 1;
+                        $("#idsales").html('');
+                        var op1 = $('<option selected>Pilih</option>');
+                        $("#idsales").append(op1);
+                        data.forEach(function(sales){
+                            var op2 = $('<option value="' + sales['id_sales'] + '">' + sales['id_sales'] + '-'+sales['nama'] +'</option>');
+
+                            $("#idsales").append(op2);
+                        });
+                    },
+                    error: function(data) {
+                        alert("load data error!");
+                    }
+                });
+            }
+            $(document).ready(function(){
+                load_data();
+            });
             //Button Add Sales
             $("#add-target-submit-btn").click(function(){
                 $.ajax({
@@ -294,7 +324,7 @@
                         var co = 1;
                         var check = true
                         data.forEach(function(target){
-                            if(target['x'] == <?php echo $_GET['id'] ?>){
+                            if(target['id_sales']==$("#idsales").val()){
                                 if(target['bulan']==$("#bulan").val() && target['tahun']==$("#tahun").val()){
                                     check = false;
                                 }
@@ -305,7 +335,7 @@
 
                         if(check){
                             var id_manager = <?php echo $_SESSION['id']; ?>;
-                            var id_sales = <?php echo $_GET['id'] ?>;
+                            var id_sales = $("#idsales").val();
                             var bulan = $("#bulan").val();
                             var tahun = $("#tahun").val();
                             var target = $("#target").val();
@@ -324,7 +354,7 @@
                                     $("#bulan").val('');
                                     $("#tahun").val('');
                                     $("#target").val('');
-                                    window.location.replace("Halaman_Sales.php?id=" + <?php echo $_GET['id'] ?>);
+                                    window.location.replace("DataTarget.php");
                                 },
                                 error: function($xhr, textStatus, errorThrown) {
                                     alert($xhr.responseJSON['error']);
@@ -339,8 +369,6 @@
                         alert("load data error!");
                     }
                 });
-
-                
             });
         </script>
 

@@ -11,11 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         "error" => ""
     );
 
-    $id_sales = $_POST['id_sales'];
+    $id_target = $_POST['id_target'];
 
-    $sql = "DELETE FROM target_penjualan WHERE id_sales = ?";
+    $sql = "DELETE FROM target_penjualan WHERE id_target = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id_sales]);
+    $stmt->execute([$id_target]);
 
     echo json_encode($result);
 } else {

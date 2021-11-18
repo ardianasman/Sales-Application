@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Data Sales</title>
+        <title>Target Penjualan Sales</title>
 
         <style>
             .bd-placeholder-img {
@@ -246,7 +246,7 @@
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
             <div class="p-3" style="margin-left: 20%; width:80%; position: static;">
                 <form class="p-2 grid-container">
-                    <div style="font-weight: bold; font-size: 35px;">Data Sales</div>
+                    <div style="font-weight: bold; font-size: 35px;">Data Target Penjualan Sales</div>
                     <div style="text-align: right;">
                         <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
                             $stmt=$pdo->prepare($sql);
@@ -257,9 +257,8 @@
                 </form>
                 
                 <form class=" mt-4 grid-container">
-                    <div class=""><a href="Add_DataSales.php"><button class="btn btn-danger" type="button" id="add-sales-btn">+ Add</button></a></div>
-                    <div ><a href="DataTarget.php"><button class="btn btn-success" type="button">Lihat Target Penjualan</button></a></div>
-                </form>
+                    <div class=""><a href="Add_Target.php"><button class="btn btn-danger" type="button" id="add-sales-btn">+ Add</button></a></div>
+                    </form>
                 <div class="row pt-4">
                     <div class="col-12 table-responsive-sm">
                         <table id="tableImage" class="table table-hover table-striped table-bordered">
@@ -267,11 +266,12 @@
                                 <tr>
                                     <th width="5%" data-sortable="true">#</th>
                                     <th width="5%" data-sortable="true">ID</th>
-                                    <th width="25%" data-sortable="true">Nama</th>
-                                    <th width="30%" data-sortable="true">Location</th>
-                                    <th width="20%" data-sortable="true">Mulai Bekerja</th>
-                                    <th width="20%" data-sortable="true">Berhenti Bekerja</th>
-                                    <th wdith="20%" data-sortable="true">Attributes</th>
+                                    <th width="20%" data-sortable="true">Nama</th>
+                                    <th width="15%" data-sortable="true">Bulan</th>
+                                    <th width="15%" data-sortable="true">Tahun</th>
+                                    <th width="20%" data-sortable="true">Target</th>
+                                    <th width="20%" data-sortable="true">Status</th>
+                                    <th width="20%" data-sortable="true">Attribute</th>
                                 </tr>
                             </thead>
                             <tbody id="sales-content">
@@ -292,23 +292,24 @@
         <script>
             function load_data() {
                 $.ajax({
-                    url: "/ProyekManpro/services/get_sales.php",
+                    url: "/ProyekManpro/services/get_target.php",
                     method: "GET",
                     success: function(data) {
                         var cek=false;
                         var co = 1;
                         $("#sales-content").html('');
-                        data.forEach(function(sales){
+                        data.forEach(function(target){
                             var row = $("<tr></tr>");
                             var col1 = $("<td scope='col' >" + co + "</td>");
-                            var col2 = $("<td scope='col' >" + sales['id_sales'] + "</td>");
-                            var col3 = $("<td scope='col'>" + sales['nama'] + "</td>")
-                            var col4 = $("<td scope='col'>" + "..." + "</td>");
-                            var col5 = $("<td scope='col'>" + sales['tanggal_mulai_kerja'] + "</td>");
-                            if(sales['tanggal_berhenti_kerja'] != "0000-00-00"){
-                                var col6 = $("<td scope='col'>" + sales['tanggal_berhenti_kerja'] + "</td>");
+                            var col2 = $("<td scope='col'>" + target['id_sales'] + "</td>")
+                            var col3 = $("<td scope='col'>" + target['nama'] + "</td>");
+                            var col4 = $("<td scope='col'>" + target['mon'] + "</td>");
+                            var col5 = $("<td scope='col'>" + target['tahun'] + "</td>");
+                            var col6 = $("<td scope='col'>" + target['target'] + "</td>");
+                            if(target['status'] == 0){
+                                var col7 = $("<td scope='col'>Belum Terpenuhi</td>");
                             }else{
-                                var col6= $("<td scope='col'>" + "-" + "</td>");
+                                var col7 = $("<td scope='col'>Terpenuhi</td>");
                             }
                                 
                             col1.appendTo(row);
@@ -317,15 +318,14 @@
                             col4.appendTo(row);
                             col5.appendTo(row);
                             col6.appendTo(row);
+                            col7.appendTo(row);
 
                             var btn = $('<td scope="col"></td>');
-                            var lihat = $('<a href="Halaman_Sales.php?id=' + sales['id_sales'] + '" id="lihat-btn"><svg class="bi me-2" width="16" height="16" style="color: black;"><use xlink:href="#open"/></svg></a>')
-                            var edit = $('<a href="Edit_DataSales.php?id=' + sales['id_sales'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>')
+                            var edit = $('<a href="Edit_Target.php?id=' + target['id_target'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>')
                             var del = $('<a href="#" id="delete-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#trash"/></svg></a>')
 
-                            del.data('id_sales', sales['id_sales']);
+                            del.data('id_target', target['id_target']);
                                                     
-                            lihat.appendTo(btn);
                             edit.appendTo(btn);
                             del.appendTo(btn);
                             btn.appendTo(row); 
@@ -345,7 +345,7 @@
 
             // DELETE
             $("#sales-content").on("click", "[id='delete-btn']", function(){
-                var id_sales = $(this).data('id_sales');
+                var id_target = $(this).data('id_target');
                 $.confirm({
                     title: 'Confirm!',
                     content: 'You cannot recover deleted data!',
@@ -359,23 +359,10 @@
                                     url: '/ProyekManpro/services/delete_target.php',
                                     method: 'POST',
                                     data: {
-                                        id_sales : id_sales
+                                        id_target : id_target
                                     },
                                     success: function(data) {
-                                       
-                                    },
-                                    error: function($xhr, textStatus, errorThrown) {
-                                        alert($xhr.responseJSON['error']);
-                                    }
-                                });
-                                $.ajax({
-                                    url: '/ProyekManpro/services/delete_sales.php',
-                                    method: 'POST',
-                                    data: {
-                                        id_sales : id_sales
-                                    },
-                                    success: function(data) {
-                                        load_data();
+                                       load_data();
                                     },
                                     error: function($xhr, textStatus, errorThrown) {
                                         alert($xhr.responseJSON['error']);

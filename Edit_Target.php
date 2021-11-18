@@ -250,7 +250,7 @@
                     </div>
                 </form>
                 <div class="input-group input-group mb-3">
-                    <input type="hidden" id="id_target" name="id_target" value="">
+                    <input type="hidden" id="idtarget" name="idtarget" value="">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Bulan</span>
                     </div>
@@ -295,20 +295,20 @@
         <script>
             function load_data() {
                 $.ajax({
-                    url: "/ProyekManpro/services/get_sales.php",
+                    url: "/ProyekManpro/services/get_target.php",
                     method: "GET",
                     success: function(data) {
                         var cek=false;
                         var co = 1;
                         data.forEach(function(target){
-                            if(target['id_sales'] == <?php echo $_GET['id'] ?>){
+                            if(target['id_target'] == <?php echo $_GET['id'] ?>){
                                 var id_target = target['id_target'];
                                 var bulan = target['bulan'];
                                 var status = target['status'];
                                 var tahun = target['tahun'];
                                 var target = target['target'];
                                 
-                                $("#id_target").val(id_target);
+                                $("#idtarget").val(id_target);
                                 $("#bulan").val(bulan);
                                 $("#tahun").val(tahun);
                                 $("#target").val(target);
@@ -330,28 +330,65 @@
 
             //Button simpan
             $("#edit-target-submit-btn").click(function(){
-                var id_target = $("#id_target").val();
-                var bulan = $("#bulan").val();
-                var tahun = $("#tahun").val();
-                var target = $("#target").val();
-                var status = $("#status").val();
-
                 $.ajax({
-                    url: '/ProyekManpro/services/edit_target.php',
-                    method: 'POST',
-                    data: {
-                        id_target : id_target,
-                        bulan : bulan,
-                        tahun : tahun, 
-                        target : target,
-                        status : status
-                    },
-                    
+                    url: "/ProyekManpro/services/get_target.php",
+                    method: "GET",
                     success: function(data) {
-                        window.location.replace("Halaman_Sales.php?id=" + <?php echo $_GET['id'] ?>);
+                        var cek=false;
+                        var co = 1;
+                        var check = true;
+                        var ids;
+
+                        data.forEach(function(target){
+                            if(target['id_target'] == <?php echo $_GET['id'] ?>){
+                                ids = target['id_sales'];
+                            }
+                        });
+
+                        data.forEach(function(target){
+                            if(target['id_sales']== ids && target['id_target'] != <?php echo $_GET['id'] ?>){
+                                if(target['bulan']==$("#bulan").val() && target['tahun']==$("#tahun").val()){
+                                    check = false;
+                                }
+                            }
+                            cek = true;
+                            co++;
+                        });
+
+                        if(check){
+                            var id_target = <?php echo $_GET['id']; ?>;
+                            var bulan = $("#bulan").val();
+                            var tahun = $("#tahun").val();
+                            var target = $("#target").val();
+                            var status = $("#status").val();
+                            $.ajax({
+                                url: '/ProyekManpro/services/edit_target.php',
+                                method: 'POST',
+                                data: {
+                                    id_target : id_target,
+                                    bulan : bulan,
+                                    tahun : tahun,
+                                    target : target,
+                                    status : status
+                                },
+                                
+                                success: function(data) {
+                                    $("#bulan").val('');
+                                    $("#tahun").val('');
+                                    $("#target").val('');
+                                    window.location.replace("DataTarget.php");
+                                },
+                                error: function($xhr, textStatus, errorThrown) {
+                                    alert($xhr.responseJSON['error']);
+                                }
+                            });
+                        }
+                        else{
+                            alert("Data untuk bulan dan tahun tersebut sudah ada!")
+                        }
                     },
-                    error: function($xhr, textStatus, errorThrown) {
-                        alert($xhr.responseJSON['error']);
+                    error: function(data) {
+                        alert("load data error!");
                     }
                 });
             });
