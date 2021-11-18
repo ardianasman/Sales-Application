@@ -17,17 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $tanggal_mulai_kerja = $_POST['tanggal_mulai_kerja'];
     $tanggal_berhenti_kerja = $_POST['tanggal_berhenti_kerja'];
+    $username = $_POST['username'];
     
 
-    if ($nama == '' || $alamat == '' || $no_telp == '' || $email == '' || $tanggal_mulai_kerja == '') {
+    if ($nama == '' || $alamat == '' || $no_telp == '' || $email == '' || $tanggal_mulai_kerja == '' || $username =='') {
         header("HTTP/1.1 400 Bad Request");
         $result['status'] = 0;
         $result['error'] = 'Data Harus Terisi Semua Kecuali Data Berhenti Kerja!';
     } else {
-        $sql = "INSERT INTO sales (id_sales, id_manager, nama, alamat, no_telp, email, tanggal_mulai_kerja, tanggal_berhenti_kerja)
-                VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO sales (id_sales, id_manager, nama, alamat, no_telp, email, tanggal_mulai_kerja, tanggal_berhenti_kerja, username)
+                VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$_SESSION['id'], $nama, $alamat, $no_telp, $email, $tanggal_mulai_kerja, $tanggal_berhenti_kerja]);
+        $stmt->execute([$_SESSION['id'], $nama, $alamat, $no_telp, $email, $tanggal_mulai_kerja, $tanggal_berhenti_kerja, $username]);
     }
 
     echo json_encode($result);

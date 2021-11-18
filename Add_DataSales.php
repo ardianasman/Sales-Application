@@ -285,6 +285,13 @@
                     </div>
                     <input type="date" class="form-control" id="tanggal_berhenti_kerja" name="tanggal_berhenti_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
+                <div class="input-group input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Username</span>
+                    </div>
+                    <input type="text" class="form-control" id="username" name="username" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div style="color: grey;">*password default : sales</div>
                 <button type="button" class="btn btn-warning mt-5" id="add-sales-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Submit</button>
             </div>
         </div>
@@ -299,6 +306,7 @@
                 var email = $("#email").val();
                 var tanggal_mulai_kerja = $("#tanggal_mulai_kerja").val();
                 var tanggal_berhenti_kerja = $("#tanggal_berhenti_kerja").val();
+                var username = $("#username").val();
 
                 $.ajax({
                     url: '/ProyekManpro/services/add_sales.php',
@@ -310,7 +318,8 @@
                         no_telp : no_telp,
                         email : email,
                         tanggal_mulai_kerja : tanggal_mulai_kerja,
-                        tanggal_berhenti_kerja : tanggal_berhenti_kerja
+                        tanggal_berhenti_kerja : tanggal_berhenti_kerja,
+                        username : username
                     },
                     
                     success: function(data) {
@@ -320,6 +329,7 @@
                         $("#email").val('');
                         $("#tanggal_mulai_kerja").val('');
                         $("#tanggal_berhenti_kerja").val('');
+                        $("#username").val('');
                         window.location.replace("DataSales_Manajer.php");
                     },
                     error: function($xhr, textStatus, errorThrown) {
