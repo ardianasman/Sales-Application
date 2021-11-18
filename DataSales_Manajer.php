@@ -268,7 +268,7 @@
                                     <th width="5%" data-sortable="true">#</th>
                                     <th width="5%" data-sortable="true">ID</th>
                                     <th width="25%" data-sortable="true">Nama</th>
-                                    <th width="30%" data-sortable="true">Location</th>
+                                    <th width="15%" data-sortable="true">Location</th>
                                     <th width="20%" data-sortable="true">Mulai Bekerja</th>
                                     <th width="20%" data-sortable="true">Berhenti Bekerja</th>
                                     <th wdith="20%" data-sortable="true">Attributes</th>
@@ -303,7 +303,7 @@
                             var col1 = $("<td scope='col' >" + co + "</td>");
                             var col2 = $("<td scope='col' >" + sales['id_sales'] + "</td>");
                             var col3 = $("<td scope='col'>" + sales['nama'] + "</td>")
-                            var col4 = $("<td scope='col'>" + "..." + "</td>");
+                            var col4 = $("<td scope='col'><a href='sales_location.php?id=" + sales['id_sales'] + "'><button class='btn btn-sm btn-info' style=''>Track Location</button></a></td>");
                             var col5 = $("<td scope='col'>" + sales['tanggal_mulai_kerja'] + "</td>");
                             if(sales['tanggal_berhenti_kerja'] != "0000-00-00"){
                                 var col6 = $("<td scope='col'>" + sales['tanggal_berhenti_kerja'] + "</td>");

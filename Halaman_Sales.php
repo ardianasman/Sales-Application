@@ -252,9 +252,6 @@
                             echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
                 </form>
-                <div id="location-btn">
-
-                </div>
                 
                 <div class="row pt-4">
                     <div class="col-12 table-responsive-sm">
@@ -306,18 +303,40 @@
                         data.forEach(function(sales){
                             if(sales['id_sales'] == id){
                                 var col1 = $("<h2 class='mb-3'>" + sales['nama'] + "</h2>");
-                                var col2 = $("<div class='mb-3' style='font-size: 20px;'> Email : " + sales['email'] + "</div>");
-                                var col3 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>No Telp : " + sales['no_telp'] + "</div>");
-                                var col4 = $("<div class='mt-3 mb-3' style='font-size: 20px;'>Alamat : " + sales['alamat'] + "</div>");
-                                
-                                $("#location-btn").html('');
-                                var loc = $('<a href="sales_location.php?id=' + sales['id_sales'] + '"><button class="btn btn-success btn-block ml-5" style="width: 200px;">Track Sales Location</button></a>')
-                                $("#location-btn").append(loc);
+                                var col2 = $("<div class='mb-2' style='font-size: 20px;'> Email : " + sales['email'] + "</div>");
+                                var col3 = $("<div class='mt-2 mb-2' style='font-size: 20px;'>No Telp : " + sales['no_telp'] + "</div>");
+                                var col4 = $("<div class='mt-2 mb-2' style='font-size: 20px;'>Alamat : " + sales['alamat'] + "</div>");
                                 
                                 $("#sales-content").append(col1);
                                 $("#sales-content").append(col2);
                                 $("#sales-content").append(col3);
                                 $("#sales-content").append(col4);
+
+                                $.ajax({
+                                    url: "services/get_penjualan.php",
+                                    method: "GET",
+                                    success: function(data) {
+                                        var penjualan;
+                                        data.forEach(function(order){
+                                            if(order['id_sales']==sales['id_sales']){
+                                                // alert();
+                                                penjualan = order['total'];
+                                            }
+                                        })
+                                        if(penjualan){
+                                            var col5 = $("<div class='mt-2 mb-2' style='font-size: 20px;'>Penjualan Bulan Ini : Rp. " + penjualan + "</div>");
+                                        }else{
+                                            var col5 = $("<div class='mt-2 mb-2' style='font-size: 20px;'>Penjualan Bulan Ini : Rp. 0</div>");
+                                        }
+                                        
+                                        $("#sales-content").append(col5);
+                                    },
+                                    error: function(data) {
+
+                                    }
+                                });
+
+                                // var col5 = $("<div class='mt-2 mb-2' style='font-size: 20px;'>Penjualan : " + penjualan + "</div>");
                                 
                                 $.ajax({
                                     url: "services/get_kunjungansales.php?id="+id,
