@@ -1,6 +1,6 @@
 <?php
     include "./database.php";
-    //header("Content-Type: application/json");
+    
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
         $id_order = $_POST['id_order'];
@@ -11,7 +11,7 @@
 
         $sql = "INSERT INTO `order` VALUES(?, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id_order, $_SESSION['id'], $id_customer, $tanggal_order, $tanggal_jatuh_tempo, $id_order, '']);
+        $stmt->execute([$id_order, $_SESSION['id'], $id_customer, $tanggal_order, $tanggal_jatuh_tempo, $id_order, $id_order]);
     }
     else
     {

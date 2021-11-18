@@ -4,6 +4,9 @@
         header("Location: login.php");
     }
     $id = $_SESSION['id'];
+    $sql = "SELECT * FROM `customer` ORDER BY `id_customer` DESC LIMIT 1";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
 ?>
 <!doctype html>
 <html lang="en">
@@ -20,80 +23,57 @@
     
            
     <script>
-        function getSalesId(){
-                $.ajax({
-                    url: "./services/getsalesid.php",
-                    method: "POST",
-                    success: function(res){
-                        $("#data-list").html('');
-                        var opt = $("<select required></select>");
-                        var data = [];
-                        res.forEach(function(item){
-                            var html = $(`
-                                <option>`+ item['id_sales'] +`</option>
-                            `);
-                            opt.append(html);
-                        });
-                        $("#data-list").append(opt);
-                    },
-                    error: function(){
-                        alert('fail');
-                    }
-                });
-            }
-        function getManagerId(){
-                $.ajax({
-                    url: "./services/getmanagerid.php",
-                    method: "POST",
-                    success: function(res){
-                        $("#datamanager-list").html('');
-                        var opt = $("<select required></select>");
-                        var data = [];
-                        res.forEach(function(item){
-                            var html = $(`
-                                <option>`+ item['id_manager'] +`</option>
-                            `);
-                            opt.append(html);
-                        });
-                        $("#datamanager-list").append(opt);
-                    },
-                    error: function(){
-                        alert('fail');
-                    }
-                });
-            }
-        function start(){
-            getSalesId();
-            getManagerId();
-        }
     </script>
+    <style>
+        .btn{
+            height: 50px;
+            width: 150px;
+        }
+        .item-list{
+            text-align: center;
+        }
+    </style>
 </head>
 
-<body onload="start()">
+<body>
     <div class="container">
         <div class="transparent">
-            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                <label for="idorder"><b">ID Sales</b></label>
-                <div id="data-list"> </div>
-            </div>
-            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                <label for="idorder"><b">ID Manager</b></label>
-                <div id="datamanager-list"> </div>
-            </div>
-            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                <label for="namacust"><b">Nama Lengkap</b></label>
-                <input type="text" class="form-control" style="text-align:center" name="idnama" id="idnama">
-            </div>
-            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                <label for="alamat"><b">Alamat</b></label>
-                <input type="text" class="form-control" style="text-align:center" name="idalamat" id="idalamat">
-            </div>
-            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                <label for="notelp"><b">Nomor Telepon</b></label>
-                <input type="text" class="form-control" style="text-align:center" name="idno" id="idno">
-            </div>
+            <?php
+                if($stmt->rowCount() == 1){
+                    $item = $stmt->fetch() ?>
+                    <form action = "./services/addcustomer.php" method="POST">
+                        <div id="item-list" class="item-list" style="width: 100%;">
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="idorder"><b">ID Sales</b></label>
+                                <input class = "form-control" style="text-align: center" value="<?php echo $id; ?>" readonly> 
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="idorder"><b">ID Customer</b></label>
+                               <input class="form-control" style="text-align: center" name="uidcust" value="<?php echo $item['id_customer'] + 1; ?>" readonly>
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="namacust"><b">Nama Lengkap</b></label>
+                                <input type="text" class="form-control" style="text-align:center" name="idnama" id="idnama" required>
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="alamat"><b">Alamat</b></label>
+                                <input type="text" class="form-control" style="text-align:center" name="idalamat" id="idalamat" required>
+                            </div>
+                            <div class="w-25" style="margin-left: auto; margin-right: auto">
+                                <label for="notelp"><b">Nomor Telepon</b></label>
+                                <input type="text" class="form-control" style="text-align:center" name="idno" id="idno" required>
+                            </div>
+                            <div class = "d-flex">
+                                <button class="btn btn-outline-secondary p-2" onclick="window.history.go(-1)">Back</button>
+                                <button class="btn btn-success ml-auto p-2 justify-content-center align-items-center">Add Customer</button>
+                            </div>
+                        </div>
+                    </form>
+                <?php }
+                else {?>
+                    <input> aa</input>
+                <?php } ?>
         </div>
     </div>
 </body>
-
 </html>

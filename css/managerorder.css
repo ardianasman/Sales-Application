@@ -4,12 +4,20 @@
     font-family: sans-serif;
 }
 .transparent{
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0);
     width: 100%;
     height: auto;
     margin: 10px;
     animation: transitionIn 1s;
 
+}
+.transparentadd{
+    background: rgba(114, 112, 112, 0.7);
+    width: 50%;
+    height: auto;
+    margin: 10px;
+    animation: transitionIn 1s;
+    
 }
 .transparenttable{
     background: rgba(255, 255, 255, 0.7);

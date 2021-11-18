@@ -1,14 +1,14 @@
-<?php
+<?php 
+
     include "./database.php";
     header("Content-Type: application/json");
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-
-    if ($_SERVER['REQUEST_METHOD'] == "POST")
-    {
-        $sql = "SELECT `id_customer` FROM `customer` ORDER BY `id_customer` ASC";
+        
+        $sql = "SELECT `id_produk`, `nama_produk`, `harga_produk` FROM `produk`";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
-
+        
         $result = array();
         while($row = $stmt->fetch()){
             array_push($result,$row);

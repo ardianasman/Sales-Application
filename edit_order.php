@@ -10,6 +10,8 @@
         $sql = "SELECT * FROM `order` WHERE `id_order` = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id_order]);
+        $stmtx = $pdo->prepare($sql);
+        $stmtx->execute([$id_order]);
     }
 ?>
 <!doctype html>
@@ -40,9 +42,53 @@
                 }) masih error
             } 
         </script>-->
+
+        <script>
+            function deleteP(){
+                <?php $itemx = $stmtx->fetch();?>
+                var id_order = "<?php echo $itemx['id_order']; ?>"
+                console.log(id_order);
+                $.ajax({
+                    url: "./services/deletedetailorder.php",
+                    method: "POST",
+                    data: {
+                        id_order : id_order
+                    },
+                    success: function(data){
+
+                    },
+                    error: function(){
+                        alert('failxxx');
+                    }
+                });
+                $.ajax({
+                    url: "./services/delete_order.php",
+                    method: "POST",
+                    data: {
+                        id_order : id_order
+                    },
+                    success: function(data){
+
+                    },
+                    error: function(){
+                        alert('failxxx');
+                    }
+                });
+                window.history.go(-1);
+            }
+        </script>
+        <style>
+        .btn{
+            height: 50px;
+            width: 150px;
+        }
+        body{
+            margin: 15px;
+        }
+        </style>
 </head>
 
-<body onload="toggle()">
+<body onload>
     <div class="transparent">
                 <?php
                     if($stmt->rowCount() == 1)
@@ -53,7 +99,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <label>ID Order : </label>
-                                        <input class="form-control" name="uid" style="text-align:center" value="<?php echo $item['id_order']; ?>" readonly>
+                                        <input class="form-control" id="uid" name="uid" style="text-align:center" value="<?php echo $item['id_order']; ?>" readonly>
                                     </div>
                                     <div class="col"> 
                                         <label>ID Sales : </label>
@@ -82,8 +128,11 @@
                                     <label>Status Order : </label>
                                     <input class="form-control w-25" id="ustat" name="ustatus" value="<?php echo $item['status_order']; ?>">
                                 </div>
-                                <button class="btn btn-danger" onclick="window.history.go(-1)">Back</button>
-                                <button class="btn btn-warning">Edit Order</button>
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-outline-secondary p-2" onclick="window.history.go(-1)">Back</button>
+                                    <button class="btn btn-warning p-2">Edit</button>
+                                    <button class="btn btn-danger p-2" onclick="deleteP()">Delete</button>
+                                </div>
                             </div>
                         </form>
                 <?php }

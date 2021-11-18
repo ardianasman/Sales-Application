@@ -4,6 +4,10 @@
         header("Location: login.php");
     }
     $id = $_SESSION['id'];
+    $sql = "SELECT `nama` FROM `sales` WHERE `id_sales` = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id]);
+
     if(isset($_GET['ids']))
     {
         $id_order = $_GET['ids'];
@@ -20,7 +24,13 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
         <script src="https://use.fontawesome.com/504410ced2.js"></script>
-        <!--<link rel="stylesheet" href="css\managerorder.css"> -->
+        <link rel="stylesheet" href="css\managerorder.css">
+        
+        <style>
+            .centertd{
+                text-align: center;
+            }
+        </style>
 
         <script>
             function getCustId(){
@@ -44,53 +54,110 @@
                     }
                 });
             }
+            function addorder(){
+                var id_order = "<?php echo $_GET['ids'];?>"
+                sessionStorage.setItem("idorder", id_order);
+                var id_customer = $("#data-list").find(":selected").text();
+                sessionStorage.setItem("idcust", id_customer);
+                var matauang = $("#iduang").val();
+                sessionStorage.setItem("iduang", matauang);
+                var pajak = $("#idpajak").val();
+                sessionStorage.setItem("idpajak", pajak);
+                var diskon = $("#iddiskon").val();
+                sessionStorage.setItem("iddiskon", diskon);
+                
+                var date = new Date($("#idtglorder").val());
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                var tanggal_order = [year, month, day].join('-');
+
+                var date1 = new Date($("#idtempo").val());
+                var day1 = date1.getDate();
+                var month1 = date1.getMonth() + 1;
+                var year1 = date1.getFullYear();
+                var tanggal_jatuh_tempo = [year1, month1, day1].join('-');
+
+                $.ajax({
+                    url:"./services/addorder.php",
+                    method: "POST",
+                    data: {
+                        id_order : id_order,
+                        id_customer : id_customer,
+                        tanggal_order : tanggal_order,
+                        tanggal_jatuh_tempo : tanggal_jatuh_tempo
+                    },
+                    success: function(data){
+                        
+                    },
+                    error: function(){
+                        alert('fail');
+                    }
+                });
+                window.location.replace("add_orderdetail.php?ids=" + id_order);
+            }
+            function init(){
+                getCustId();
+            }
         </script>
 </head>
+<style>
+    #btn-add{
+        width: 30%;
+        margin-right: 35%;
+        margin-left: 35%; 
+    }
+</style>
 
-<body onload="getCustId()">
-    <div class="transparent">
-            <form method="POST" action="./services/addorder.php" enctype="multipart/form-data">
-                <div class="form-content">  
-                    <div class="form-group">
-                            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                                <label for="idorder"><b">ID Order</b></label>
-                                <input type="text" class="form-control" style="text-align:center" name="idorder" id="idorder" value="<?php echo $id_order; ?>" readonly>
-                            </div>
-                            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                                <label for="idsales"><b">ID Sales</b></label>
-                                <input type="text" class="form-control" style="text-align:center" name="idsales" id="idsales" value="<?php echo $id; ?>" readonly>
-                            </div>
-                            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                                <label for="namasales"><b">Nama Sales</b></label>
-                                <input type="text" class="form-control" style="text-align:center" name="idsales" id="idsales" value="<?php echo $id; ?>" readonly>
-                            </div>
-                            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                                <label for="idorder"><b">ID Customer</b></label>
-                                    <div id="data-list"> </div>
-                            </div>
-                            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                                <label for="idtglorder"><b">Tanggal Order</b></label>
-                                <input type="date" class="form-control" style="text-align:center" name="idtglorder" id="idtglorder" value="<?php echo date('Y-m-d'); ?>">
-                            </div>
-                            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                                <label for="idtempo"><b">Tanggal Jatuh Tempo</b></label>
-                                <input type="date" class="form-control" style="text-align:center" name="idtempo" id="idtempo" value="<?php echo date('Y-m-d'); ?>">
-                            </div>
-                            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                                <label for="matauang"><b">Mata Uang</b></label>
-                                <input type="text" class="form-control" style="text-align:center" name="iduang" id="iduang" value="Rupiah" readonly>
-                            </div>
-                            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                                <label for="diskon"><b">Diskon</b></label>
-                                <input type="number" class="form-control" style="text-align:center" name="iddiskon" id="iddiskon">
-                            </div>
-                            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                                <label for="pajak"><b">Pajak</b></label>
-                                <input type="number" class="form-control" style="text-align:center" name="idpajak" id="idpajak">
-                            </div>
+<body onload="init()">
+    <div class="container">
+        <div class="transparent">
+                <form method="POST" action="./services/addorder.php" enctype="multipart/form-data">
+                    <div class="form-content">  
+                        <div class="form-group">
+                                <div class="w-50" style="margin-left: auto; margin-right: auto">
+                                    <label for="idorder"><b">ID Order</b></label>
+                                    <input type="text" class="form-control" style="text-align:center" name="idorder" id="idorder" value="<?php echo $id_order; ?>" readonly>
+                                </div>
+                                <div class="w-50" style="margin-left: auto; margin-right: auto">
+                                    <label for="idsales"><b">ID Sales</b></label>
+                                    <input type="text" class="form-control" style="text-align:center" name="idsales" id="idsales" value="<?php echo $id; ?>" readonly>
+                                </div>
+                                <?php $item = $stmt->fetch()?>
+                                <div class="w-50" style="margin-left: auto; margin-right: auto">
+                                    <label for="namasales"><b">Nama Sales</b></label>
+                                    <input type="text" class="form-control" style="text-align:center" name="idnamasales" id="idnamasales" value="<?php echo $item['nama']; ?>" readonly>
+                                </div>
+                                <div class="w-50" style="margin-left: auto; margin-right: auto">
+                                    <label for="idorder"><b">ID Customer</b></label>
+                                        <div id="data-list" xml:id="idcust"> </div>
+                                </div>
+                                <div class="w-50" style="margin-left: auto; margin-right: auto">
+                                    <label for="idtglorder"><b">Tanggal Order</b></label>
+                                    <input type="date" class="form-control" style="text-align:center" name="idtglorder" id="idtglorder" value="<?php echo date('Y-m-d'); ?>">
+                                </div>
+                                <div class="w-50" style="margin-left: auto; margin-right: auto">
+                                    <label for="idtempo"><b">Tanggal Jatuh Tempo</b></label>
+                                    <input type="date" class="form-control" style="text-align:center" name="idtempo" id="idtempo" value="<?php echo date('Y-m-d', strtotime('+30 days')); ?>">
+                                </div>
+                                <div class="w-50" style="margin-left: auto; margin-right: auto">
+                                    <label for="matauang"><b">Mata Uang</b></label>
+                                    <input type="text" class="form-control" style="text-align:center" name="iduang" id="iduang" value="Rupiah" readonly>
+                                </div>
+                                <div class="w-50" style="margin-left: auto; margin-right: auto">
+                                    <label for="diskon"><b">Diskon</b></label>
+                                    <input type="number" class="form-control" style="text-align:center" name="iddiskon" id="iddiskon">
+                                </div>
+                                <div class="w-50" style="margin-left: auto; margin-right: auto">
+                                    <label for="pajak"><b">Pajak</b></label>
+                                    <input type="text" class="form-control" style="text-align:center" name="idpajak" id="idpajak" value="10" readonly>
+                                </div>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+                <button class= "btn btn-primary" id="btn-add" onclick="addorder()">Add</button>
+                    
+        </div>
     </div>
 </body>
 </html>

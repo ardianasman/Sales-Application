@@ -1,14 +1,13 @@
-<?php
+<?php 
+
     include "./database.php";
-    header("Content-Type: application/json");
-
-
-    if ($_SERVER['REQUEST_METHOD'] == "POST")
-    {
-        $sql = "SELECT `id_customer` FROM `customer` ORDER BY `id_customer` ASC";
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $id_order = $_POST['id_order'];
+        
+        $sql = "SELECT d.id_produk, p.nama_produk, d.kuantitas, p.harga_produk FROM detail_order d JOIN produk p ON d.id_produk = p.id_produk WHERE d.id_order = ?";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-
+        $stmt->execute([$id_order]);
+        
         $result = array();
         while($row = $stmt->fetch()){
             array_push($result,$row);

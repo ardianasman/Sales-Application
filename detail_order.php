@@ -50,13 +50,25 @@
                 });
             }
         </script>
+        <style>
+            body{
+                margin: 15px;
+            }
+        .btn{
+            height: 50px;
+            width: 150px;
+        }
+            .transparent{
+                text-align: center;
+            }
+        </style>
 </head>
 
 <body onload="getDetail()">
     <div class="container">
         <div class="transparent">
             <div id="detail-list" class="transparent"> </div>
-                <button class="btn btn-danger" onclick="window.history.go(-1)">Back</button>
+                <button class="btn btn-outline-secondary" onclick="window.history.go(-1)">Back</button>
         </div>
     </div>  
 </body>
