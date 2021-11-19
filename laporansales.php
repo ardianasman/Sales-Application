@@ -299,7 +299,7 @@ if (!isset($_SESSION['id'])) {
                     </div>
                     <div class="col-12 col-md-6 selectedlaporan">
                         <div class="d-flex justify-content-md-start justify-content-center mt-3 mt-md-0">
-                            <a class="containeropsi d-flex justify-content-center selectedopsi align-items-center" href="laporan.php">
+                            <a class="containeropsi d-flex justify-content-center selectedopsi align-items-center" href="#">
                                 Laporan Target Sales
                             </a>
                         </div>
