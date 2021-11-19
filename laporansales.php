@@ -287,99 +287,99 @@ if (!isset($_SESSION['id'])) {
 
         <!-- <div class="col-md-9 col-lg-8 m-3"> -->
         <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
-        <div class="container pt-5 pb-5">
-        <div class="row">
-            <div class="col-12 col-md-6 selectedlaporan">
-                <div class="d-flex justify-content-md-end justify-content-center">
-                    <a class="containeropsi d-flex justify-content-center align-items-center" href="laporan.php">
-                        Laporan Penjualan Sales
-                    </a>
+            <div class="container pt-5 pb-5">
+                <div class="row">
+                    <div class="col-12 col-md-6 selectedlaporan">
+                        <div class="d-flex justify-content-md-end justify-content-center">
+                            <a class="containeropsi d-flex justify-content-center align-items-center" href="laporan.php">
+                                Laporan Penjualan Sales
+                            </a>
 
-                </div>
-            </div>
-            <div class="col-12 col-md-6 selectedlaporan">
-                <div class="d-flex justify-content-md-start justify-content-center mt-3 mt-md-0">
-                    <a class="containeropsi d-flex justify-content-center selectedopsi align-items-center" href="laporan.php">
-                        Laporan Target Sales
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 mt-5 d-flex justify-content-center">
-                <h1>Sales App</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 d-flex justify-content-center">
-                <h4>Laporan Target Sales</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="d-flex justify-content-center mt-4">
-                    <div class="input-group mb-3" style="width:50%;">
-                        <select class="custom-select" id="inputbulan">
-                            <option value="1">Januari</option>
-                            <option value="2">Febuari</option>
-                            <option value="3">Maret</option>
-                            <option value="4">April</option>
-                            <option value="5">Mei</option>
-                            <option value="6">Juni</option>
-                            <option value="7">Juli</option>
-                            <option value="8">Agustus</option>
-                            <option value="9">September</option>
-                            <option value="10">Oktober</option>
-                            <option value="11">November</option>
-                            <option value="12">Desember</option>
-                        </select>
-                        <select class="custom-select ml-3" id="inputtahun">
-
-                        </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 selectedlaporan">
+                        <div class="d-flex justify-content-md-start justify-content-center mt-3 mt-md-0">
+                            <a class="containeropsi d-flex justify-content-center selectedopsi align-items-center" href="laporan.php">
+                                Laporan Target Sales
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
-                    <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-outline-secondary ml-md-4" id="updatebutton" onclick="load_data()">Update Bulan</button>
+                <div class="row">
+                    <div class="col-12 mt-5 d-flex justify-content-center">
+                        <h1>Sales App</h1>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-12 d-flex justify-content-center">
-                <table cellpadding="3" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th class="d-flex justify-content-center">Search</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- <tr id="filter_global">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <h4>Laporan Target Sales</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-center mt-4">
+                            <div class="input-group mb-3" style="width:50%;">
+                                <select class="custom-select" id="inputbulan">
+                                    <option value="1">Januari</option>
+                                    <option value="2">Febuari</option>
+                                    <option value="3">Maret</option>
+                                    <option value="4">April</option>
+                                    <option value="5">Mei</option>
+                                    <option value="6">Juni</option>
+                                    <option value="7">Juli</option>
+                                    <option value="8">Agustus</option>
+                                    <option value="9">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                <select class="custom-select ml-3" id="inputtahun">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
+                            <div class="d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-secondary ml-md-4" id="updatebutton" onclick="updatebulan()">Update Bulan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12 d-flex justify-content-center">
+                        <table cellpadding="3" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="d-flex justify-content-center">Search</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <tr id="filter_global">
                             <td class="d-flex justify-content-end">Global search</td>
                             <td align="center"><input type="text" class="global_filter" id="global_filter"></td>
                         </tr> -->
-                        <!-- <tr id="filter_col1" data-column="0">
+                                <!-- <tr id="filter_col1" data-column="0">
                         <td class="d-flex justify-content-end">Column - Name</td>
                         <td align="center"><input type="text" class="column_filter" id="col0_filter"></td>
                     </tr> -->
-                        <tr id="filter_col2" data-column="1">
-                            <td class="d-flex justify-content-end">Nama Sales</td>
-                            <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
-                        </tr>
-                        <tr id="filter_col3" data-column="3">
-                            <td class="d-flex justify-content-end">Status</td>
-                            <td align="center">
-                                <select id="dropdown1">
-                                    <option value=""></option>
-                                    <option value="Sudah Terpenuhi">Sudah Terpenuhi</option>
-                                    <option value="Belum Terpenuhi">Belum Terpenuhi</option>
-                                </select>
-                            </td>
+                                <tr id="filter_col2" data-column="1">
+                                    <td class="d-flex justify-content-end">Nama Sales</td>
+                                    <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
+                                </tr>
+                                <tr id="filter_col3" data-column="3">
+                                    <td class="d-flex justify-content-md-end">Status</td>
+                                    <td align="center">
+                                        <select id="dropdown1">
+                                            <option value=""></option>
+                                            <option value="Sudah Terpenuhi">Sudah Terpenuhi</option>
+                                            <option value="Belum Terpenuhi">Belum Terpenuhi</option>
+                                        </select>
+                                    </td>
 
-                        </tr>
-                        <!-- <tr id="filter_col4" data-column="3">
+                                </tr>
+                                <!-- <tr id="filter_col4" data-column="3">
                         <td class="d-flex justify-content-end">Tanggal Order</td>
                         <td align="center"><input type="text" class="column_filter" id="col3_filter"></td>
                     </tr>
@@ -387,50 +387,50 @@ if (!isset($_SESSION['id'])) {
                         <td class="d-flex justify-content-end">Tanggal Jatuh Tempo</td>
                         <td align="center"><input type="text" class="column_filter" id="col4_filter"></td>
                     </tr> -->
-                        <!-- <tr id="filter_col6" data-column="6">
+                                <!-- <tr id="filter_col6" data-column="6">
                             <td class="d-flex justify-content-end">Status Order</td>
                             <td align="center"><input type="text" class="column_filter" id="col6_filter"></td>
                         </tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-
-                <table id="tablelaporan" class="table table-striped table-hover" style="width:100%;">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Sales</th>
-                            <th>Target</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- <div class="row">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table id="tablelaporan" class="table table-striped table-hover" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Sales</th>
+                                    <th>Target</th>
+                                    <th>Status</th>
+                                    <th>Total Sales</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <h4>Total Seluruh Pendapatan: <span id="totalpendapatan"></span></h4>
             </div>
         </div> -->
 
 
-        <!-- <div class="row">
+                <!-- <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <div id="piechart"></div>
             </div>
         </div> -->
 
-        <div class="row">
-            <div class="col-12 d-flex justify-content-center">
-                <button type="button" class="btn btn-primary ms-4" id="downloadbutton" onclick="HTMLtoPDF()">Download as PDF</button>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary ms-4" id="downloadbutton" onclick="HTMLtoPDF()">Download as PDF</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
         </div>
 
     </div>
@@ -499,16 +499,16 @@ if (!isset($_SESSION['id'])) {
             $('#inputbulan').val(thismonth);
             $('#inputtahun').val(thisyear);
         }
+        
+        function updatebulan(){
+            load_data();
+            $('#col1_filter').val('');
+            $('#dropdown1').val('');
+        }
 
         function load_data() {
-            $('#dropdown1').on('change', function() {
-                console.log(this.value);
-                $('#tablelaporan').DataTable().columns(3).search($(this).val()).draw();
-            });
-
             var bulan = $('#inputbulan').val();
             var tahun = $('#inputtahun').val();
-            console.log('hello')
             $.ajax({
                 url: "services/gettargetsales.php",
                 method: "POST",
@@ -517,7 +517,6 @@ if (!isset($_SESSION['id'])) {
                     tahun: tahun
                 },
                 success: function(data) {
-                    console.log("hello2");
                     $('#tablelaporan tbody').html('');
                     $('#tablelaporan').dataTable().fnClearTable();
                     $('#tablelaporan').dataTable().fnDestroy();
@@ -538,6 +537,45 @@ if (!isset($_SESSION['id'])) {
                         col2.appendTo(row);
                         col3.appendTo(row);
                         col4.appendTo(row);
+
+
+                        var id_sales = line['id_sales'];
+                        var penjualan = 0;
+
+                        // console.log(id_sales);
+                        var testing = 0;
+                        console.log("1:" + testing);
+
+                        
+                        $.ajax({
+                            url: "services/get_penjualan_bulan.php",
+                            method: "GET",
+                            data: {
+                                bulan: bulan,
+                                tahun: tahun,
+                                id_sales: id_sales
+                            },
+                            async: false,
+                            success: function(data2) {
+                                penjualan = data2[0]['total'];
+                                testing=data2[0]['total'];
+                                console.log("2:"+testing);
+                                if (data2[0]['total'] == null) {
+                                    penjualan = "0";
+                                }
+                                var col5 = $("<td>" + penjualan + "</td>");
+                                col5.appendTo(row);
+                            },
+                            error: function(data2) {
+                                console.log(data2)
+                            }
+                        });
+                        // console.log(row)
+                        // var col5 = $("<td>" +  + "</td>");
+                        // col5.appendTo(row);
+                        console.log("1:" + testing);
+
+                        // console.log(penjualan)
                         co++;
                         $("#tablelaporan tbody").append(row);
                         html += row;
@@ -558,6 +596,10 @@ if (!isset($_SESSION['id'])) {
 
 
         $(document).ready(function() {
+            $('#dropdown1').on('change', function() {
+                console.log(this.value);
+                $('#tablelaporan').DataTable().columns(3).search($(this).val()).draw();
+            });
             addopsi();
             load_data();
 
@@ -704,7 +746,7 @@ if (!isset($_SESSION['id'])) {
         .containeropsi {
             width: 200px;
             cursor: pointer;
-            border: 3px solid rgb(97,163,214);
+            border: 3px solid rgb(97, 163, 214);
             color: black;
             border-radius: 10px;
             height: 50px;
@@ -713,17 +755,23 @@ if (!isset($_SESSION['id'])) {
 
         .containeropsi.selectedopsi {
             color: white;
-            background: rgb(97,163,214);
+            background: rgb(97, 163, 214);
         }
 
         .containeropsi:hover {
             text-decoration: none;
-            background-color: rgb(97,163,214);
+            background-color: rgb(97, 163, 214);
             color: white;
             transition: ease .5s;
         }
-        .table{
-            margin-bottom:0px !important;
+
+        .table {
+            margin-bottom: 0px !important;
+        }
+
+        #dropdown1 {
+            width: 189px;
+            height: 30px;
         }
     </style>
 </body>

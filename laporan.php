@@ -332,7 +332,7 @@ if (!isset($_SESSION['id'])) {
                     </div>
                     <div class="col-12">
                         <div class="d-flex justify-content-center mt-3">
-                            <button type="button" class="btn btn-outline-secondary ml-md-4" id="updatebutton" onclick="load_data()">Update Tanggal</button>
+                            <button type="button" class="btn btn-outline-secondary ml-md-4" id="updatebutton" onclick="updatetanggal()">Update Tanggal</button>
                         </div>
                     </div>
                 </div>
@@ -372,7 +372,15 @@ if (!isset($_SESSION['id'])) {
                     </tr> -->
                                 <tr id="filter_col6" data-column="6">
                                     <td class="d-flex justify-content-end">Status Order</td>
-                                    <td align="center"><input type="text" class="column_filter" id="col6_filter"></td>
+                                    <td align="center">
+                                        <select id="dropdown1">
+                                            <option value=""></option>
+                                            <option value="Terbayar">Terbayar</option>
+                                            <option value="Belum Terbayar">Belum Terbayar</option>
+                                        </select>
+                                    </td>
+                                    <!-- <td class="d-flex justify-content-end">Status Order</td>
+                                    <td align="center"><input type="text" class="column_filter" id="col6_filter"></td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -470,9 +478,20 @@ if (!isset($_SESSION['id'])) {
         //add commas to string
 
 
-
+        function updatetanggal(){
+            load_data();
+            //reset all filter
+            $('#global_filter').val('');
+            $('#col1_filter').val('');
+            $('#col2_filter').val('');
+            $('#dropdown1').val('');
+        }
 
         function load_data() {
+            $('#dropdown1').on('change', function() {
+                console.log(this.value);
+                $('#tablelaporan').DataTable().columns(6).search($(this).val()).draw();
+            });
             // console.log("loading data");
             var tanggal_mulai_order = $('#tanggalmulai').val();
             var tanggal_selesai_order = $('#tanggalsampai').val();
@@ -531,6 +550,10 @@ if (!isset($_SESSION['id'])) {
                     html = "";
                     var i;
                     data.forEach(function(line) {
+                        var stats = "Terbayar"
+                        if (line['status_order'] == "0") {
+                            stats = "Belum Terbayar"
+                        }
                         var row = $("<tr></tr>");
                         var col1 = $("<td>" + line['id_order'] + "</td>");
                         var col2 = $("<td>" + line['nama_sales'] + "</td>");
@@ -538,7 +561,7 @@ if (!isset($_SESSION['id'])) {
                         var col4 = $("<td>" + line['tanggal_order'] + "</td>");
                         var col5 = $("<td>" + line['tanggal_jatuh_tempo'] + "</td>");
                         var col6 = $("<td>" + line['total_harga'].toLocaleString() + "</td>");
-                        var col7 = $("<td>" + line['status_order'] + "</td>");
+                        var col7 = $("<td>" + stats + "</td>");
                         col1.appendTo(row);
                         col2.appendTo(row);
                         col3.appendTo(row);
@@ -947,8 +970,13 @@ if (!isset($_SESSION['id'])) {
             transition: ease .5s;
         }
 
-        .table{
-            margin-bottom:0px !important;
+        .table {
+            margin-bottom: 0px !important;
+        }
+
+        #dropdown1{
+            width: 189px;
+            height: 30px;
         }
     </style>
 </body>
