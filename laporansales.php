@@ -405,6 +405,7 @@ if (!isset($_SESSION['id'])) {
                                     <th>Target</th>
                                     <th>Status</th>
                                     <th>Total Sales</th>
+                                    <th>Sisa Target</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -499,8 +500,8 @@ if (!isset($_SESSION['id'])) {
             $('#inputbulan').val(thismonth);
             $('#inputtahun').val(thisyear);
         }
-        
-        function updatebulan(){
+
+        function updatebulan() {
             load_data();
             $('#col1_filter').val('');
             $('#dropdown1').val('');
@@ -546,7 +547,7 @@ if (!isset($_SESSION['id'])) {
                         var testing = 0;
                         console.log("1:" + testing);
 
-                        
+
                         $.ajax({
                             url: "services/get_penjualan_bulan.php",
                             method: "GET",
@@ -558,13 +559,20 @@ if (!isset($_SESSION['id'])) {
                             async: false,
                             success: function(data2) {
                                 penjualan = data2[0]['total'];
-                                testing=data2[0]['total'];
-                                console.log("2:"+testing);
                                 if (data2[0]['total'] == null) {
-                                    penjualan = "0";
+                                    penjualan = 0;
                                 }
-                                var col5 = $("<td>" + penjualan + "</td>");
+                                penjualan=changeToAngka(penjualan)
+                                sisa = penjualan - line['target'];
+                                var col5 = $("<td>" + penjualan.toLocaleString() + "</td>")
+                                if(sisa>=0){
+                                    var col6 = $("<td style='color:green'>" + sisa.toLocaleString() + "</td>");
+                                }
+                                else{
+                                    var col6 = $("<td style='color:red'>" + sisa.toLocaleString() + "</td>");
+                                }
                                 col5.appendTo(row);
+                                col6.appendTo(row);
                             },
                             error: function(data2) {
                                 console.log(data2)
@@ -593,6 +601,12 @@ if (!isset($_SESSION['id'])) {
             });
         }
 
+        function changeToAngka(angka) {
+            val=0
+            if(angka!=0){
+            var val = parseInt(angka.replace(/,/g, ''), 10)}
+            return val
+        }
 
 
         $(document).ready(function() {
