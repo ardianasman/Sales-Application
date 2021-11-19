@@ -402,10 +402,10 @@ if (!isset($_SESSION['id'])) {
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Sales</th>
-                                    <th>Target</th>
+                                    <th>Target(Rp)</th>
                                     <th>Status</th>
-                                    <th>Total Sales</th>
-                                    <th>Sisa Target</th>
+                                    <th>Total Sales(Rp)</th>
+                                    <th>Sisa Target(Rp)</th>
                                 </tr>
                             </thead>
                             <tbody>

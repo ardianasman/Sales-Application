@@ -396,7 +396,7 @@ if (!isset($_SESSION['id'])) {
                                     <th>Nama Customer</th>
                                     <th>Tanggal Order</th>
                                     <th>Tanggal Jatuh Tempo</th>
-                                    <th>Total Harga</th>
+                                    <th>Total Harga(Rp)</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
