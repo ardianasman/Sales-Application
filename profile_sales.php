@@ -202,7 +202,7 @@ function load_data() {
                 $('#emailsales').text("Email Sales : " + data['email']);
                 $('#usernamesales').text("Username Sales : " + data['username']);
                 $('#passwordsales').text("Password Sales : " + data['password']);
-                $('#targetsales').text("Target Yang Harus dipenuhi : " + data['target']);
+                $('#targetsales').text("Target Yang Harus dipenuhi : Rp " + data['target']);
                 console.log(data)
             },
             error: function($xhr, textStatus, errorThrown) {

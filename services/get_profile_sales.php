@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $id_sales = $_SESSION['id'];
 
-    $sql = "SELECT s.nama,s.alamat,s.email, s.username, s.password, t.target,t.bulan
+    $sql = "SELECT s.nama,s.alamat,s.email, s.username, s.password, FORMAT(t.target, 'C') AS target_penjualan,t.bulan
     FROM sales s 
     JOIN target_penjualan t ON s.id_sales = t.id_sales
     WHERE s.id_sales = ? AND t.bulan = MONTH(DATE(NOW()))";
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $result["email"] = $user['email'];
     $result["username"] = $user['username'];
     $result["password"] = $user['password'];
-    $result["target"] = $user['target'];
+    $result["target"] = $user['target_penjualan'];
 
     echo json_encode($result);
 } else {
