@@ -142,8 +142,9 @@ if (!isset($_SESSION['id'])) {
                         <p class="fonts" id="usernamesales"></p>
                         <p class="fonts" id="passwordsales"></p>
                         <p class="fonts" id="targetsales"></p>
+                        <p class="fonts" id="totalpenjualansales"></p>
                     </div>
-                    <div class="buttons"> <button id = "change-pass-btn" class="btn btn-outline-primary px-4">Change Password</button> </div>
+                    <div class="buttons"> <button id = "change-pass-btn" class="btn btn-outline-primary px-4">Change Password</button> <button id = "change-username-btn" class="btn btn-primary px-4 ms-3">Change Username</button> </div>
                 </div>
             </div>
         </div>
@@ -155,7 +156,7 @@ if (!isset($_SESSION['id'])) {
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Student</h5>
+                        <h5 class="modal-title">Change Password</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -173,6 +174,35 @@ if (!isset($_SESSION['id'])) {
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" id="submit-user-button" name="submit" class="btn btn-success"><i class="lnr lnr-plus-circle"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Change Username Modal -->
+    <div class="modal fade" id="change-username-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Change Username</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="new-username">New Username: </label>
+                            <input type="text" id="new-username" name="new-username" class="form-control" placeholder="New Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-username">Confirm Username: </label>
+                            <input type="text" id="confirm-user" name="confirm-user" class="form-control" placeholder="Confirm Username">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="submit-username-button" name="submit" class="btn btn-success"><i class="lnr lnr-plus-circle"></i> Add</button>
                     </div>
                 </div>
             </div>
@@ -202,7 +232,12 @@ function load_data() {
                 $('#emailsales').text("Email Sales : " + data['email']);
                 $('#usernamesales').text("Username Sales : " + data['username']);
                 $('#passwordsales').text("Password Sales : " + data['password']);
-                $('#targetsales').text("Target Yang Harus dipenuhi : Rp " + data['target']);
+                $('#targetsales').text("Target Yang Harus dipenuhi : " + data['target']);
+                if(data['totalpenj'] == null){
+                    $('#totalpenjualansales').text("Total Penjualan Bulan ini : Belum ada penjualan bulan ini" );
+                }else{
+                    $('#totalpenjualansales').text("Total Penjualan Bulan ini : " + data['totalpenj'])
+                }
                 console.log(data)
             },
             error: function($xhr, textStatus, errorThrown) {
@@ -218,6 +253,10 @@ $(document).ready(function(){
 
 $("#change-pass-btn").click(function(){
     $("#change-modal").modal();
+});
+
+$("#change-username-btn").click(function(){
+    $("#change-username-modal").modal();
 });
 
 $("#submit-user-button").click(function(){
@@ -237,6 +276,34 @@ $("#submit-user-button").click(function(){
             $.alert({
                 title: 'Success!',
                 content: 'Password Has Been Changed!',
+            });
+            load_data();
+        },
+        error: function($xhr, textStatus, errorThrown) {
+            alert($xhr.responseJSON['error']);
+         }
+    });
+});
+
+$("#submit-username-button").click(function(){
+    var newname = $("#new-username").val();
+    var confname = $("#confirm-user").val();
+    alert(newname)
+    alert(confname)
+    $.ajax({
+        url: '/ProyekManpro/services/edit_username_sales.php',
+        method: 'POST',
+        data: {
+            newname: newname,
+            confname: confname
+        },
+        success: function(data) {
+            $("#new-username").val('');
+            $("#confirm-user").val('');
+            $("#change-username-modal").modal('toggle');
+            $.alert({
+                title: 'Success!',
+                content: 'Username Has Been Changed!',
             });
             load_data();
         },

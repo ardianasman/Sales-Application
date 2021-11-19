@@ -81,7 +81,7 @@ if (!isset($_SESSION['id'])) {
     <div class="col-12 bg-home-sales p-sm-3 ">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparent ">
-                <a class="judul" href="index.php">Prototype Sales</a>
+                <a class="judul nav-link" href="index.php">Prototype Sales</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
