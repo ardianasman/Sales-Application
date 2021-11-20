@@ -305,7 +305,7 @@
                             var col3 = $("<td scope='col'>" + target['nama'] + "</td>");
                             var col4 = $("<td scope='col'>" + target['mon'] + "</td>");
                             var col5 = $("<td scope='col'>" + target['tahun'] + "</td>");
-                            var col6 = $("<td scope='col'>" + target['target'] + "</td>");
+                            var col6 = $("<td scope='col'>Rp. " + target['tar'] + "</td>");
                             if(target['status'] == 0){
                                 var col7 = $("<td scope='col'>Belum Terpenuhi</td>");
                             }else{
@@ -346,6 +346,7 @@
             // DELETE
             $("#sales-content").on("click", "[id='delete-btn']", function(){
                 var id_target = $(this).data('id_target');
+                var type = 1;
                 $.confirm({
                     title: 'Confirm!',
                     content: 'You cannot recover deleted data!',
@@ -359,6 +360,7 @@
                                     url: '/ProyekManpro/services/delete_target.php',
                                     method: 'POST',
                                     data: {
+                                        type : type,
                                         id_target : id_target
                                     },
                                     success: function(data) {

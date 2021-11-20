@@ -346,6 +346,7 @@
             // DELETE
             $("#sales-content").on("click", "[id='delete-btn']", function(){
                 var id_sales = $(this).data('id_sales');
+                var type = 0;
                 $.confirm({
                     title: 'Confirm!',
                     content: 'You cannot recover deleted data!',
@@ -359,6 +360,7 @@
                                     url: '/ProyekManpro/services/delete_target.php',
                                     method: 'POST',
                                     data: {
+                                        type : type,
                                         id_sales : id_sales
                                     },
                                     success: function(data) {

@@ -299,43 +299,70 @@
         <script>
             //Button Add Sales
             $("#add-sales-submit-btn").click(function(){
-                var id_manager = <?php echo $_SESSION['id']; ?>;
-                var nama = $("#nama").val();
-                var alamat = $("#alamat").val()
-                var no_telp = $("#no_telp").val();
-                var email = $("#email").val();
-                var tanggal_mulai_kerja = $("#tanggal_mulai_kerja").val();
-                var tanggal_berhenti_kerja = $("#tanggal_berhenti_kerja").val();
-                var username = $("#username").val();
-
                 $.ajax({
-                    url: '/ProyekManpro/services/add_sales.php',
-                    method: 'POST',
-                    data: {
-                        id_manager : id_manager,
-                        nama : nama,
-                        alamat : alamat,
-                        no_telp : no_telp,
-                        email : email,
-                        tanggal_mulai_kerja : tanggal_mulai_kerja,
-                        tanggal_berhenti_kerja : tanggal_berhenti_kerja,
-                        username : username
-                    },
-                    
+                    url: "/ProyekManpro/services/get_sales.php",
+                    method: "GET",
                     success: function(data) {
-                        $("#nama").val('');
-                        $("#alamat").val('');
-                        $("#no_telp").val('');
-                        $("#email").val('');
-                        $("#tanggal_mulai_kerja").val('');
-                        $("#tanggal_berhenti_kerja").val('');
-                        $("#username").val('');
-                        window.location.replace("DataSales_Manajer.php");
+                        var cek=false;
+                        var co = 1;
+                        var check = true
+                        data.forEach(function(sales){
+                            if(sales['username']==$("#username").val()){
+                                check = false;
+                            }
+                            cek = true;
+                            co++;
+                        });
+
+                        if(check){
+                            var id_manager = <?php echo $_SESSION['id']; ?>;
+                            var nama = $("#nama").val();
+                            var alamat = $("#alamat").val()
+                            var no_telp = $("#no_telp").val();
+                            var email = $("#email").val();
+                            var tanggal_mulai_kerja = $("#tanggal_mulai_kerja").val();
+                            var tanggal_berhenti_kerja = $("#tanggal_berhenti_kerja").val();
+                            var username = $("#username").val();
+
+                            $.ajax({
+                                url: '/ProyekManpro/services/add_sales.php',
+                                method: 'POST',
+                                data: {
+                                    id_manager : id_manager,
+                                    nama : nama,
+                                    alamat : alamat,
+                                    no_telp : no_telp,
+                                    email : email,
+                                    tanggal_mulai_kerja : tanggal_mulai_kerja,
+                                    tanggal_berhenti_kerja : tanggal_berhenti_kerja,
+                                    username : username
+                                },
+                                
+                                success: function(data) {
+                                    $("#nama").val('');
+                                    $("#alamat").val('');
+                                    $("#no_telp").val('');
+                                    $("#email").val('');
+                                    $("#tanggal_mulai_kerja").val('');
+                                    $("#tanggal_berhenti_kerja").val('');
+                                    $("#username").val('');
+                                    window.location.replace("DataSales_Manajer.php");
+                                },
+                                error: function($xhr, textStatus, errorThrown) {
+                                    alert($xhr.responseJSON['error']);
+                                }
+                            });
+                        }
+                        else{
+                            alert("Username Sudah Terpakai!")
+                        }
                     },
-                    error: function($xhr, textStatus, errorThrown) {
-                        alert($xhr.responseJSON['error']);
+                    error: function(data) {
+                        alert("load data error!");
                     }
                 });
+
+                
             });
         </script>
     </body>

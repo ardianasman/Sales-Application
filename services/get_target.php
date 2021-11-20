@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             WHEN target_penjualan.bulan=12 THEN 'Desember'
             WHEN target_penjualan.bulan=11 THEN 'November'
             ELSE '-'
-            END as mon, target_penjualan.tahun, target_penjualan.target, target_penjualan.status, 
+            END as mon, target_penjualan.tahun, target_penjualan.target, FORMAT(target_penjualan.target,'C') as tar, target_penjualan.status, 
             sales.nama FROM `target_penjualan`
             LEFT JOIN sales on target_penjualan.id_sales=sales.id_sales
             WHERE (target_penjualan.id_manager=? AND bulan=MONTH(CURRENT_DATE) AND tahun=YEAR(CURRENT_DATE)) OR (target_penjualan.id_manager=? AND status=0)";
