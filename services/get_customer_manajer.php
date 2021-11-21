@@ -2,17 +2,13 @@
 
 include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php";
 
-//session_start();
-
-
 header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $sql = "SELECT `order`.`id_order`, s.nama AS nama_sales, s.id_manager, c.nama AS nama_cust, `order`.`tanggal_order`, `order`.`tanggal_jatuh_tempo`,FORMAT(`order`.`total_harga`,'C') as total_harga
-    FROM `order`
-    JOIN sales s ON s.id_sales = `order`.`id_sales`
-    JOIN customer c ON c.id_customer = `order`.`id_customer`
-    WHERE s.id_manager=?";
+    $sql = "SELECT customer.id_customer, sales.nama as nama_sales, customer.nama, customer.alamat, customer.no_telp, customer.terakhir_dikunjungi, sales.id_manager FROM `customer`
+JOIN sales ON customer.id_sales=sales.id_sales
+WHERE sales.id_manager=?";
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$_SESSION['id']]);
 
@@ -30,4 +26,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     echo json_encode($error);
 }
-?>

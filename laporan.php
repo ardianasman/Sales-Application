@@ -1,8 +1,8 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . "/ProyekManpro/services/database.php";
-if (!isset($_SESSION['id'])) {
-    header("Location:login_manajer.php");
-}
+    include $_SERVER['DOCUMENT_ROOT'] . "/ProyekManpro/services/database.php";
+        if (!isset($_SESSION['id'])) {
+            header("Location:login_manajer.php");
+        }
 ?>
 <!doctype html>
 
@@ -27,7 +27,7 @@ if (!isset($_SESSION['id'])) {
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <title>Laporan</title>
+    <title>Laporan Penjualan Sales</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
     <meta name="theme-color" content="#7952b3">
@@ -250,7 +250,7 @@ if (!isset($_SESSION['id'])) {
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white">
+                    <a href="Customer_Manajer.php" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#gem" />
                         </svg>

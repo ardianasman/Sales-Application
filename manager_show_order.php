@@ -1,3 +1,9 @@
+<?php
+    include $_SERVER['DOCUMENT_ROOT'] . "/ProyekManpro/services/database.php";
+        if (!isset($_SESSION['id'])) {
+            header("Location:login_manajer.php");
+        }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -216,7 +222,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a href="Customer_Manajer.php" class="nav-link text-white">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#gem"/></svg>
                             Customers
                         </a>

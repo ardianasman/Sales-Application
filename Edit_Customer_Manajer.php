@@ -1,16 +1,13 @@
 <?php
-    include $_SERVER['DOCUMENT_ROOT'] . "/ProyekManpro/services/database.php";
-        if (!isset($_SESSION['id'])) {
-            header("Location:login_manajer.php");
-        }
+    include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
+    if (!isset($_SESSION['id'])) {
+        header("Location:login_manajer.php");
+    }
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -20,8 +17,8 @@
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Aktivitas Sales</title>
-        
+        <title>Edit Customer</title>
+
         <style>
             .bd-placeholder-img {
                 font-size: 1.125rem;
@@ -54,6 +51,10 @@
                 display: grid;
                 grid-template-columns: max-content auto;
                 grid-gap: 10px;
+            }
+            .modal-backdrop {
+                z-index: -1;
+                background-color: white;
             }
 
             .b-example-divider {
@@ -171,13 +172,6 @@
             <symbol id="trash" viewBox="0 0 16 16">
                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
             </symbol>
-            <symbol id="plus" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-            </symbol>
-            <symbol id="open" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"/>
-                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"/>
-            </symbol>
             <symbol id="activity" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
             </symbol>
@@ -208,7 +202,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="DataSales_Manajer.php" class="nav-link text-white" aria-current="page">
+                        <a href="DataSales_Manajer.php" class="nav-link active" aria-current="page">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people"/></svg>
                         Sales
                         </a>
@@ -226,7 +220,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="manager_show_all_activity.php" class="nav-link active">
+                        <a href="manager_show_all_activity.php" class="nav-link text-white">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#activity"/></svg>
                             Sales Activities
                         </a>
@@ -245,84 +239,104 @@
                     </li>
                 </ul>
             </nav>
-
-            <div class="container p-3" style="margin-left: 20%;width:80%; position: static;">
-                <div class="row pt-4">
-                    <div class="col-6">
-                        <h3 class="title">Aktivitas Sales</h3>
+        
+            <!-- <div class="col-md-9 col-lg-8 m-3"> -->
+            <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
+                <form class="p-2 grid-container mb-5">
+                    <div style="font-weight: bold; font-size: 35px;">Edit Data Customer</div>
+                    <div style="text-align: right;">
+                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                            $stmt=$pdo->prepare($sql);
+                            $stmt->execute();
+                            $res=$stmt->fetch();  
+                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
-                    <div class="col-6">
-                        <div class="text-right">
-                            <a href="#"><button id="add-user-btn" class="btn btn-secondary"></i> Back</button></a>
-                        </div>
+                </form>
+                <div class="input-group input-group mb-3">
+                    <input type="hidden" id="id_customer" name="id_customer" value="">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Nama</span>
                     </div>
+                    <input type="text" class="form-control" id="nama" name="nama" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
-                <div class="row pt-4">
-                    <div class="col-12 table-responsive-sm">
-                        <table id="tableImage" class="table table-hover table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th width="5%" data-sortable="true">No</th>
-                                    <th width="5%" data-sortable="true">ID Aktivitas</th>
-                                    <th width="15%" data-sortable="true">Nama Customer</th>
-                                    <th width="15%" data-sortable="true">Nama Sales</th>
-                                    <th width="5%" data-sortable="true">Status Kunjungan</th>
-                                    <th wdith="40%" data-sortable="true">Foto Kunjungan</th>
-                                    <th wdith="15%" data-sortable="true">Jadwal Kunjungan</th>
-                                </tr>
-                            </thead>
-                            <tbody id="user-content">
-
-                            </tbody>
-                        </table>
+                <div class="input-group input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Alamat</span>
                     </div>
+                    <input type="text" class="form-control" id="alamat" name="alamat" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
+                <div class="input-group input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">No Telp</span>
+                    </div>
+                    <input type="text" class="form-control" id="no_telp" name="no_telp" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <button type="button" class="btn btn-warning mt-5" id="edit-customer-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Submit</button>
             </div>
         </div>
 
-    <!-- DataTable Query -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-
-        <script>
+        <script type="text/javascript">
             function load_data() {
+                var id = <?php echo $_GET['id'] ?>;
                 $.ajax({
-                    url: "/ProyekManpro/services/manager_get_all_activity.php",
+                    url: "/ProyekManpro/services/get_customer_manajer.php",
                     method: "GET",
                     success: function(data) {
+                        var cek=false;
                         var co = 1;
-                        $("#user-content").html('');
-                        data.forEach(function(aktivitas){
-                            var row = $("<tr></tr>");
-                            var col1 = $("<td>" + co + "</td>");
-                            var col2 = $("<td>" + aktivitas['id_aktivitas'] + "</td>");
-                            var col3 = $("<td>" + aktivitas['nama'] + "</td>");
-                            var col4 = $("<td>" + aktivitas['nama_sales'] + "</td>");
-                            var target_file = aktivitas['foto_kunjungan'];
-                            var col5 = $("<td><img src='" + target_file  + "' style='width:250px; height:auto;'></td>");
-                            var col6 = $("<td>" + aktivitas['foto_kunjungan'] + "</td>");
-                            //var changeHarga = 
-                            var col7 = $("<td>" + aktivitas['jadwal_kunjungan'] + "</td>");
+                        data.forEach(function(customer){
+                            if(customer['id_customer'] == id){
+                                var id_customer = customer['id_customer'];
+                                var nama = customer['nama'];
+                                var alamat = customer['alamat'];
+                                var no_telp = customer['no_telp'];
 
-                            col1.appendTo(row);
-                            col2.appendTo(row);
-                            col3.appendTo(row);
-                            col4.appendTo(row);
-                            col5.appendTo(row);
-                            col6.appendTo(row);
-                            col7.appendTo(row);
-
+                                $("#id_customer").val(id_customer);
+                                $("#nama").val(nama);
+                                $("#alamat").val(alamat);
+                                $("#no_telp").val(no_telp);
+                                $("#edit-customer-submit-btn").data('id_customer', customer['id_customer']);
+                            }
+                            
+                            cek = true;
                             co++;
-                            $("#user-content").append(row);
-                        })
-                        $('#tableImage').DataTable();
+                        });
                     },
                     error: function(data) {
-                    }  
+                        alert("load data error!");
+                    }
                 });
             }
             $(document).ready(function(){
                 load_data();
             });
+
+            //Button simpan
+            $("#edit-customer-submit-btn").click(function(){
+                var id_customer = $("#id_customer").val();
+                var nama = $("#nama").val();
+                var alamat = $("#alamat").val();
+                var no_telp = $("#no_telp").val();
+
+                $.ajax({
+                    url: '/ProyekManpro/services/edit_customer_manajer.php',
+                    method: 'POST',
+                    data: {
+                        id_customer : id_customer,
+                        nama : nama,
+                        alamat : alamat,
+                        no_telp : no_telp
+                    },
+                    
+                    success: function(data) {
+                        window.location.replace("Customer_Manajer.php");
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+            });
+
         </script>
     </body>
 </html>

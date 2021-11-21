@@ -1,11 +1,11 @@
 <?php
-    include $_SERVER['DOCUMENT_ROOT'] . "/ProyekManpro/services/database.php";
-        if (!isset($_SESSION['id'])) {
-            header("Location:login_manajer.php");
-        }
+    include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
+    if (!isset($_SESSION['id'])) {
+        header("Location:login_manajer.php");
+    }
 ?>
-<!DOCTYPE html>
-<html lang="en">
+
+<!doctype html>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,8 +20,8 @@
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Aktivitas Sales</title>
-        
+        <title>Customer</title>
+
         <style>
             .bd-placeholder-img {
                 font-size: 1.125rem;
@@ -220,13 +220,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="Customer_Manajer.php" class="nav-link text-white">
+                        <a href="Customer_Manajer.php" class="nav-link active">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#gem"/></svg>
                             Customers
                         </a>
                     </li>
                     <li>
-                        <a href="manager_show_all_activity.php" class="nav-link active">
+                        <a href="manager_show_all_activity.php" class="nav-link text-white">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#activity"/></svg>
                             Sales Activities
                         </a>
@@ -245,33 +245,40 @@
                     </li>
                 </ul>
             </nav>
-
-            <div class="container p-3" style="margin-left: 20%;width:80%; position: static;">
-                <div class="row pt-4">
-                    <div class="col-6">
-                        <h3 class="title">Aktivitas Sales</h3>
+        
+            <!-- <div class="col-md-9 col-lg-8 m-3"> -->
+            <div class="p-3" style="margin-left: 20%; width:80%; position: static;">
+                <form class="p-2 grid-container">
+                    <div style="font-weight: bold; font-size: 35px;">Data Customer</div>
+                    <div style="text-align: right;">
+                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                            $stmt=$pdo->prepare($sql);
+                            $stmt->execute();
+                            $res=$stmt->fetch();  
+                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                     </div>
-                    <div class="col-6">
-                        <div class="text-right">
-                            <a href="#"><button id="add-user-btn" class="btn btn-secondary"></i> Back</button></a>
-                        </div>
-                    </div>
-                </div>
+                </form>
+<!--                 
+                <form class=" mt-4 grid-container">
+                    <div class=""><a href="Add_DataSales.php"><button class="btn btn-danger" type="button" id="add-sales-btn">+ Add</button></a></div>
+                    <div ><a href="DataTarget.php"><button class="btn btn-success" type="button">Lihat Target Penjualan</button></a></div>
+                </form> -->
                 <div class="row pt-4">
                     <div class="col-12 table-responsive-sm">
                         <table id="tableImage" class="table table-hover table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th width="5%" data-sortable="true">No</th>
-                                    <th width="5%" data-sortable="true">ID Aktivitas</th>
-                                    <th width="15%" data-sortable="true">Nama Customer</th>
-                                    <th width="15%" data-sortable="true">Nama Sales</th>
-                                    <th width="5%" data-sortable="true">Status Kunjungan</th>
-                                    <th wdith="40%" data-sortable="true">Foto Kunjungan</th>
-                                    <th wdith="15%" data-sortable="true">Jadwal Kunjungan</th>
+                                    <th width="5%" data-sortable="true">#</th>
+                                    <th width="5%" data-sortable="true">ID</th>
+                                    <th width="20%" data-sortable="true">Nama Customer</th>
+                                    <th width="20%" data-sortable="true">Alamat</th>
+                                    <th width="10%" data-sortable="true">No Telp</th>
+                                    <th width="15%" data-sortable="true">Terakhir Dikunjungi</th>
+                                    <th width="20%" data-sortable="true">Sales</th>
+                                    <th wdith="8%" data-sortable="true">Attributes</th>
                                 </tr>
                             </thead>
-                            <tbody id="user-content">
+                            <tbody id="customer-content">
 
                             </tbody>
                         </table>
@@ -280,29 +287,28 @@
             </div>
         </div>
 
-    <!-- DataTable Query -->
+        <!-- DataTable Query -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
         <script>
             function load_data() {
                 $.ajax({
-                    url: "/ProyekManpro/services/manager_get_all_activity.php",
+                    url: "/ProyekManpro/services/get_customer_manajer.php",
                     method: "GET",
                     success: function(data) {
+                        var cek=false;
                         var co = 1;
-                        $("#user-content").html('');
-                        data.forEach(function(aktivitas){
+                        $("#customer-content").html('');
+                        data.forEach(function(customer){
                             var row = $("<tr></tr>");
-                            var col1 = $("<td>" + co + "</td>");
-                            var col2 = $("<td>" + aktivitas['id_aktivitas'] + "</td>");
-                            var col3 = $("<td>" + aktivitas['nama'] + "</td>");
-                            var col4 = $("<td>" + aktivitas['nama_sales'] + "</td>");
-                            var target_file = aktivitas['foto_kunjungan'];
-                            var col5 = $("<td><img src='" + target_file  + "' style='width:250px; height:auto;'></td>");
-                            var col6 = $("<td>" + aktivitas['foto_kunjungan'] + "</td>");
-                            //var changeHarga = 
-                            var col7 = $("<td>" + aktivitas['jadwal_kunjungan'] + "</td>");
-
+                            var col1 = $("<td scope='col' >" + co + "</td>");
+                            var col2 = $("<td scope='col' >" + customer['id_customer'] + "</td>");
+                            var col3 = $("<td scope='col'>" + customer['nama'] + "</td>");
+                            var col4 = $("<td scope='col'>" + customer['alamat'] + "</td>");
+                            var col5 = $("<td scope='col'>" + customer['no_telp'] + "</td>");
+                            var col6 = $("<td scope='col'>" + customer['terakhir_dikunjungi'] + "</td>");
+                            var col7 = $("<td scope='col'>" + customer['nama_sales'] + "</td>");
+                            
                             col1.appendTo(row);
                             col2.appendTo(row);
                             col3.appendTo(row);
@@ -311,13 +317,19 @@
                             col6.appendTo(row);
                             col7.appendTo(row);
 
+                            var btn = $('<td scope="col"></td>');
+                            var edit = $('<a href="Edit_Customer_Manajer.php?id=' + customer['id_customer'] + '" id="edit-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#edit"/></svg></a>')
+                                                   
+                            edit.appendTo(btn);
+                            btn.appendTo(row); 
                             co++;
-                            $("#user-content").append(row);
-                        })
+                            $("#customer-content").append(row);
+                        });
                         $('#tableImage').DataTable();
                     },
                     error: function(data) {
-                    }  
+                        alert("load data error!");
+                    }
                 });
             }
             $(document).ready(function(){
