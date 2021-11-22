@@ -60,17 +60,12 @@
                             var col1 = $("<td>" + count + "</td>");
                             var col2 = $("<td>" + item['nama_produk'] + "</td>");
                             var col3 = $("<td>" + item['harga_produk'] + "</td>");
-                            var col4 = $("<td><input type='number' name='inp' id='inpqty' required value = '<?php echo 2 ?>'></input></td>");
+                            var col4 = $("<td><input type='number' name='inp' id='inpqty' required value = '<?php echo 0 ?>'></input></td>");
                             
                             var btn = $('<td scope="col"></td>');
                             var add = $('<a href="#" id="add-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#basket"/></svg></a>');
                             var add2 = $('<a href="#" id="inp-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#basket"/></svg></a>');
 
-                            add.data('id_produk', item['id_produk']);
-                            add2.data('qty', $("#inpqty").val());
-                            console.log(item['id_produk']);
-                            console.log(item['harga_produk'] * $("#inpqty").val());
-                            
 
                             col1.appendTo(row);
                             col2.appendTo(row);
@@ -81,6 +76,11 @@
                             btn.appendTo(row);
                             count++;
                             $("#product-list").append(row);
+                            add.data('id_produk', item['id_produk']);
+                            add2.data('qty', $("#inpqty").val());
+
+                            console.log("Product ID ->" + item['id_produk']);
+                            console.log(("Qty ->") + $("#inpqty").val());
                         });
                         $("#tableImage").DataTable();
                     },
@@ -90,6 +90,7 @@
                 });
             }
             $(document).ready(function(){
+
                 $("#product-list").on("click", "[id='add-btn']", function(){
                     var id_produk = $(this).data('id_produk');
                     console.log(id_produk);
@@ -101,16 +102,54 @@
                     //     },
                     // });
                 });
-                $("#product-list").on("click", "[id='inp-btn']", function(){
-                    var qty = $(this).data('qty');
-                    console.log(qty);
-                    // $.ajax({
-                    //     url: "./services/addorderdetail.php",
-                    //     method: "POST",
-                    //     data: {
+                $("#inp-btn").on("click", function(){
+                    var str = $('#qtyform').serializeArray();
+                    //console.log(str);
+                    var arr_id = [];
+                    var detailorder_id;
+                    var id_order = "<?php echo $_GET['ids'];?>"
+                    $.ajax({
+                        url:"./services/getproductlist.php",
+                        method: "GET",
+                        success: function(res){
+                            res.forEach(function(item){
+                                arr_id.push(item['id_produk']);
+                            });
 
-                    //     },
-                    // });
+                            $.ajax({
+                                url: "./services/getdetailorderlist.php",
+                                method: "POST",
+                                success: function(res){
+                                    res.forEach(function(item){
+                                        detailorder_id = item['id_detail_order'] + 1;
+                                        console.log(detailorder_id);
+                                    });
+                                }
+                            });
+                            
+                            $.ajax({
+                                url: "./services/addorderdetail.php",
+                                method: "POST",
+                                data: {
+                                    str : str,
+                                    arr_id : arr_id,
+                                    id_order : id_order,
+                                    detailorder_id : detailorder_id
+                                },
+                                success: function(data){
+                                    //$('#qtyform')[0].reset();
+                                    //console.log(arr_id);
+                                    //console.log(data);
+                                },
+                                error: function(){
+                                    alert('nono');
+                                }
+                            });
+                        },
+                        error: function(){
+                            alert('fail');
+                        }
+                    });
                 });
             });
             function getProductPerOrder(){
@@ -131,7 +170,7 @@
                         res.forEach(function(item){
                             var html = $(`
                                 <tr class="centerd">
-                                <td class="centerd">`+ item['id_produk'] +`</td>
+                                <td class="centerd">`+ item['nama_produk'] +`</td>
                                 <td class="centerd">`+ item['kuantitas'] +`</td>
                                 <td class="centerd">`+ item['harga_produk'] +`</td>
                                 <td class="centerd">`+ item['kuantitas']*item['harga_produk'] +`</td>
@@ -146,7 +185,7 @@
                     }
                 });
             }
-            function addProduct(){
+            function getProductId(){
 
             }
             function init(){
@@ -160,12 +199,8 @@
 <body onload="init()">
     <div class="container">
         <div class="transparent">
-            <!--<div id="product-list" class="transparentadd"></div>-->
             <div>
-                Added Items
-                <div id="product-order"></div>
-            </div>
-                <div>
+                <form id="qtyform">
                     <table id="tableImage" class="table table-hover table-striped table-bordered">
                         <thead>
                             <tr>
@@ -180,7 +215,13 @@
                                 
                         </tbody>
                     </table>
-                </div>
+                </form>
+            </div>
+            <div><button class="btn btn-danger" id="inp-btn">Submit</button></div>
+            <div>
+                Added Items
+                <div id="product-order"></div>
+            </div>
         </div>
     </div>
 </body>
