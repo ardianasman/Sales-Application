@@ -26,6 +26,12 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/navbar.css"> 
+
+        <!-- CSS Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
         
         <style>
         .centertd{
@@ -197,6 +203,22 @@
 </head>
 
 <body onload="init()">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+        <a class="judul" href="#">Prototype Sales</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="show_image_upload.php">Activity</a>
+                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
+                <a class="nav-item nav-link active" href="manage_order.php">Order</a>
+                <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
+                <a class="nav-item nav-link" href="logout.php">Logout</a>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <div class="transparent">
             <div>

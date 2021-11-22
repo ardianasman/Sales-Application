@@ -13,6 +13,7 @@
         $sql = "INSERT INTO `customer` VALUES(?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id_customer, $id_sales, $nama_cust, $alamat_cust, $no_cust, "0000-00-00"]);
+        header("Location: ..\ListCustomer.php");
     }
     else
     {

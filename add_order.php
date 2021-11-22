@@ -25,6 +25,12 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
         <script src="https://use.fontawesome.com/504410ced2.js"></script>
         <link rel="stylesheet" href="css\managerorder.css">
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/navbar.css"> 
+
+        <!-- CSS Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
         
         <style>
             .centertd{
@@ -110,6 +116,22 @@
 </style>
 
 <body onload="init()">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+        <a class="judul" href="#">Prototype Sales</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="show_image_upload.php">Activity</a>
+                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
+                <a class="nav-item nav-link active" href="manage_order.php">Order</a>
+                <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
+                <a class="nav-item nav-link" href="logout.php">Logout</a>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <div class="transparent">
                 <form method="POST" action="./services/addorder.php" enctype="multipart/form-data">

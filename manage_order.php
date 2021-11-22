@@ -21,8 +21,13 @@
         <script src="https://use.fontawesome.com/504410ced2.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css\managerorder.css">
-        <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
-        <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/navbar.css"> 
+
+        <!-- CSS Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 
     <style>
         .centertd{
@@ -40,24 +45,50 @@
                 method: "POST",
                 success: function(res){
                     $("#order-list").html('');
-                    var table = $("<table id='data_table' class='table'></table>");
-                    var title = $("<thead><tr style=text-align:center;><td><b>Order ID</b></td><td><b>Sales ID</b></td><td><b>Tanggal Order</b></td><td><b> </b></td><td><b> </b></td></tr></thead>");
-                    table.append(title);
+                    // var table = $("<table id='data_table' class='table'></table>");
+                    // var title = $("<thead><tr style=text-align:center;><td><b>Order ID</b></td><td><b>Sales Name</b></td><td><b>Tanggal Order</b></td><td><b>Total</b></td><td><b> </b></td><td><b> </b></td></tr></thead>");
+                    // table.append(title);
+                    // res.forEach(function(item){
+                    //     var html = $(`
+                    //         <tr class="centertd">
+                    //         <td>`+ item['id_order'] +`</td>
+                    //         <td>` + item['nama'] + `</td>
+                    //         <td>`+ item['tanggal_order'] +`</td>
+                    //         <td>`+ item['total_harga'] +`</td>
+                    //         <td><a href="./edit_order.php?ids=`+ item['id_order'] +`" class="btn btn-primary">Edit</a></td>
+                    //         <td><a href="./detail_order.php?ids=`+ item['id_order'] +`" class="btn btn-primary">Detail</a></td>
+                            
+                            
+                    //         </tr>
+                    //     `);                       
+                    //     table.append(html);
+                    // });
+                    // $("#order-list").append(table);
+                    var count = 1;
                     res.forEach(function(item){
-                        var html = $(`
-                            <tr class="centertd">
-                            <td>`+ item['id_order'] +`</td>
-                            <td>` + item['id_sales'] + `</td>
-                            <td>`+ item['tanggal_order'] +`</td>
-                            <td><a href="./edit_order.php?ids=`+ item['id_order'] +`" class="btn btn-primary">Edit</a></td>
-                            <td><a href="./detail_order.php?ids=`+ item['id_order'] +`" class="btn btn-primary">Detail</a></td>
+                            var row = $("<tr></tr>");
+                            var col1 = $("<td>" + count + "</td>");
+                            var col2 = $("<td>" + item['id_order'] + "</td>");
+                            var col3 = $("<td>" + item['nama'] + "</td>");
+                            var col4 = $("<td>" + item['tanggal_order'] + "</td>");
+                            var col5 = $("<td>" + item['total_harga'] + "</td>");
                             
-                            
-                            </tr>
-                        `);                       
-                        table.append(html);
+                            var btn = $('<td scope="col"></td>');
+                            var edit = $('<a href="./edit_order.php?ids='+ item['id_order'] +'" class="btn btn-primary" style="margin-left: 25px;">Edit</a>');
+                            var detail = $('<a href="./detail_order.php?ids='+ item['id_order'] +'" class="btn btn-primary" style="margin-left: 55px;">Detail</a>');
+
+                            col1.appendTo(row);
+                            col2.appendTo(row);
+                            col3.appendTo(row);
+                            col4.appendTo(row);
+                            col5.appendTo(row);
+                            edit.appendTo(btn);
+                            detail.appendTo(btn);
+                            btn.appendTo(row);
+                            count++;
+                            $("#order-list").append(row);
                     });
-                    $("#order-list").append(table);
+                    $("#tableImage").DataTable();
                 },
                 error: function(){
                     alert('fail');
@@ -68,12 +99,48 @@
 </head>
 
 <body onload="getItem()">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+        <a class="judul" href="#">Prototype Sales</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="show_image_upload.php">Activity</a>
+                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
+                <a class="nav-item nav-link active" href="manage_order.php">Order</a>
+                <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
+                <a class="nav-item nav-link" href="logout.php">Logout</a>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <div class="transparent">
             <?php
                 $item = $stmt->fetch()?>
-                <button onclick="location.href = `./add_order.php?ids=`+ <?php if($stmt->rowCount() == 0){$tot = 1;} else{$tot = $item['id_order'] + 1;} echo $tot; ?>">Add Order</button>
-                <div id="order-list" class="transparent"> </div>
+                <button class="btn btn-success" style="float: right; margin-right: 15px; margin-top: 15px;" onclick="location.href = `./add_order.php?ids=`+ <?php if($stmt->rowCount() == 0){$tot = 1;} else{$tot = $item['id_order'] + 1;} echo $tot; ?>">Add Order</button>
+                <!-- <div id="order-list" class="transparent"> </div>-->
+
+                <div>
+                    <form>
+                        <table id="tableImage" class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="5%" data-sortable="true">#</th>
+                                    <th width="15%" data-sortable="true">Order ID</th>
+                                    <th width="25%" data-sortable="true">Sales Name</th>
+                                    <th width="25%" data-sortable="true">Tanggal Order</th>
+                                    <th wdith="15%" data-sortable="true">Total</th>
+                                    <th wdith="15%" data-sortable="true">Attributes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="order-list">
+                                    
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
         </div>
     </div>
 </body>

@@ -45,6 +45,7 @@ if (!isset($_SESSION['id'])) {
                 <a class="nav-item nav-link " href="index.php">Home</a><span class="sr-only">(current)</span>
                 <a class="nav-item nav-link " href="show_activity.php">Activity</a>
                 <a class="nav-item nav-link active" href="#">Customer</a>
+                <a class="nav-item nav-link" href="manage_order.php">Order</a>
                 <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
                 <a class="nav-item nav-link" href="logout.php">Logout</a>
             </div>
@@ -61,6 +62,7 @@ if (!isset($_SESSION['id'])) {
                     <h3 class="title">List Customer</h3>
                 </div>
             </div>
+            <div class="row pt-4"><div  class="col-6"><a href = "add_customer.php"><button class="btn btn-success">New Customer</button></a></div></div>
             <div class="row pt-4">
                 <div class="col-12 table-responsive-sm">
                     <table class="table table-hover table-striped table-bordered" id="sortTable">

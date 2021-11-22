@@ -3,7 +3,7 @@
     header("Content-Type: application/json");
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
-        $sql = "SELECT * FROM `order`";
+        $sql = "SELECT d.id_order, d.tanggal_order, d.total_harga, p.nama FROM `order` d JOIN `sales` p ON d.id_sales = p.id_sales";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
