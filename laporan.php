@@ -1,8 +1,8 @@
 <?php
-    include $_SERVER['DOCUMENT_ROOT'] . "/ProyekManpro/services/database.php";
-        if (!isset($_SESSION['id'])) {
-            header("Location:login_manajer.php");
-        }
+include $_SERVER['DOCUMENT_ROOT'] . "/ProyekManpro/services/database.php";
+if (!isset($_SESSION['id'])) {
+    header("Location:login_manajer.php");
+}
 ?>
 <!doctype html>
 
@@ -23,7 +23,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <!-- <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script> -->
-    <script src="    https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -332,7 +333,7 @@
                     </div>
                     <div class="col-12">
                         <div class="d-flex justify-content-center mt-3">
-                            <button type="button" class="btn btn-outline-secondary ml-md-4" id="updatebutton" onclick="updatetanggal()">Update Tanggal</button>
+                            <button type="button" class="containeropsi2 ml-md-4" id="updatebutton" onclick="updatetanggal()">Update Tanggal</button>
                         </div>
                     </div>
                 </div>
@@ -387,7 +388,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 table-responsive-sm">
                         <table id="tablelaporan" class="table table-striped table-hover" style="width:100%;">
                             <thead>
                                 <tr>
@@ -478,7 +479,7 @@
         //add commas to string
 
 
-        function updatetanggal(){
+        function updatetanggal() {
             load_data();
             //reset all filter
             $('#global_filter').val('');
@@ -952,7 +953,7 @@
             width: 200px;
             cursor: pointer;
             border: 3px solid rgb(97, 163, 214);
-            color: black;
+            color: rgb(97, 163, 214);
             border-radius: 10px;
             height: 50px;
             transition: ease .5s;
@@ -970,13 +971,47 @@
             transition: ease .5s;
         }
 
+        .containeropsi2 {
+            width: 150px;
+            cursor: pointer;
+            border: 2px solid rgb(97, 163, 214);
+            color: rgb(97, 163, 214);
+            border-radius: 10px;
+            height: 50px;
+            transition: ease .5s;
+            background-color: transparent;
+        }
+
+        .containeropsi2:hover {
+            text-decoration: none;
+            background-color: rgb(97, 163, 214);
+            color: white;
+            transition: ease .5s;
+        }
+
+        #tanggalmulai,
+        #tanggalsampai {
+            /* make it rounded border and border color like containeropsi2*/
+            border-radius: 10px;
+            border: 2px solid rgb(97, 163, 214);
+            padding: 5px;
+        }
+
         .table {
             margin-bottom: 0px !important;
         }
 
-        #dropdown1{
+        #dropdown1 {
             width: 189px;
             height: 30px;
+        }
+
+        #dropdown1,
+        .global_filter,
+        .column_filter {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 3px;
         }
     </style>
 </body>

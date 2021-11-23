@@ -21,7 +21,8 @@ if (!isset($_SESSION['id'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="    https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -338,7 +339,7 @@ if (!isset($_SESSION['id'])) {
                         <div class="col-12">
                             <!-- <input class="form-control" id="myInput" type="text" placeholder="Masukan Nama..."> -->
                             <div class="d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-secondary ml-md-4" id="updatebutton" onclick="updatebulan()">Update Bulan</button>
+                                <button type="button" class="containeropsi2 ml-md-4" id="updatebutton" onclick="updatebulan()">Update Bulan</button>
                             </div>
                         </div>
                     </div>
@@ -758,7 +759,7 @@ if (!isset($_SESSION['id'])) {
             width: 200px;
             cursor: pointer;
             border: 3px solid rgb(97, 163, 214);
-            color: black;
+            color: rgb(97, 163, 214);
             border-radius: 10px;
             height: 50px;
             transition: ease .5s;
@@ -776,6 +777,38 @@ if (!isset($_SESSION['id'])) {
             transition: ease .5s;
         }
 
+        .containeropsi2 {
+            width: 150px;
+            cursor: pointer;
+            border: 2px solid rgb(97, 163, 214);
+            color: rgb(97, 163, 214);
+            border-radius: 10px;
+            height: 50px;
+            transition: ease .5s;
+            background-color: transparent;
+        }
+
+        .containeropsi2:hover {
+            text-decoration: none;
+            background-color: rgb(97, 163, 214);
+            color: white;
+            transition: ease .5s;
+        }
+
+        
+        #inputbulan, #inputtahun {
+            /* make it rounded border and border color like containeropsi2*/
+            border-radius: 10px;
+            border: 2px solid rgb(97, 163, 214);
+            padding: 5px;
+            transition:ease .5s;
+
+        }
+        #inputbulan:focus, #inputtahun:focus {
+            transform: scale(1.1);
+            transition:ease .5s;
+        }
+
         .table {
             margin-bottom: 0px !important;
         }
@@ -783,6 +816,14 @@ if (!isset($_SESSION['id'])) {
         #dropdown1 {
             width: 189px;
             height: 30px;
+        }
+
+        #dropdown1,
+        .global_filter,
+        .column_filter {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 3px;
         }
     </style>
 </body>
