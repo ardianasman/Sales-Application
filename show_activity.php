@@ -78,11 +78,12 @@ if (!isset($_SESSION['id'])) {
                     <thead>
                         <tr>
                             <th width="5%">No</th>
-                            <th width="25%">Nama Customer</th>
+                            <th width="20%">Nama Customer</th>
                             <th width="10%">Id Aktivitas</th>
                             <th width="15%">Nomor Telp</th>
-                            <th width="25%">Alamat Customer</th>
-                            <th wdith="20%">Tools</th>
+                            <th width="20%">Alamat Customer</th>
+                            <th width="15%">Check In Button</th>
+                            <th wdith="15%">Tools</th>
                         </tr>
                     </thead>
                     <tbody id="user-content">
@@ -105,6 +106,7 @@ if (!isset($_SESSION['id'])) {
 <script>
 
 function load_data() {
+    
     $.ajax({
         url: "/ProyekManpro/services/get_all_activity.php",
             method: "GET",
@@ -125,11 +127,16 @@ function load_data() {
                 col4.appendTo(row);
                 col5.appendTo(row);
 
+                //Check-in Button
+                var tools_1 = $("<td ></td>");
+                var check_in = $('<button id="check-in-btn" class="btn btn-warning">Check-In<i class="lnr lnr-pencil"></i></button>');
                 // Tools
                 var tools = $("<td ></td>");
                 var add_btn = $('<a href = "fiturUpload.php?id='+simpan['id_aktivitas']+'"><button type="button" class="btn btn-secondary" >Add  <i class="fas fa-plus-circle"></i></button></a>');
-                            
+
+                check_in.appendTo(tools_1);            
                 add_btn.appendTo(tools);
+                tools_1.appendTo(row);
                 tools.appendTo(row);
 
                 co++;
@@ -146,6 +153,33 @@ function load_data() {
 $(document).ready(function(){
     load_data();
     // 
+});
+
+$("#user-content").on("click", "[id='check-in-btn']", function(){
+    var posisi_lt = 0;
+    var posisi_lg = 0;
+    var timestamp = 0;
+    navigator.geolocation.getCurrentPosition(function(position){
+        posisi_lt = position.coords.latitude;
+        posisi_lg = position.coords.longitude;
+        timestamp = position.timestamp;
+        $.ajax({
+            url: '/ProyekManpro/services/check_position.php',
+            method: 'POST',
+            data: {
+                posisi_lt: posisi_lt,
+                posisi_lg: posisi_lg
+            },
+            success: function(data) {
+                alert("Success");
+            },
+            error: function($xhr, textStatus, errorThrown) {
+                alert($xhr.responseJSON['error']);
+            }
+        });
+        
+    });        
+            
 });
 
 

@@ -14,8 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $plt = $_POST['posisi_lt'];
-    $plg = $_POST['posisi_lg'];
+    
 
     if ($username == '' || $password == '') {
         header("HTTP/1.1 400 Bad Request");
@@ -37,9 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['email'] = $user['email'];
             $simpanid = $user['id_sales'];
 
-            $sql_1 = "UPDATE sales SET track_lat = ?, track_lng = ? WHERE id_sales = ?";
-            $test_2 = $pdo->prepare($sql_1);
-            $test_2->execute([$plt,$plg,$simpanid]);
+            
         } else {
             header("HTTP/1.1 400 Bad Request");
             $result['status'] = 0;
