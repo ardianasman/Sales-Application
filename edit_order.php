@@ -143,8 +143,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Total Harga : </label>
-                                    <input class="form-control w-25" name="utotal" value="<?php echo $item['total_harga']; ?>">
-                                </div>
+                                    <input class="form-control w-25" name="utotal" value="<?php echo number_format($item['total_harga'],0,'','.') ;?>" readonly>
+                                </div> 
                                 <div class="form-group">
                                     <label>Status Order : </label>
                                     <input class="form-control w-25" id="ustat" name="ustatus" value="<?php echo $item['status_order']; ?>">
