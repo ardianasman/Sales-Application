@@ -9,10 +9,18 @@ nav {
     font-weight: bold;
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .navbar-nav{
     color: white;
+}
+.navbar-collapse ul{
+    display: inline-flex;
+    list-style: none;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .nav-item{
@@ -21,5 +29,16 @@ nav {
 
 .judul-status{
     text-align: center;
-    
+}
+.navbar-collapse ul li:hover .dropdown-menu{
+    display: block;
+    background-color: #937861;
+    margin-top: 0px;
+}
+.dropdown-menu a{
+    color: #d1cdce;
+}
+.dropdown-menu a:hover{
+    color: white;
+    background-color: #937861;
 }

@@ -80,22 +80,29 @@ if (!isset($_SESSION['id'])) {
     
     <div class="col-12 bg-home-sales p-sm-3 ">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent ">
-                <a class="judul nav-link" href="index.php">Prototype Sales</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav ml-auto">
-                        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                        <a class="nav-item nav-link" href="show_activity.php">Activity</a>
-                        <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
-                        <!-- <a class="nav-item nav-link" href="laporan.php">Laporan</a> -->
-                        <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
-                        <a class="nav-item nav-link" href="logout.php">Logout</a>
-                    </div>
-                </div>
-        </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <a class="judul" href="#">Prototype Sales</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <ul>
+                    <li><a class="nav-item nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item dropdown"><a class="nav-link" id="navbarDropdownMenuLink"aria-haspopup="true" aria-expanded="false">Activity</a>
+                        <div class="dropdown-menu bg-transparent" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="show_activity.php">Sales Activity</a>
+                            <a class="dropdown-item" href="add_rencanakungjungan.php">Visit Plan</a>
+                        </div>
+                    </li>
+                    <li><a class="nav-item nav-link" href="ListCustomer.php">Customer</a></li>
+                    <li><a class="nav-item nav-link" href="manage_order.php">Order</a></li>
+                    <li><a class="nav-item nav-link" href="profile_sales.php">Profile</a></li>
+                    <li><a class="nav-item nav-link" href="logout.php">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
         <div class="col-12 welcome-statement m-sm-3 p-sm-3">
             <h2 class="tulisanSatu">Welcome,</h2>

@@ -49,9 +49,8 @@
             function getData(){
                 var idorder = sessionStorage.getItem("idorder");
                 var idcust = sessionStorage.getItem("idcust");
-                var iduang = sessionStorage.getItem("iduang");
-                var iddiskon = sessionStorage.getItem("iddiskon");
-                var idpajak = sessionStorage.getItem("idpajak");
+                //
+                //
             }
             function getProduct(){
                 $.ajax({
@@ -68,17 +67,17 @@
                             var col3 = $("<td>" + item['harga_produk'] + "</td>");
                             var col4 = $("<td><input type='number' name='inp' id='inpqty' required value = '<?php echo 0 ?>'></input></td>");
                             
-                            var btn = $('<td scope="col"></td>');
-                            var add = $('<a href="#" id="add-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#basket"/></svg></a>');
-                            var add2 = $('<a href="#" id="inp-btn"><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#basket"/></svg></a>');
+                            var btn = $('<td scope="col" hidden></td>');
+                            var add = $('<a href="#" id="add-btn" hidden><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#basket"/></svg></a>');
+                            var add2 = $('<a href="#" id="inp-btn" hidden><svg class="bi me-2" width="16" height="16" style="color: black; margin-left: 10px;"><use xlink:href="#basket"/></svg></a>');
 
 
                             col1.appendTo(row);
                             col2.appendTo(row);
                             col3.appendTo(row);
                             col4.appendTo(row);
-                            add.appendTo(btn);
-                            add2.appendTo(btn);
+                            // add.appendTo(btn);
+                            // add2.appendTo(btn);
                             btn.appendTo(row);
                             count++;
                             $("#product-list").append(row);
@@ -96,24 +95,15 @@
                 });
             }
             $(document).ready(function(){
-
-                $("#product-list").on("click", "[id='add-btn']", function(){
-                    var id_produk = $(this).data('id_produk');
-                    console.log(id_produk);
-                    // $.ajax({
-                    //     url: "./services/addorderdetail.php",
-                    //     method: "POST",
-                    //     data: {
-
-                    //     },
-                    // });
-                });
                 $("#inp-btn").on("click", function(){
                     var str = $('#qtyform').serializeArray();
                     //console.log(str);
                     var arr_id = [];
                     var detailorder_id;
                     var id_order = "<?php echo $_GET['ids'];?>"
+                    var iduang = sessionStorage.getItem("iduang");
+                    var iddiskon = sessionStorage.getItem("iddiskon");
+                    var idpajak = sessionStorage.getItem("idpajak");
                     $.ajax({
                         url:"./services/getproductlist.php",
                         method: "GET",
@@ -128,7 +118,7 @@
                                 success: function(res){
                                     res.forEach(function(item){
                                         detailorder_id = item['id_detail_order'] + 1;
-                                        console.log(detailorder_id);
+                                        
                                     });
                                 }
                             });
@@ -140,15 +130,16 @@
                                     str : str,
                                     arr_id : arr_id,
                                     id_order : id_order,
-                                    detailorder_id : detailorder_id
+                                    detailorder_id : detailorder_id,
+                                    iduang : iduang,
+                                    idpajak : idpajak,
+                                    iddiskon : iddiskon
                                 },
                                 success: function(data){
-                                    //$('#qtyform')[0].reset();
-                                    //console.log(arr_id);
-                                    //console.log(data);
+                                    window.location.href = "manage_order.php";
                                 },
-                                error: function(){
-                                    alert('nono');
+                                error: function(data){
+                                    alert(data);
                                 }
                             });
                         },
@@ -158,46 +149,9 @@
                     });
                 });
             });
-            function getProductPerOrder(){
-                var id_order = "<?php echo $_GET['ids'];?>"
-                console.log(id_order);
-                $.ajax({
-                    url: "./services/getProductPerOrder.php",
-                    method: "POST",
-                    data: {
-                        id_order : id_order
-                    },
-                    success: function(res){
-                        $("#product-order").html('');
-                        var table = $("<table id='data_table' class='table'></table>");
-                        var title = $("<thead><tr style=text-align:center;><td><b>Product</b></td><td><b>Quantity</b></td><td><b>Harga</b></td><td><b>Sub Total</b></td><td><b> </b></td></tr></thead>");
-                        table.append(title);
-                        res = JSON.parse(res);
-                        res.forEach(function(item){
-                            var html = $(`
-                                <tr class="centerd">
-                                <td class="centerd">`+ item['nama_produk'] +`</td>
-                                <td class="centerd">`+ item['kuantitas'] +`</td>
-                                <td class="centerd">`+ item['harga_produk'] +`</td>
-                                <td class="centerd">`+ item['kuantitas']*item['harga_produk'] +`</td>
-                                </tr>
-                            `);
-                            table.append(html);
-                        })
-                    $("#product-order").append(table);
-                    },
-                    error: function(){
-                        alert('failx')
-                    }
-                });
-            }
-            function getProductId(){
-
-            }
             function init(){
                 getData();
                 getProduct();
-                getProductPerOrder();
             }
         </script>
 </head>
@@ -230,7 +184,7 @@
                                 <th width="30%" data-sortable="true">Nama Produk</th>
                                 <th width="30%" data-sortable="true">Harga</th>
                                 <th width="25%" data-sortable="true">Quantity</th>
-                                <th wdith="15%" data-sortable="true">Attributes</th>
+                                <th wdith="15%" data-sortable="true" hidden>Attributes</th>
                             </tr>
                         </thead>
                         <tbody id="product-list">
@@ -240,10 +194,6 @@
                 </form>
             </div>
             <div><button class="btn btn-danger" id="inp-btn">Submit</button></div>
-            <div>
-                Added Items
-                <div id="product-order"></div>
-            </div>
         </div>
     </div>
 </body>

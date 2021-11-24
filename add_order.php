@@ -65,12 +65,14 @@
                 sessionStorage.setItem("idorder", id_order);
                 var id_customer = $("#data-list").find(":selected").text();
                 sessionStorage.setItem("idcust", id_customer);
+                //
                 var matauang = $("#iduang").val();
                 sessionStorage.setItem("iduang", matauang);
                 var pajak = $("#idpajak").val();
                 sessionStorage.setItem("idpajak", pajak);
                 var diskon = $("#iddiskon").val();
                 sessionStorage.setItem("iddiskon", diskon);
+                //
                 
                 var date = new Date($("#idtglorder").val());
                 var day = date.getDate();

@@ -33,6 +33,9 @@
         .centertd{
             text-align: center;
         }
+        th {
+            text-align: center;
+        }
     </style>
 
     
@@ -45,25 +48,7 @@
                 method: "POST",
                 success: function(res){
                     $("#order-list").html('');
-                    // var table = $("<table id='data_table' class='table'></table>");
-                    // var title = $("<thead><tr style=text-align:center;><td><b>Order ID</b></td><td><b>Sales Name</b></td><td><b>Tanggal Order</b></td><td><b>Total</b></td><td><b> </b></td><td><b> </b></td></tr></thead>");
-                    // table.append(title);
-                    // res.forEach(function(item){
-                    //     var html = $(`
-                    //         <tr class="centertd">
-                    //         <td>`+ item['id_order'] +`</td>
-                    //         <td>` + item['nama'] + `</td>
-                    //         <td>`+ item['tanggal_order'] +`</td>
-                    //         <td>`+ item['total_harga'] +`</td>
-                    //         <td><a href="./edit_order.php?ids=`+ item['id_order'] +`" class="btn btn-primary">Edit</a></td>
-                    //         <td><a href="./detail_order.php?ids=`+ item['id_order'] +`" class="btn btn-primary">Detail</a></td>
-                            
-                            
-                    //         </tr>
-                    //     `);                       
-                    //     table.append(html);
-                    // });
-                    // $("#order-list").append(table);
+                    
                     var count = 1;
                     res.forEach(function(item){
                             var row = $("<tr></tr>");
@@ -71,21 +56,49 @@
                             var col2 = $("<td>" + item['id_order'] + "</td>");
                             var col3 = $("<td>" + item['nama'] + "</td>");
                             var col4 = $("<td>" + item['tanggal_order'] + "</td>");
-                            var col5 = $("<td>" + item['total_harga'] + "</td>");
-                            
-                            var btn = $('<td scope="col"></td>');
-                            var edit = $('<a href="./edit_order.php?ids='+ item['id_order'] +'" class="btn btn-primary" style="margin-left: 25px;">Edit</a>');
-                            var detail = $('<a href="./detail_order.php?ids='+ item['id_order'] +'" class="btn btn-primary" style="margin-left: 55px;">Detail</a>');
-
+                            var idorderget = item['id_order'];
                             col1.appendTo(row);
                             col2.appendTo(row);
                             col3.appendTo(row);
                             col4.appendTo(row);
-                            col5.appendTo(row);
-                            edit.appendTo(btn);
-                            detail.appendTo(btn);
-                            btn.appendTo(row);
-                            count++;
+                            
+                            $.ajax({
+                                url: "./services/gettotal.php",
+                                method: "POST",
+                                data: {
+                                    idorderget : idorderget
+                                },
+                                success : function(res){
+                                    var total = 0;
+                                    var col5 = $("<td>" + total + "</td>");
+                                    res.forEach(function(data){
+                                        var subtotal = data['kuantitas'] * data['harga_produk'];
+                                        total = total + subtotal;
+                                    });
+                                    //console.log(total);
+                                    $.ajax({
+                                        url: "./services/updatetotal.php",
+                                        method: "POST",
+                                        data: {
+                                            idorderget : idorderget,
+                                            total : total
+                                        },
+                                        success: function(res){
+
+                                        }
+                                    });
+                                    col5 = $("<td>" + total + "</td>");
+                                    var btn = $('<td scope="col"></td>');
+                                    var edit = $('<a href="./edit_order.php?ids='+ item['id_order'] +'" class="btn btn-primary" style="margin-left: 25px;">Edit</a>');
+                                    var detail = $('<a href="./detail_order.php?ids='+ item['id_order'] +'" class="btn btn-primary" style="margin-left: 55px;">Detail</a>');
+
+                                    col5.appendTo(row);
+                                    edit.appendTo(btn);
+                                    detail.appendTo(btn);
+                                    btn.appendTo(row);
+                                    count++;
+                                }
+                            });
                             $("#order-list").append(row);
                     });
                     $("#tableImage").DataTable();
@@ -106,12 +119,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="show_image_upload.php">Activity</a>
-                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
-                <a class="nav-item nav-link active" href="manage_order.php">Order</a>
-                <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
-                <a class="nav-item nav-link" href="logout.php">Logout</a>
+                <ul>
+                    <li><a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item dropdown"><a class="nav-link" id="navbarDropdownMenuLink"aria-haspopup="true" aria-expanded="false">Activity</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="show_activity.php">Sales Activity</a>
+                            <a class="dropdown-item" href="add_rencanakungjungan.php">Visit Plan</a>
+                        </div>
+                    </li>
+                    <li><a class="nav-item nav-link" href="ListCustomer.php">Customer</a></li>
+                    <li><a class="nav-item nav-link active" href="manage_order.php">Order</a></li>
+                    <li><a class="nav-item nav-link" href="profile_sales.php">Profile</a></li>
+                    <li><a class="nav-item nav-link" href="logout.php">Logout</a></li>
+                </ul>
             </div>
         </div>
     </nav>
