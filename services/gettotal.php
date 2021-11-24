@@ -5,7 +5,7 @@
     $idorder = $_POST["idorderget"];
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
-        $sql = "SELECT d.id_order, q.id_produk, q.kuantitas, w.harga_produk FROM `order` d
+        $sql = "SELECT d.id_order, q.id_produk, q.kuantitas, w.harga_produk, q.diskon FROM `order` d
         JOIN `sales` p ON d.id_sales = p.id_sales
         JOIN `detail_order` q ON d.id_order = q.id_order
         JOIN `produk` w ON q.id_produk = w.id_produk

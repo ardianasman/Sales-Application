@@ -71,10 +71,13 @@
                                 success : function(res){
                                     var total = 0;
                                     var col5 = $("<td>" + total + "</td>");
+                                    var disc = 1;
                                     res.forEach(function(data){
                                         var subtotal = data['kuantitas'] * data['harga_produk'];
+                                        disc = data['diskon'];
                                         total = total + subtotal;
                                     });
+                                    total = total - (total * disc / 100);
                                     //console.log(total);
                                     $.ajax({
                                         url: "./services/updatetotal.php",
