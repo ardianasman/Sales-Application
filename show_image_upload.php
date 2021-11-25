@@ -27,19 +27,36 @@ if (!isset($_SESSION['id'])) {
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="judul" href="#">Prototype Sales</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link active" href="show_activity.php">Activity</a>
-                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
-                <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
-                <a class="nav-item nav-link" href="logout.php">Logout</a>
-            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active dropdown"><a class="nav-link" id="navbarDropdownMenuLink"aria-haspopup="true" aria-expanded="false">Activity</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="show_activity.php">Sales Activity</a>
+                        <a class="dropdown-item" href="add_rencanakungjungan.php">Visit Plan</a>
+                        <a class="dropdown-item" href="lihat_status_kunjungan.php">Plan Status</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ListCustomer.php">Customer <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="manage_order.php">Order <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile_sales.php">Profile <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.php">Logout <span class="sr-only"></span></a>
+                </li>
+            </ul>
         </div>
     </nav>
 
