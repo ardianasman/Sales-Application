@@ -297,9 +297,13 @@
                             var col2 = $("<td>" + aktivitas['id_aktivitas'] + "</td>");
                             var col3 = $("<td>" + aktivitas['nama'] + "</td>");
                             var col4 = $("<td>" + aktivitas['nama_sales'] + "</td>");
+                            if(aktivitas['status_kunjungan'] == 0){
+                                var col5 = $("<td>" + "Belum Dikunjungi" + "</td>");
+                            }else{
+                                var col5 = $("<td>" + "Sudah Dikunjungi" + "</td>");
+                            }
                             var target_file = aktivitas['foto_kunjungan'];
-                            var col5 = $("<td><img src='" + target_file  + "' style='width:250px; height:auto;'></td>");
-                            var col6 = $("<td>" + aktivitas['foto_kunjungan'] + "</td>");
+                            var col6 = $("<td><img src='" + target_file  + "' style='width:250px; height:auto;'></td>");
                             //var changeHarga = 
                             var col7 = $("<td>" + aktivitas['jadwal_kunjungan'] + "</td>");
 

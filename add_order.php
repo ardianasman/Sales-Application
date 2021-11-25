@@ -134,6 +134,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="show_activity.php">Sales Activity</a>
                             <a class="dropdown-item" href="add_rencanakungjungan.php">Visit Plan</a>
+                            <a class="dropdown-item" href="lihat_status_kunjungan.php">Plan Status</a>
                         </div>
                     </li>
                     <li><a class="nav-item nav-link" href="ListCustomer.php">Customer</a></li>
