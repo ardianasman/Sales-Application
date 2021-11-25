@@ -97,7 +97,8 @@
                         jadwal_kunjungan : jadwal_kunjungan
                     },
                     success: function(data){
-                        alert("succq");
+                        alert("success");
+                        //window.location.replace(index.php);
                     },
                     error: function(){
                         alert("fail");
@@ -184,7 +185,7 @@
                             </div>
                             <div class = "d-flex">
                                 <button class="btn btn-outline-secondary p-2" onclick="window.history.go(-1)">Back</button>
-                                <button class="btn btn-success ml-auto p-2 justify-content-center align-items-center" onclick="addRencana()">Add Customer</button>
+                                <button class="btn btn-success ml-auto p-2 justify-content-center align-items-center" onclick="addRencana()">Add Plan</button>
                             </div>
                         </div>
                 <?php }

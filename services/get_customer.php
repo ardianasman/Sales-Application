@@ -5,10 +5,10 @@ include "database.php";
 header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-
-    $sql = "SELECT id_customer,nama,alamat,no_telp FROM `customer`";
+    $id = $_SESSION['id'];
+    $sql = "SELECT id_customer,nama,alamat,no_telp FROM `customer` WHERE id_sales = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $stmt->execute([$id]);
 
     $result = array();
     while($row = $stmt->fetch()) {
