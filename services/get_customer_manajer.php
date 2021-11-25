@@ -10,7 +10,7 @@ JOIN sales ON customer.id_sales=sales.id_sales
 WHERE sales.id_manager=?";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['id']]);
+    $stmt->execute([$_SESSION['id_manajer']]);
 
     $result = array();
     while($row = $stmt->fetch()) {

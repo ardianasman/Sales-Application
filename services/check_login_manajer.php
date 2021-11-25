@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result['redirect'] = '/ProyekManpro/Profile_Manajer.php';
             $user = $stmt->fetch();
             //session_start();
-            $_SESSION['id'] = $user['id_manager'];
+            $_SESSION['id_manajer'] = $user['id_manager'];
             $_SESSION['nama'] = $user['nama'];
             $_SESSION['email'] = $user['email'];
         } else {

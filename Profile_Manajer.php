@@ -1,6 +1,6 @@
 <?php
     include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
-    if (!isset($_SESSION['id'])) {
+    if (!isset($_SESSION['id_manajer'])) {
         header("Location:login_manajer.php");
     }
 ?>
@@ -273,7 +273,7 @@
                             <?php $sql="SELECT COUNT(id_sales) as 'jumlah' FROM `sales`
                                         WHERE id_manager=?"; 
                                 $stmt=$pdo->prepare($sql);
-                                $stmt->execute([$_SESSION['id']]);
+                                $stmt->execute([$_SESSION['id_manajer']]);
                                 $res=$stmt->fetch();  
                                 echo $res['jumlah']?>
                         </div>
@@ -284,7 +284,7 @@
                             <?php $sql="SELECT COUNT(id_produk) as 'jumlah' FROM `produk`
                                         WHERE id_manager=?"; 
                                 $stmt=$pdo->prepare($sql);
-                                $stmt->execute([$_SESSION['id']]);
+                                $stmt->execute([$_SESSION['id_manajer']]);
                                 $res=$stmt->fetch();  
                                 echo $res['jumlah']?>
                         </div>
@@ -301,7 +301,7 @@
                                 LEFT JOIN sales ON `order`.id_sales=sales.id_sales
                                 WHERE sales.id_manager=? && status_order=1 && MONTH(tanggal_order)=MONTH(CURRENT_DATE)"; 
                                 $stmt=$pdo->prepare($sql);
-                                $stmt->execute([$_SESSION['id']]);
+                                $stmt->execute([$_SESSION['id_manajer']]);
                                 $res=$stmt->fetch();
                                 if($res['total']==NULL){
                                     echo "Rp. 0";
@@ -317,7 +317,7 @@
                             <?php $sql="SELECT FORMAT(SUM(target),'C') as 'total' FROM `target_penjualan` 
                                     WHERE id_manager=? && bulan=MONTH(CURRENT_DATE)"; 
                                 $stmt=$pdo->prepare($sql);
-                                $stmt->execute([$_SESSION['id']]);
+                                $stmt->execute([$_SESSION['id_manajer']]);
                                 $res=$stmt->fetch();
                                 if($res['total']==NULL){
                                     echo "Rp. 0";

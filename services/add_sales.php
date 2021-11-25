@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql = "INSERT INTO sales (id_sales, id_manager, nama, alamat, no_telp, email, tanggal_mulai_kerja, tanggal_berhenti_kerja, username)
                 VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$_SESSION['id'], $nama, $alamat, $no_telp, $email, $tanggal_mulai_kerja, $tanggal_berhenti_kerja, $username]);
+        $stmt->execute([$_SESSION['id_manajer'], $nama, $alamat, $no_telp, $email, $tanggal_mulai_kerja, $tanggal_berhenti_kerja, $username]);
     }
 
     echo json_encode($result);

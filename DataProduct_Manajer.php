@@ -1,7 +1,7 @@
 <?php
     //$_SESSION['id_produk'] = '';
     include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
-    if (!isset($_SESSION['id'])) {
+    if (!isset($_SESSION['id_manajer'])) {
         header("Location:login_manajer.php");
     }
 ?>

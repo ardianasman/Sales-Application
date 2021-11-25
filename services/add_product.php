@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $sql = "INSERT INTO produk VALUES(NULL, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$_SESSION['id'], $nama_produk, $harga_produk]);
+        $stmt->execute([$_SESSION['id_manajer'], $nama_produk, $harga_produk]);
     }
 
     echo json_encode($result);

@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     JOIN customer c ON c.id_customer = `order`.`id_customer`
     WHERE s.id_manager=?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['id']]);
+    $stmt->execute([$_SESSION['id_manajer']]);
 
     $result = array();
     while($row = $stmt->fetch()) {

@@ -1,6 +1,6 @@
 <?php
     include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
-    if (!isset($_SESSION['id'])) {
+    if (!isset($_SESSION['id_manajer'])) {
         header("Location:login_manajer.php");
     }
 ?>
@@ -295,7 +295,7 @@
 
         <script type="text/javascript">
             function load_data() {
-                var id = <?php echo $_GET['id'] ?>;
+                var id = <?php echo $_GET['id_manajer'] ?>;
                 $.ajax({
                     url: "/ProyekManpro/services/get_sales.php",
                     method: "GET",

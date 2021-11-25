@@ -1,6 +1,6 @@
 <?php
     include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
-    if (!isset($_SESSION['id'])) {
+    if (!isset($_SESSION['id_manajer'])) {
         header("Location:login_manajer.php");
     }
 ?>
@@ -337,7 +337,7 @@
                         });
 
                         if(check){
-                            var id_manager = <?php echo $_SESSION['id']; ?>;
+                            var id_manager = <?php echo $_SESSION['id_manajer']; ?>;
                             var id_sales = $("#idsales").val();
                             var bulan = $("#bulan").val();
                             var tahun = $("#tahun").val();

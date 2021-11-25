@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             WHERE (target_penjualan.id_manager=? AND bulan=MONTH(CURRENT_DATE) AND tahun=YEAR(CURRENT_DATE)) OR (target_penjualan.id_manager=? AND status=0)";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['id'], $_SESSION['id']]);
+    $stmt->execute([$_SESSION['id_manajer'], $_SESSION['id_manajer']]);
 
     $result = array();
     while($row = $stmt->fetch()) {
