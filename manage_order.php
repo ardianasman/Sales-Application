@@ -55,10 +55,10 @@
                     var count = 1;
                     res.forEach(function(item){
                             var row = $("<tr></tr>");
-                            var col1 = $("<td>" + count + "</td>");
-                            var col2 = $("<td>" + item['id_order'] + "</td>");
-                            var col3 = $("<td>" + item['nama'] + "</td>");
-                            var col4 = $("<td>" + item['tanggal_order'] + "</td>");
+                            var col1 = $("<td style='text-align:center;'>" + count + "</td>");
+                            var col2 = $("<td style='text-align:center;'>" + item['id_order'] + "</td>");
+                            var col3 = $("<td style='text-align:center;'>" + item['nama'] + "</td>");
+                            var col4 = $("<td style='text-align:center;'>" + item['tanggal_order'] + "</td>");
                             var idorderget = item['id_order'];
                             col1.appendTo(row);
                             col2.appendTo(row);
@@ -93,7 +93,7 @@
 
                                         }
                                     });
-                                    col5 = $("<td>" + total + "</td>");
+                                    col5 = $("<td style='text-align:center;'>" + total + "</td>");
                                     var btn = $('<td scope="col"></td>');
                                     var edit = $('<a href="./edit_order.php?ids='+ item['id_order'] +'" class="btn btn-primary" style="margin-left: 25px;">Edit</a>');
                                     var detail = $('<a href="./detail_order.php?ids='+ item['id_order'] +'" class="btn btn-primary" style="margin-left: 55px;">Detail</a>');
@@ -155,7 +155,7 @@
                                 <tr>
                                     <th width="5%" data-sortable="true">#</th>
                                     <th width="15%" data-sortable="true">Order ID</th>
-                                    <th width="25%" data-sortable="true">Sales Name</th>
+                                    <th width="25%" data-sortable="true">Customer Name</th>
                                     <th width="25%" data-sortable="true">Tanggal Order</th>
                                     <th wdith="15%" data-sortable="true">Total</th>
                                     <th wdith="15%" data-sortable="true">Attributes</th>

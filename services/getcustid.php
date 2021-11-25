@@ -2,10 +2,10 @@
     include "./database.php";
     header("Content-Type: application/json");
 
-
+    $id = $_SESSION['id'];
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
-        $sql = "SELECT `id_customer`, `nama` FROM `customer` ORDER BY `id_customer` ASC";
+        $sql = "SELECT `id_customer`, `nama` FROM `customer` WHERE `id_sales` = $id ORDER BY `id_customer` ASC";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 

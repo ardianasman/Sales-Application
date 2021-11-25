@@ -1,9 +1,10 @@
 <?php
     include "./database.php";
     header("Content-Type: application/json");
+    $id = $_SESSION['id'];
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
-        $sql = "SELECT d.id_order, d.tanggal_order, d.total_harga, p.nama FROM `order` d JOIN `sales` p ON d.id_sales = p.id_sales";
+        $sql = "SELECT d.id_order, d.tanggal_order, d.total_harga, p.nama FROM `order` d JOIN `customer` p ON d.id_customer = p.id_customer WHERE d.id_sales = $id";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
