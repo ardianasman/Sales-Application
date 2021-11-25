@@ -5,7 +5,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
-        $sql = "SELECT `id_customer` FROM `customer` ORDER BY `id_customer` ASC";
+        $sql = "SELECT `id_customer`, `nama` FROM `customer` ORDER BY `id_customer` ASC";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 

@@ -45,11 +45,11 @@
                     method: "POST",
                     success: function(res){
                         $("#data-list").html('');
-                        var opt = $("<select required></select>");
+                        var opt = $("<select style='height:40px; width: 555px;text-align: center' required></select>");
                         var data = [];
                         res.forEach(function(item){
                             var html = $(`
-                                <option>`+ item['id_customer'] +`</option>
+                                <option>`+ item['id_customer'] + " - " + item['nama'] +`</option>
                             `);
                             opt.append(html);
                         });
@@ -115,6 +115,9 @@
         margin-right: 35%;
         margin-left: 35%; 
     }
+    .w-50{
+        margin-bottom:10px;
+    }
 </style>
 
 <body onload="init()">
@@ -125,12 +128,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="show_image_upload.php">Activity</a>
-                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
-                <a class="nav-item nav-link active" href="manage_order.php">Order</a>
-                <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
-                <a class="nav-item nav-link" href="logout.php">Logout</a>
+                <ul>
+                    <li><a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item dropdown"><a class="nav-link" id="navbarDropdownMenuLink"aria-haspopup="true" aria-expanded="false">Activity</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="show_activity.php">Sales Activity</a>
+                            <a class="dropdown-item" href="add_rencanakungjungan.php">Visit Plan</a>
+                        </div>
+                    </li>
+                    <li><a class="nav-item nav-link" href="ListCustomer.php">Customer</a></li>
+                    <li><a class="nav-item nav-link active" href="manage_order.php">Order</a></li>
+                    <li><a class="nav-item nav-link" href="profile_sales.php">Profile</a></li>
+                    <li><a class="nav-item nav-link" href="logout.php">Logout</a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -154,7 +164,7 @@
                                 </div>
                                 <div class="w-50" style="margin-left: auto; margin-right: auto">
                                     <label for="idorder"><b">ID Customer</b></label>
-                                        <div id="data-list" xml:id="idcust"> </div>
+                                        <div id="data-list"> </div>
                                 </div>
                                 <div class="w-50" style="margin-left: auto; margin-right: auto">
                                     <label for="idtglorder"><b">Tanggal Order</b></label>
@@ -170,7 +180,7 @@
                                 </div>
                                 <div class="w-50" style="margin-left: auto; margin-right: auto">
                                     <label for="diskon"><b">Diskon</b></label>
-                                    <input type="number" class="form-control" style="text-align:center" name="iddiskon" id="iddiskon">
+                                    <input type="number" class="form-control" style="text-align:center" name="iddiskon" id="iddiskon" min="" max="99">
                                 </div>
                                 <div class="w-50" style="margin-left: auto; margin-right: auto">
                                     <label for="pajak"><b">Pajak</b></label>

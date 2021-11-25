@@ -6,7 +6,7 @@
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
         $id = $_SESSION['ids'];
-        $sql = "SELECT * FROM `detail_order` WHERE `id_order` = ?";
+        $sql = "SELECT m.kuantitas, m.mata_uang, m.diskon, m.pajak, n.nama_produk, n.harga_produk FROM `detail_order` m JOIN `produk` n ON m.id_produk = n.id_produk WHERE m.id_order = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id]);
 

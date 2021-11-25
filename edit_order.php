@@ -7,11 +7,16 @@
     if(isset($_GET['ids']))
     {
         $id_order = $_GET['ids'];
-        $sql = "SELECT * FROM `order` WHERE `id_order` = ?";
+        $sql = "SELECT m.id_order, m.id_sales, m.id_customer, m.tanggal_order, m.tanggal_jatuh_tempo, m.total_harga, m.status_order, n.nama FROM `order` m JOIN `customer` n ON m.id_customer = n.id_customer WHERE `id_order` = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id_order]);
+
         $stmtx = $pdo->prepare($sql);
         $stmtx->execute([$id_order]);
+
+        $sqlsales = "SELECT * FROM `sales` WHERE `id_sales` = $id";
+        $stmtsales = $pdo->prepare($sqlsales);
+        $stmtsales->execute();
     }
 ?>
 <!doctype html>
@@ -101,12 +106,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="show_image_upload.php">Activity</a>
-                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
-                <a class="nav-item nav-link active" href="manage_order.php">Order</a>
-                <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
-                <a class="nav-item nav-link" href="logout.php">Logout</a>
+                <ul>
+                    <li><a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item dropdown"><a class="nav-link" id="navbarDropdownMenuLink"aria-haspopup="true" aria-expanded="false">Activity</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="show_activity.php">Sales Activity</a>
+                            <a class="dropdown-item" href="add_rencanakungjungan.php">Visit Plan</a>
+                        </div>
+                    </li>
+                    <li><a class="nav-item nav-link" href="ListCustomer.php">Customer</a></li>
+                    <li><a class="nav-item nav-link active" href="manage_order.php">Order</a></li>
+                    <li><a class="nav-item nav-link" href="profile_sales.php">Profile</a></li>
+                    <li><a class="nav-item nav-link" href="logout.php">Logout</a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -114,7 +126,8 @@
                 <?php
                     if($stmt->rowCount() == 1)
                     {
-                        $item = $stmt->fetch();?>
+                        $item = $stmt->fetch();
+                        $itemsales = $stmtsales->fetch();?>
                         <form action = "./services/editorder.php" method="POST">
                             <div id="item-list" class="item-list" style="width: 100%;">
                                 <div class="row">
@@ -124,11 +137,11 @@
                                     </div>
                                     <div class="col"> 
                                         <label>ID Sales : </label>
-                                        <input class="form-control" id="idsales" name="idsales" style="text-align:center" value="<?php echo $item['id_sales']; ?>" readonly>
+                                        <input class="form-control" id="idsales" name="idsales" style="text-align:center" value="<?php echo $item['id_sales']; echo " - "; echo $itemsales['nama']; ?>" readonly>
                                     </div>  
                                     <div class="col"> 
                                         <label>ID Customer : </label>
-                                        <input class="form-control" id="idcust" name="idcust" style="text-align:center" value="<?php echo $item['id_customer']; ?>" readonly>
+                                        <input class="form-control" id="idcust" name="idcust" style="text-align:center" value="<?php echo $item['id_customer']; echo " - "; echo $item['nama'] ?>" readonly>
                                     </div>     
                                 </div>
                                 <div class="row">         

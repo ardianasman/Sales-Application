@@ -33,12 +33,13 @@
                     success: function(res){
                         $('#detail-list').html('');
                         var table = $("<table id='data_table' class='table'></table>");
-                        var title = $("<thead><tr style=text-align:center;><td><b>Product ID</b></td><td><b>Kuantitas</b></td><td><b>Mata Uang</b></td><td><b>Diskon</b></td><td><b>Pajak</b></td><td><b> </b></td></tr></thead>");
+                        var title = $("<thead><tr style=text-align:center;><td><b>Product</b></td><td><b>Harga</b></td><td><b>Kuantitas</b></td><td><b>Mata Uang</b></td><td><b>Diskon</b></td><td><b>Pajak</b></td><td><b> </b></td></tr></thead>");
                         table.append(title);
                         res.forEach(function(item){
                             var html = $(`
                                 <tr class="centertd">
-                                <td style=text-align:center;>` + item['id_produk'] + `</td>
+                                <td style=text-align:center;>` + item['nama_produk'] + `</td>
+                                <td style=text-align:center;>` + item['harga_produk'] + `</td>
                                 <td style=text-align:center;>`+ item['kuantitas'] +`</td>
                                 <td style=text-align:center;>`+ item['mata_uang'] +`</td>
                                 <td style=text-align:center;>`+ item['diskon'] +`</td>
@@ -75,12 +76,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="show_image_upload.php">Activity</a>
-                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
-                <a class="nav-item nav-link active" href="manage_order.php">Order</a>
-                <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
-                <a class="nav-item nav-link" href="logout.php">Logout</a>
+                <ul>
+                    <li><a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item dropdown"><a class="nav-link" id="navbarDropdownMenuLink"aria-haspopup="true" aria-expanded="false">Activity</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="show_activity.php">Sales Activity</a>
+                            <a class="dropdown-item" href="add_rencanakungjungan.php">Visit Plan</a>
+                        </div>
+                    </li>
+                    <li><a class="nav-item nav-link" href="ListCustomer.php">Customer</a></li>
+                    <li><a class="nav-item nav-link active" href="manage_order.php">Order</a></li>
+                    <li><a class="nav-item nav-link" href="profile_sales.php">Profile</a></li>
+                    <li><a class="nav-item nav-link" href="logout.php">Logout</a></li>
+                </ul>
             </div>
         </div>
     </nav>

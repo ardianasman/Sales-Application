@@ -7,6 +7,10 @@
     $sql = "SELECT * FROM `customer` ORDER BY `id_customer` DESC LIMIT 1";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
+
+    $sql1 = "SELECT * FROM `sales` WHERE `id_sales` = $id";
+    $stmt1 = $pdo->prepare($sql1);
+    $stmt1->execute();
 ?>
 <!doctype html>
 <html lang="en">
@@ -61,12 +65,13 @@
         <div class="transparent">
             <?php
                 if($stmt->rowCount() == 1){
-                    $item = $stmt->fetch() ?>
+                    $item = $stmt->fetch();
+                    $item1 = $stmt1->fetch() ?>
                     <form action = "./services/addcustomer.php" method="POST">
                         <div id="item-list" class="item-list" style="width: 100%;">
                             <div class="w-25" style="margin-left: auto; margin-right: auto">
                                 <label for="idorder"><b">ID Sales</b></label>
-                                <input class = "form-control" style="text-align: center" value="<?php echo $id; ?>" readonly> 
+                                <input class = "form-control" style="text-align: center" value="<?php echo $id; echo " - ";echo $item1['nama']; ?>" readonly> 
                             </div>
                             <div class="w-25" style="margin-left: auto; margin-right: auto">
                                 <label for="idorder"><b">ID Customer</b></label>

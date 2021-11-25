@@ -34,11 +34,11 @@
                     method: "POST",
                     success: function(res){
                         $("#data-list").html('');
-                        var opt = $("<select style='height:40px; width: 125px; text-align: center' required></select>");
+                        var opt = $("<select style='height:40px; width: 277.5px; text-align: center' required></select>");
                         var data = [];
                         res.forEach(function(item){
                             var html = $(`
-                                <option>`+ item['id_customer'] +`</option>
+                                <option>`+ item['id_customer'] + " - " + item['nama'] + `</option>
                             `);
                             opt.append(html);
                         });
@@ -55,11 +55,11 @@
                     method: "POST",
                     success: function(res){
                         $("#datamanager-list").html('');
-                        var opt = $("<select style='height:40px; width: 125px; text-align: center' required></select>");
+                        var opt = $("<select style='height:40px; width: 277.5px;text-align: center' required></select>");
                         var data = [];
                         res.forEach(function(item){
                             var html = $(`
-                                <option>`+ item['id_manager'] +`</option>
+                                <option>`+ item['id_manager'] + " - " + item['nama'] +`</option>
                             `);
                             opt.append(html);
                         });
@@ -126,6 +126,9 @@
         .form-control{
             text-align: center;
         }
+        .w-25{
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -174,10 +177,6 @@
                             <div class="w-25" style="margin-left: auto; margin-right: auto">
                                 <label for="idcust"><b">ID Customer</b></label>
                                <div id="data-list" name="idcust"></div>
-                            </div>
-                            <div class="w-25" style="margin-left: auto; margin-right: auto">
-                                <label for="namacust"><b">Nama Customer</b></label>
-                                <input type="text" class="form-control" style="text-align:center" name="idnama" id="idnama" required>
                             </div>
                             <div class="w-25" style="margin-left: auto; margin-right: auto">
                                 <label for="alamat"><b">Tanggal Kunjungan</b></label>

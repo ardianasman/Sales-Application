@@ -36,6 +36,9 @@
         th {
             text-align: center;
         }
+        button{
+            margin-bottom: 15px;
+        }
     </style>
 
     
@@ -99,9 +102,9 @@
                                     edit.appendTo(btn);
                                     detail.appendTo(btn);
                                     btn.appendTo(row);
-                                    count++;
                                 }
                             });
+                                    count++;
                             $("#order-list").append(row);
                     });
                     $("#tableImage").DataTable();

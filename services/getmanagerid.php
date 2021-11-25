@@ -5,7 +5,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
-        $sql = "SELECT `id_manager` FROM `manager`";
+        $sql = "SELECT `id_manager`, `nama` FROM `manager`";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
