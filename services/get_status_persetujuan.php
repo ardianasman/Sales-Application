@@ -8,11 +8,12 @@ include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php";
 header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $id = $_SESSION['id'];
     $sql = "SELECT a.id_customer, c.nama as nama_cust, a.jadwal_kunjungan, a.status_persetujuan
     FROM `aktivitas_sales` a
-    JOIN customer c ON a.id_customer = c.id_customer";
-    $stmt = $pdo->prepare();
-    $stmt->execute();
+    JOIN customer c ON a.id_customer = c.id_customer WHERE a.id_sales = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id]);
 
     $result = array();
     while($row = $stmt->fetch()) {

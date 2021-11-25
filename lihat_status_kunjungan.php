@@ -99,7 +99,6 @@ if (!isset($_SESSION['id'])) {
 <script>
 
 function load_data() {
-    alert("Masuk");
     $.ajax({
         url: "/ProyekManpro/services/get_status_persetujuan.php",
             method: "GET",
@@ -113,7 +112,15 @@ function load_data() {
                 var col2 = $("<td>" + aktivitas['id_customer'] + "</td>");
                 var col3 = $("<td>" + aktivitas['nama_cust'] + "</td>");
                 var col4 = $("<td>" + aktivitas['jadwal_kunjungan'] + "</td>");
-                var col5 = $("<td>" + aktivitas['status_persetujuan'] + "</td>");
+                if(aktivitas['status_persetujuan'] == 0 ){
+                    var col5 = $("<td>" + "Belum Disetujui" + "</td>");
+                }
+                if (aktivitas['status_persetujuan'] == 1){
+                    var col5 = $("<td>" + "Ditolak" + "</td>");
+                }
+                if(aktivitas['status_persetujuan'] == 2){
+                    var col5 = $("<td>" + "Disetujui" + "</td>");
+                }
 
                 col1.appendTo(row);
                 col2.appendTo(row);
@@ -127,7 +134,7 @@ function load_data() {
             $('#tableImage').DataTable();
             },
             error: function(data) {
-
+                
             }        
     });
 }
