@@ -71,6 +71,7 @@
                                 data: {
                                     idorderget : idorderget
                                 },
+                                async: false,
                                 success : function(res){
                                     var total = 0;
                                     var col5 = $("<td>" + total + "</td>");
@@ -89,11 +90,12 @@
                                             idorderget : idorderget,
                                             total : total
                                         },
+                                        async: false,
                                         success: function(res){
 
                                         }
                                     });
-                                    col5 = $("<td style='text-align:center;'>" + total + "</td>");
+                                    col5 = $("<td style='text-align:center;'>" + total.toLocaleString() + "</td>");
                                     var btn = $('<td scope="col"></td>');
                                     var edit = $('<a href="./edit_order.php?ids='+ item['id_order'] +'" class="btn btn-primary" style="margin-left: 25px;">Edit</a>');
                                     var detail = $('<a href="./detail_order.php?ids='+ item['id_order'] +'" class="btn btn-primary" style="margin-left: 55px;">Detail</a>');
@@ -104,7 +106,7 @@
                                     btn.appendTo(row);
                                 }
                             });
-                                    count++;
+                            count++;
                             $("#order-list").append(row);
                     });
                     $("#tableImage").DataTable();

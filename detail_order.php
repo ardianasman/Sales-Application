@@ -39,7 +39,7 @@
                             var html = $(`
                                 <tr class="centertd">
                                 <td style=text-align:center;>` + item['nama_produk'] + `</td>
-                                <td style=text-align:center;>` + item['harga_produk'] + `</td>
+                                <td style=text-align:center;>` + item['harga_produk'].toLocaleString() + `</td>
                                 <td style=text-align:center;>`+ item['kuantitas'] +`</td>
                                 <td style=text-align:center;>`+ item['mata_uang'] +`</td>
                                 <td style=text-align:center;>`+ item['diskon'] +`</td>

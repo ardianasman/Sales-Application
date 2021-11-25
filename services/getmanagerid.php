@@ -5,7 +5,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
-        $sql = "SELECT `id_manager`, `nama` FROM `manager`";
+        $sql = "SELECT n.nama FROM `sales` m JOIN `manager` n on m.id_manager = n.id_manager WHERE m.id_sales = $_SESSION['id]";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 

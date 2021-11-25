@@ -7,6 +7,10 @@
     $sql = "SELECT * FROM `aktivitas_sales` ORDER BY `id_aktivitas` DESC LIMIT 1";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
+
+    $sqlmanager = "SELECT n.nama FROM `sales` m JOIN `manager` n ON m.id_manager = n.id_manager WHERE m.id_sales = $id";
+    $stmtmanager = $pdo->prepare($sqlmanager);
+    $stmtmanager->execute();
 ?>
 <!doctype html>
 <html lang="en">
@@ -49,27 +53,18 @@
                     }
                 });
             }
-            function getManagerId(){
-                $.ajax({
-                    url: "./services/getmanagerid.php",
-                    method: "POST",
-                    success: function(res){
-                        $("#datamanager-list").html('');
-                        var opt = $("<select style='height:40px; width: 277.5px;text-align: center' required></select>");
-                        var data = [];
-                        res.forEach(function(item){
-                            var html = $(`
-                                <option>`+ item['id_manager'] + " - " + item['nama'] +`</option>
-                            `);
-                            opt.append(html);
-                        });
-                        $("#datamanager-list").append(opt);
-                    },
-                    error: function(){
-                        alert('fail');
-                    }
-                });
-            }
+            // function getManagerId(){
+            //     $.ajax({
+            //         url: "./services/getmanagerid.php",
+            //         method: "POST",
+            //         success: function(res){
+                        
+            //         },
+            //         error: function(){
+            //             alert('fail');
+            //         }
+            //     });
+            // }
             function addRencana(){
                 console.log("masuk");
                 var id_customer = $("#data-list").find(":selected").text();
@@ -170,7 +165,8 @@
         <div class="transparent">
             <?php
                 if($stmt->rowCount() == 1){
-                    $item = $stmt->fetch() ?>
+                    $item = $stmt->fetch();
+                    $itemmanager = $stmtmanager->fetch(); ?>
                         <div id="item-list" class="item-list">
                             <div class="w-25" style="margin-left: auto; margin-right: auto">
                                 <label for="idktivits"><b">ID Aktivitas</b></label>
@@ -182,7 +178,7 @@
                             </div>
                             <div class="w-25" style="margin-left: auto; margin-right: auto">
                                 <label for="idmanager"><b">ID Manager</b></label>
-                               <div id="datamanager-list" name="idmanager"></div>
+                                <input class = "form-control"  value="<?php echo $itemmanager['nama']; ?>" readonly> 
                             </div>
                             <div class="w-25" style="margin-left: auto; margin-right: auto">
                                 <label for="idcust"><b">ID Customer</b></label>
