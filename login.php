@@ -145,9 +145,6 @@
                         alert($xhr.responseJSON['error']);
                     }
             });
-            
-            
-            
         });
     </script>
 
