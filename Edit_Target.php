@@ -304,7 +304,7 @@
                         var cek=false;
                         var co = 1;
                         data.forEach(function(target){
-                            if(target['id_target'] == <?php echo $_GET['id_manajer'] ?>){
+                            if(target['id_target'] == <?php echo $_GET['id'] ?>){
                                 var id_target = target['id_target'];
                                 var bulan = target['bulan'];
                                 var status = target['status'];
@@ -343,13 +343,13 @@
                         var ids;
 
                         data.forEach(function(target){
-                            if(target['id_target'] == <?php echo $_GET['id_manajer'] ?>){
+                            if(target['id_target'] == <?php echo $_GET['id'] ?>){
                                 ids = target['id_sales'];
                             }
                         });
 
                         data.forEach(function(target){
-                            if(target['id_sales']== ids && target['id_target'] != <?php echo $_GET['id_manajer'] ?>){
+                            if(target['id_sales']== ids && target['id_target'] != <?php echo $_GET['id'] ?>){
                                 if(target['bulan']==$("#bulan").val() && target['tahun']==$("#tahun").val()){
                                     check = false;
                                 }
@@ -359,7 +359,7 @@
                         });
 
                         if(check){
-                            var id_target = <?php echo $_GET['id_manajer']; ?>;
+                            var id_target = <?php echo $_GET['id']; ?>;
                             var bulan = $("#bulan").val();
                             var tahun = $("#tahun").val();
                             var target = $("#target").val();

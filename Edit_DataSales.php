@@ -295,7 +295,7 @@
 
         <script type="text/javascript">
             function load_data() {
-                var id = <?php echo $_GET['id_manajer'] ?>;
+                var id = <?php echo $_GET['id'] ?>;
                 $.ajax({
                     url: "/ProyekManpro/services/get_sales.php",
                     method: "GET",

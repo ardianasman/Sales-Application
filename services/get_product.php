@@ -6,10 +6,11 @@ header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $sql = "SELECT id_produk, id_manager, nama_produk, FORMAT(harga_produk,'C') as harga_produk, harga_produk as har FROM `produk`
-            WHERE id_manager=?";
+            ";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['id_manajer']]);
+    // $stmt->execute([$_SESSION['id_manajer']]);
+    $stmt->execute();
 
     $result = array();
     while($row = $stmt->fetch()) {

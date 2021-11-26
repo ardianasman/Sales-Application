@@ -295,7 +295,7 @@
 
         <script>
             function load_data() {
-                var id = <?php echo $_GET['id_manajer'] ?>;
+                var id = <?php echo $_GET['id'] ?>;
                 $.ajax({
                     url: "/ProyekManpro/services/get_sales.php",
                     method: "GET",
@@ -380,7 +380,7 @@
                 load_data();
             });
             $("#user-content").on("click", "[id='reject_btn']", function(){
-                var id_sales = <?php echo $_GET['id_manajer'] ?>;
+                var id_sales = <?php echo $_GET['id'] ?>;
                 var id_customer = $(this).attr('data-id');
 
                 $.ajax({
@@ -401,7 +401,7 @@
             });
 
             $("#user-content").on("click", "[id='accept_btn']", function(){
-                var id_sales = <?php echo $_GET['id_manajer'] ?>;
+                var id_sales = <?php echo $_GET['id'] ?>;
                 var id_customer = $(this).attr('data-id');
                 
                 $.ajax({
