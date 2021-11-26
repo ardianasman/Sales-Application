@@ -154,7 +154,7 @@
                                         <input class="form-control" id="idcust" name="idcust" style="text-align:center" value="<?php echo $item['id_customer']; echo " - "; echo $item['nama'] ?>" readonly>
                                     </div>     
                                 </div>
-                                <div class="row">         
+                                <div class="row mt-3">         
                                     <div class="col">
                                         <label>Tanggal Order : </label>
                                         <input type="date" class="form-control" id="utglorder" name="utglorder" value="<?php echo $item['tanggal_order']; ?>">
@@ -164,11 +164,11 @@
                                         <input type="date" class="form-control" id="utgljatuhtempo" name="utgltempo" value="<?php echo $item['tanggal_jatuh_tempo']; ?>">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group mt-3">
                                     <label>Total Harga : </label>
                                     <input class="form-control w-25" name="utotal" value="<?php echo number_format($item['total_harga'],0,'','.') ;?>" readonly>
                                 </div> 
-                                <div class="form-group">
+                                <div class="form-group mt-3">
                                     <label>Status Order : </label>
                                     <input class="form-control w-25" id="ustat" name="ustatus" value="<?php echo $item['status_order']; ?>">
                                 </div>
