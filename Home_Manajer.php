@@ -338,6 +338,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="row pt-4 pr-3 justify-content-end">
+                    <a href="register_manajer.php"><button id ="change-data-btn" class="btn btn-info px-4">Tambah Akun Manajer</button></a>
+                </div>
             </div>
 
         </div>
