@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row_count = $stmt->rowCount();
 
         if ($row_count >= 1) {
-            $result['redirect'] = '/ProyekManpro/Profile_Manajer.php';
+            $result['redirect'] = '/ProyekManpro/Home_Manajer.php';
             $user = $stmt->fetch();
             //session_start();
             $_SESSION['id_manajer'] = $user['id_manager'];

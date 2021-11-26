@@ -11,21 +11,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         "error" => ""
     );
 
-    $id_sales = $_POST['id_sales'];
-    $bulan = $_POST['bulan'];
-    $tahun = $_POST['tahun'];
-    $target = $_POST['target'];
-    $status = 0;
+    $nama = $_POST['nama'];
+    $email = $_POST['email'];
+    $alamat = $_POST['alamat'];
+    $no_telp = $_POST['no_telp'];
+    $id_manager = $_SESSION['id_manajer'];
 
-    if ($bulan == 'Pilih' || $tahun == '' || $target == '') {
+    if ($nama == '' || $email == '' || $alamat == '' || $no_telp == '') {
         header("HTTP/1.1 400 Bad Request");
         $result['status'] = 0;
-        $result['error'] = 'Data Harus Terisi Semua Kecuali Data Berhenti Kerja!';
+        $result['error'] = 'Data harus terisi semua!';
     } else {
-        $sql = "INSERT INTO target_penjualan (id_target, id_sales, id_manager, bulan, target, tahun, status)
-                VALUES(NULL, ?, ?, ?, ?, ?, ?)";
+        $sql = "UPDATE manager SET nama = ?, email = ?, alamat = ?, no_telp = ? WHERE id_manager = ?";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id_sales, $_SESSION['id_manajer'], $bulan, $target, $tahun, $status]);
+        $stmt->execute([$nama, $email, $alamat, $no_telp, $id_manager]);
     }
 
     echo json_encode($result);

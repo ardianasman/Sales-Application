@@ -1,5 +1,5 @@
 <?php
-    include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php";
+    include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
     if (!isset($_SESSION['id_manajer'])) {
         header("Location:login_manajer.php");
     }
@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
         
-        <title>Add Sales</title>
+        <title>Welcome Manager</title>
 
         <style>
             .bd-placeholder-img {
@@ -194,7 +194,7 @@
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
-                        <a href="Home_Manajer.php" class="nav-link text-white">
+                        <a href="Home_Manajer.php" class="nav-link active">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
                         Home
                         </a>
@@ -212,7 +212,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="DataSales_Manajer.php" class="nav-link active" aria-current="page">
+                        <a href="DataSales_Manajer.php" class="nav-link text-white" aria-current="page">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people"/></svg>
                         Sales
                         </a>
@@ -252,134 +252,99 @@
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
             <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
-                <form class="p-2 grid-container mb-5">
-                    <div style="font-weight: bold; font-size: 35px;">Add Data Sales</div>
-                    <div style="text-align: right;">
-                        <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
-                            $stmt=$pdo->prepare($sql);
-                            $stmt->execute();
-                            $res=$stmt->fetch();  
-                            echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
+                <form class="grid-container p-1">
+                    <div style="font-weight: bold; font-size: 25px; margin-top: 15px;">
+                        Welcome, Manajer <?php echo $_SESSION['nama']; ?>
                     </div>
+                    <span><img src="image/profile.jpg" alt="profile" width="80px" style="float: right;"></span>
                 </form>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Nama</span>
-                    </div>
-                    <input type="text" class="form-control" id="nama" name="nama" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <hr style="width: 100%; text-align: left; background-color: grey;">
+                <div class="mt-4" style="text-align: center; font-size: 20px;">
+                    <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
+                        $stmt=$pdo->prepare($sql);
+                        $stmt->execute();
+                        $res=$stmt->fetch();  
+                        echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
                 </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Alamat</span>
+                <div class="mt-4 ml-3 mr-3 row justify-content-md-center" id="sales-content">
+                    <div class="col-sm-4 border border-right-0 border-secondary rounded-left" style="position: static;">
+                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Customer</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                            <?php $sql="SELECT COUNT(id_customer) as 'jumlah' FROM `customer`"; 
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->execute();
+                                $res=$stmt->fetch();  
+                                echo $res['jumlah']?>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" id="alamat" name="alamat" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">No Telp</span>
+                    <div class="col-sm-4 border border-secondary" style="position: static;">
+                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Sales</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                            <?php $sql="SELECT COUNT(id_sales) as 'jumlah' FROM `sales`
+                                        WHERE id_manager=?"; 
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->execute([$_SESSION['id_manajer']]);
+                                $res=$stmt->fetch();  
+                                echo $res['jumlah']?>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" id="no_telp" name="no_telp" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Email</span>
+                    <div class="col-sm-4 border border-left-0 border-secondary rounded-right" style="position: static;">
+                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Product</div>
+                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                            <?php $sql="SELECT COUNT(id_produk) as 'jumlah' FROM `produk`
+                                        WHERE id_manager=?"; 
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->execute([$_SESSION['id_manajer']]);
+                                $res=$stmt->fetch();  
+                                echo $res['jumlah']?>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" id="email" name="email" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Mulai Bekerja</span>
+                <div class="mt-4" style="text-align: center; font-size: 18px; font-weight: bold;">
+                    Total Penjualan
+                </div>
+                <div class="mt-4 ml-3 mr-3 row justify-content-md-center" id="sales-content" style="align: center;">
+                    <div class="col-sm-4 border border-right-0 border-secondary rounded-left" style="position: static;">
+                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Total Penjualan Sekarang</div>
+                        <div style="font-weight: bold; font-size: 22px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                            <?php $sql="SELECT FORMAT(SUM(total_harga),'C') as 'total' FROM `order`
+                                LEFT JOIN sales ON `order`.id_sales=sales.id_sales
+                                WHERE sales.id_manager=? && status_order=1 && MONTH(tanggal_jatuh_tempo)=MONTH(CURRENT_DATE) && YEAR(tanggal_jatuh_tempo)=YEAR(CURRENT_DATE)"; 
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->execute([$_SESSION['id_manajer']]);
+                                $res=$stmt->fetch();
+                                if($res['total']==NULL){
+                                    echo "Rp. 0";
+                                } else{
+                                    echo "Rp. ", $res['total'];
+                                } 
+                                ?>
+                        </div>
                     </div>
-                    <input type="date" class="form-control" id="tanggal_mulai_kerja" name="tanggal_mulai_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Berhenti Bekerja</span>
+                    <div class="col-sm-4 border border-secondary rounded-right" style="position: static;">
+                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Target Penjualan</div>
+                        <div style="font-weight: bold; font-size: 22px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                            <?php $sql="SELECT FORMAT(SUM(target),'C') as 'total' FROM `target_penjualan` 
+                                    WHERE id_manager=? && bulan=MONTH(CURRENT_DATE)"; 
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->execute([$_SESSION['id_manajer']]);
+                                $res=$stmt->fetch();
+                                if($res['total']==NULL){
+                                    echo "Rp. 0";
+                                } else{
+                                    echo "Rp. ", $res['total'];
+                                } 
+                                ?>
+                        </div>
                     </div>
-                    <input type="date" class="form-control" id="tanggal_berhenti_kerja" name="tanggal_berhenti_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                 </div>
-                <div class="input-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Username</span>
-                    </div>
-                    <input type="text" class="form-control" id="username" name="username" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                <div style="color: grey;">*password default : sales</div>
-                <button type="button" class="btn btn-warning mt-5" id="add-sales-submit-btn" name="submit" style="width: 200px; margin-left: 450px;">Submit</button>
             </div>
+
         </div>
 
         <script>
-            //Button Add Sales
-            $("#add-sales-submit-btn").click(function(){
-                $.ajax({
-                    url: "/ProyekManpro/services/get_sales_all.php",
-                    method: "GET",
-                    success: function(data) {
-                        var cek=false;
-                        var co = 1;
-                        var check = true
-                        data.forEach(function(sales){
-                            if(sales['username']==$("#username").val()){
-                                check = false;
-                            }
-                            cek = true;
-                            co++;
-                        });
-
-                        if(check){
-                            var id_manager = <?php echo $_SESSION['id_manajer']; ?>;
-                            var nama = $("#nama").val();
-                            var alamat = $("#alamat").val()
-                            var no_telp = $("#no_telp").val();
-                            var email = $("#email").val();
-                            var tanggal_mulai_kerja = $("#tanggal_mulai_kerja").val();
-                            var tanggal_berhenti_kerja = $("#tanggal_berhenti_kerja").val();
-                            var username = $("#username").val();
-
-                            $.ajax({
-                                url: '/ProyekManpro/services/add_sales.php',
-                                method: 'POST',
-                                data: {
-                                    id_manager : id_manager,
-                                    nama : nama,
-                                    alamat : alamat,
-                                    no_telp : no_telp,
-                                    email : email,
-                                    tanggal_mulai_kerja : tanggal_mulai_kerja,
-                                    tanggal_berhenti_kerja : tanggal_berhenti_kerja,
-                                    username : username
-                                },
-                                
-                                success: function(data) {
-                                    $("#nama").val('');
-                                    $("#alamat").val('');
-                                    $("#no_telp").val('');
-                                    $("#email").val('');
-                                    $("#tanggal_mulai_kerja").val('');
-                                    $("#tanggal_berhenti_kerja").val('');
-                                    $("#username").val('');
-                                    window.location.replace("DataSales_Manajer.php");
-                                },
-                                error: function($xhr, textStatus, errorThrown) {
-                                    alert($xhr.responseJSON['error']);
-                                }
-                            });
-                        }
-                        else{
-                            $.alert({
-                                title: 'Gagal!',
-                                content: 'Username Sudah Terpakai!',
-                            });
-                        }
-                    },
-                    error: function(data) {
-                        alert("load data error!");
-                    }
-                });
-
-                
-            });
+            
         </script>
+
     </body>
 </html>

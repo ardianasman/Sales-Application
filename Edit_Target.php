@@ -181,14 +181,24 @@
             <symbol id="door" viewBox="0 0 16 16">
                 <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
             </symbol>
+            <symbol id="home" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+            </symbol>
         </svg>
 
         <div class="d-flex">
             <!-- SIDEBAR -->
             <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 20%; background-color: #61a3d6; position: fixed;">
-            <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <img src="image\LogoWhite.png" width="160px" style="margin-left: auto; margin-right: auto;" class="d-flex mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
+                    <li>
+                        <a href="Home_Manajer.php" class="nav-link text-white">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                        Home
+                        </a>
+                    </li>
                     <li>
                         <a href="Profile_Manajer.php" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
@@ -282,10 +292,12 @@
                         <span class="input-group-text">Target</span>
                     </div>
                     <input type="text" class="form-control" id="target" name="target" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Status</span>
                     </div>
-                    <select class="custom-select col-6" id="status">
+                    <select class="custom-select" id="status">
                         <option selected>Pilih</option>
                         <option value="0">Belum Terpenuhi</option>
                         <option value="1">Terpenuhi</option>
@@ -387,7 +399,10 @@
                             });
                         }
                         else{
-                            alert("Data untuk bulan dan tahun tersebut sudah ada!")
+                            $.alert({
+                                title: 'Gagal!',
+                                content: 'Data untuk bulan dan tahun tersebut sudah ada!',
+                            });
                         }
                     },
                     error: function(data) {

@@ -16,6 +16,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="Assets/jquery-confirm/jquery-confirm.css"/>
         <script src="Assets/jquery-confirm/jquery-confirm.js"></script>
+        <!-- FontAwesome -->
+        <script src="https://kit.fontawesome.com/8762c0f933.js" crossorigin="anonymous"></script>
         
         <title>Welcome Manager</title>
 
@@ -34,6 +36,7 @@
             }
             body {
                 min-height: 100vh;
+                background: #eee
             }
 
             html {
@@ -51,10 +54,6 @@
                 display: grid;
                 grid-template-columns: max-content auto;
                 grid-gap: 10px;
-            }
-            .modal-backdrop {
-                z-index: -1;
-                background-color: white;
             }
 
             .b-example-divider {
@@ -136,6 +135,43 @@
                 border-style: inset;
                 border-width: 1px;
             }
+            .fonts {
+                font-size: 20px
+            }
+            .card:hover::after {
+                transform: scaleY(1)
+            }
+            .card {
+                border: none;
+                position: relative;
+                overflow: hidden;
+                border-radius: 8px;
+                cursor: pointer
+            }
+            .card:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 4px;
+                height: 100%;
+                background-color: #98BAE7;
+                transform: scaleY(1);
+                transition: all 0.5s;
+                transform-origin: bottom
+            }
+            .card:after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 4px;
+                height: 100%;
+                background-color: #61a3d6;
+                transform: scaleY(0);
+                transition: all 0.5s;
+                transform-origin: bottom
+            }
         </style>
     </head>
 
@@ -181,14 +217,24 @@
             <symbol id="door" viewBox="0 0 16 16">
                 <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
             </symbol>
+            <symbol id="home" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+            </symbol>
         </svg>
 
         <div class="d-flex">
             <!-- SIDEBAR -->
             <nav class="flex-column flex-shrink-0 p-3 text-white" style="width: 20%; background-color: #61a3d6; position: fixed;">
-            <img src="image\LogoWhite.png" width="160px" class="d-flex ml-5 mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <img src="image\LogoWhite.png" width="160px" style="margin-left: auto; margin-right: auto;" class="d-flex mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <hr style="width: 98%; text-align: left;">
                 <ul class="nav nav-pills flex-column mb-auto">
+                    <li>
+                        <a href="Home_Manajer.php" class="nav-link text-white">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                        Home
+                        </a>
+                    </li>
                     <li>
                         <a href="Profile_Manajer.php" class="nav-link active">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
@@ -241,99 +287,312 @@
             </nav>
         
             <!-- <div class="col-md-9 col-lg-8 m-3"> -->
-            <div class="p-3" style="margin-left: 20%;width:80%; position: static;">
-                <form class="grid-container p-1">
-                    <div style="font-weight: bold; font-size: 25px; margin-top: 15px;">
-                        Welcome, Manajer <?php echo $_SESSION['nama']; ?>
-                    </div>
-                    <span><img src="image/profile.jpg" alt="profile" width="80px" style="float: right;"></span>
-                </form>
-                <hr style="width: 100%; text-align: left; background-color: grey;">
-                <div class="mt-4" style="text-align: center; font-size: 20px;">
-                    <?php $sql="SELECT DAY(CURRENT_DATE), MONTHNAME(CURRENT_DATE), YEAR(CURRENT_DATE)"; 
-                        $stmt=$pdo->prepare($sql);
-                        $stmt->execute();
-                        $res=$stmt->fetch();  
-                        echo $res['DAY(CURRENT_DATE)'], " ", $res['MONTHNAME(CURRENT_DATE)'], " ", $res['YEAR(CURRENT_DATE)']?>
-                </div>
-                <div class="mt-4 ml-3 mr-3 row justify-content-md-center" id="sales-content">
-                    <div class="col-sm-4 border border-right-0 border-secondary rounded-left" style="position: static;">
-                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Customer</div>
-                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
-                            <?php $sql="SELECT COUNT(id_customer) as 'jumlah' FROM `customer`"; 
-                                $stmt=$pdo->prepare($sql);
-                                $stmt->execute();
-                                $res=$stmt->fetch();  
-                                echo $res['jumlah']?>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 border border-secondary" style="position: static;">
-                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Sales</div>
-                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
-                            <?php $sql="SELECT COUNT(id_sales) as 'jumlah' FROM `sales`
-                                        WHERE id_manager=?"; 
-                                $stmt=$pdo->prepare($sql);
-                                $stmt->execute([$_SESSION['id_manajer']]);
-                                $res=$stmt->fetch();  
-                                echo $res['jumlah']?>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 border border-left-0 border-secondary rounded-right" style="position: static;">
-                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Jumlah Product</div>
-                        <div style="font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
-                            <?php $sql="SELECT COUNT(id_produk) as 'jumlah' FROM `produk`
-                                        WHERE id_manager=?"; 
-                                $stmt=$pdo->prepare($sql);
-                                $stmt->execute([$_SESSION['id_manajer']]);
-                                $res=$stmt->fetch();  
-                                echo $res['jumlah']?>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-4" style="text-align: center; font-size: 18px; font-weight: bold;">
-                    Total Penjualan
-                </div>
-                <div class="mt-4 ml-3 mr-3 row justify-content-md-center" id="sales-content" style="align: center;">
-                    <div class="col-sm-4 border border-right-0 border-secondary rounded-left" style="position: static;">
-                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Total Penjualan Sekarang</div>
-                        <div style="font-weight: bold; font-size: 22px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
-                            <?php $sql="SELECT FORMAT(SUM(total_harga),'C') as 'total' FROM `order`
-                                LEFT JOIN sales ON `order`.id_sales=sales.id_sales
-                                WHERE sales.id_manager=? && status_order=1 && MONTH(tanggal_order)=MONTH(CURRENT_DATE)"; 
-                                $stmt=$pdo->prepare($sql);
-                                $stmt->execute([$_SESSION['id_manajer']]);
-                                $res=$stmt->fetch();
-                                if($res['total']==NULL){
-                                    echo "Rp. 0";
-                                } else{
-                                    echo "Rp. ", $res['total'];
-                                } 
-                                ?>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 border border-secondary rounded-right" style="position: static;">
-                        <div style="font-weight: bold; font-size: 15px; margin-top: 10px; text-align: center;;">Target Penjualan</div>
-                        <div style="font-weight: bold; font-size: 22px; margin-top: 30px; margin-bottom: 30px; text-align: center;">
-                            <?php $sql="SELECT FORMAT(SUM(target),'C') as 'total' FROM `target_penjualan` 
-                                    WHERE id_manager=? && bulan=MONTH(CURRENT_DATE)"; 
-                                $stmt=$pdo->prepare($sql);
-                                $stmt->execute([$_SESSION['id_manajer']]);
-                                $res=$stmt->fetch();
-                                if($res['total']==NULL){
-                                    echo "Rp. 0";
-                                } else{
-                                    echo "Rp. ", $res['total'];
-                                } 
-                                ?>
+            <div class="container mt-5">
+                <div class="row d-flex justify-content-center" style="margin-left: 20%;">
+                    <div class="col-md-10">
+                        <div class="card p-3 py-4">
+                            <div class="text-center"> <img src="image/profile.jpg" width="150" class="rounded-circle"> </div>
+                            <div class="text-center">
+                                <h2 id="namamanajer"class="mt-2 mb-0"></h2> <span>Manajer</span>
+                                <div class="px-4 mt-3">
+                                    <p class="fonts" id="emailmanajer"></p>
+                                    <p class="fonts" id="alamatmanajer"></p>
+                                    <p class="fonts" id="notelpmanajer"></p>
+                                    <p class="fonts" id="usernamemanajer"></p>
+                                    <p class="fonts" id="passwordmanajer"></p>
+                                </div>
+                                <div class="buttons"> 
+                                    <button id = "change-data-btn" class="btn btn-info px-4">Change Data</button>
+                                    <button id = "change-pass-btn" class="btn btn-outline-primary px-4">Change Password</button> 
+                                    <button id = "change-username-btn" class="btn btn-primary px-4 ms-3">Change Username</button> 
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Change Data Modal -->
+            <div class="modal fade mt-5" id="change-data-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document" style="margin-left: 30%;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Change Data Profile</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="nama">Nama : </label>
+                                <input type="text" id="nama" name="nama" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email : </label>
+                                <input type="text" id="email" name="email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="alamat">Alamat : </label>
+                                <input type="text" id="alamat" name="alamat" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="notelp">No Telp : </label>
+                                <input type="text" id="notelp" name="notelp" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id="submit-data-button" name="submit" class="btn btn-success"><i class="lnr lnr-plus-circle"></i>Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Change Password Modal -->
+            <div class="modal fade mt-5" id="change-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document" style="margin-left: 30%;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Change Password</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="new-pass">New Password: </label>
+                                <input type="password" id="new-pass" name="new-pass" class="form-control" placeholder="New Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-pass">Confirm Password: </label>
+                                <input type="password" id="confirm-pass" name="confirm-pass" class="form-control" placeholder="Confirm Password">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id="submit-user-button" name="submit" class="btn btn-success"><i class="lnr lnr-plus-circle"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Change Username Modal -->
+            <div class="modal fade" id="change-username-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Change Username</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="new-username">New Username: </label>
+                                <input type="text" id="new-username" name="new-username" class="form-control" placeholder="New Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-username">Confirm Username: </label>
+                                <input type="text" id="confirm-user" name="confirm-user" class="form-control" placeholder="Confirm Username">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id="submit-username-button" name="submit" class="btn btn-success"><i class="lnr lnr-plus-circle"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <!-- JQuery Confirm -->
+        <script src="assets/jquery-confirm/jquery-confirm.js"></script>
+
         <script>
-            
+            function load_data() {
+                var id = <?php echo $_SESSION['id_manajer'] ?>;
+                $.ajax({
+                        url: '/ProyekManpro/services/get_profile_manajer.php',
+                        method: 'GET',
+                        data: {
+                            id: id
+                        },
+                        success: function(data) {
+                            $('#namamanajer').text(data['nama']);
+                            $('#emailmanajer').text("Email Sales : " + data['email']);
+                             $('#alamatmanajer').text("No Telp : " + data['alamat']);
+                             $('#notelpmanajer').text("No Telp : " + data['no_telp']);
+                            $('#usernamemanajer').text("Username Sales : " + data['username']);
+                            $('#passwordmanajer').text("Password Sales : " + data['password']);
+                            console.log(data);
+                        },
+                        error: function($xhr, textStatus, errorThrown) {
+                            alert($xhr.responseJSON['error']);
+                        }
+                    });
+            }
+
+            $(document).ready(function(){
+                load_data();
+            });
+
+            $("#change-data-btn").click(function(){
+                $("#change-data-modal").modal();
+                
+                var id = <?php echo $_SESSION['id_manajer'] ?>;
+                $.ajax({
+                    url: '/ProyekManpro/services/get_profile_manajer.php',
+                    method: 'GET',
+                    data: {
+                       id: id
+                    },
+                    success: function(data) {
+                        var nama = data['nama'];
+                        var email = data['email'];
+                        var alamat = data['alamat'];
+                        var no_telp = data['no_telp'];
+
+                        $('#nama').val(nama);
+                        $('#email').val(email);
+                        $('#alamat').val(alamat);
+                        $('#notelp').val(no_telp);
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+            });
+
+            $("#change-pass-btn").click(function(){
+                $("#change-modal").modal();
+            });
+
+            $("#change-username-btn").click(function(){
+                $("#change-username-modal").modal();
+            });
+
+            $("#submit-data-button").click(function(){
+                var nama = $('#nama').val();
+                var email = $('#email').val();
+                var alamat = $('#alamat').val();
+                var no_telp = $('#notelp').val();
+
+                $.ajax({
+                    url: '/ProyekManpro/services/edit_data_manajer.php',
+                    method: 'POST',
+                    data: {
+                        nama : nama,
+                        email : email,
+                        alamat : alamat,
+                        no_telp : no_telp
+                    },
+                    success: function(data) {
+                        $("#change-data-modal").modal('toggle');
+                        $.alert({
+                            title: 'Success!',
+                            content: 'Data berhasil di update!',
+                        });
+                        load_data();
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+            });
+
+            $("#submit-user-button").click(function(){
+                var newpass = $("#new-pass").val();
+                var confpass = $("#confirm-pass").val();
+                $.ajax({
+                    url: '/ProyekManpro/services/edit_pass_manajer.php',
+                    method: 'POST',
+                    data: {
+                        newpass: newpass,
+                        confpass: confpass
+                    },
+                    success: function(data) {
+                        $("#new-pass").val('');
+                        $("#confirm-pass").val('');
+                        $("#change-modal").modal('toggle');
+                        $.alert({
+                            title: 'Success!',
+                            content: 'Password Has Been Changed!',
+                        });
+                        load_data();
+                    },
+                    error: function($xhr, textStatus, errorThrown) {
+                        alert($xhr.responseJSON['error']);
+                    }
+                });
+            });
+
+            $("#submit-username-button").click(function(){
+                $.ajax({
+                    url: "/ProyekManpro/services/get_manajer.php",
+                    method: "GET",
+                    success: function(data) {
+                        var cek=false;
+                        var co = 1;
+                        var check = true
+                        data.forEach(function(manajer){
+                            if(manajer['username']==$("#new-username").val()){
+                                check = false;
+                            }
+                            cek = true;
+                            co++;
+                        });
+
+                        if(check){
+                            var newname = $("#new-username").val();
+                            var confname = $("#confirm-user").val();
+
+                            $.ajax({
+                                url: '/ProyekManpro/services/edit_username_manajer.php',
+                                method: 'POST',
+                                data: {
+                                    newname: newname,
+                                    confname: confname
+                                },
+                                success: function(data) {
+                                    $("#new-username").val('');
+                                    $("#confirm-user").val('');
+                                    $("#change-username-modal").modal('toggle');
+                                    $.alert({
+                                        title: 'Success!',
+                                        content: 'Username Berhasil diganti!',
+                                    });
+                                    load_data();
+                                },
+                                error: function($xhr, textStatus, errorThrown) {
+                                    alert($xhr.responseJSON['error']);
+                                }
+                            });
+                        }
+                        else{
+                            $.alert({
+                                title: 'Gagal!',
+                                content: 'Username Sudah Terpakai atau sama!!',
+                            });
+                            $("#new-username").val('');
+                            $("#confirm-user").val('');
+                            $("#change-username-modal").modal();
+                        }
+                    },
+                    error: function(data) {
+                        alert("load data error!");
+                    }
+                });
+
+                
+                
+            });
+
         </script>
 
     </body>
