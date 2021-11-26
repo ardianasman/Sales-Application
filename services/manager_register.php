@@ -31,18 +31,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("HTTP/1.1 400 Bad Request");
         $result['status'] = 0;
         $result['error'] = 'All Data Must Have Value!';
+    }else{
+        if($password != $re_pass){
+            header("HTTP/1.1 400 Bad Request");
+            $result['status'] = 0;
+            $result['error'] = 'Make Sure Your Password and Confirmation Password are the same!';
+        }
+        else {
+            $sql = "INSERT INTO manager(id_manager,nama,alamat,no_telp,username,email,password,tanggal_mulai_kerja)
+            VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$nama,$address,$hp,$username,$email,$password,$tanggal]);
+        }
     }
-    if($password != $re_pass){
-        header("HTTP/1.1 400 Bad Request");
-        $result['status'] = 0;
-        $result['error'] = 'Make Sure Your Password and Confirmation Password are the same!';
-    }
-    else {
-        $sql = "INSERT INTO manager(id_manager,nama,alamat,no_telp,username,email,password,tanggal_mulai_kerja)
-        VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$nama,$address,$hp,$username,$email,$password,$tanggal]);
-    }
+    
 
     echo json_encode($result);
 } else {

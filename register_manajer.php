@@ -1,6 +1,9 @@
 <?php 
 
-session_start();
+include $_SERVER['DOCUMENT_ROOT']."/ProyekManpro/services/database.php"; 
+    if (!isset($_SESSION['id_manajer'])) {
+        header("Location:login_manajer.php");
+    }
 
 
 ?>
@@ -31,7 +34,6 @@ session_start();
     
    
 <!-- Sign up form -->
-<section class="signup">
     <div class="container">
         <div class="signup-content">
             <div class="signup-form">
@@ -65,10 +67,6 @@ session_start();
                     <label for="conf_pass"><i class="zmdi zmdi-lock-outline"></i></label>
                     <input type="password" name="conf_pass" id="conf_pass" placeholder="Repeat your password"/>
                 </div>
-                <div class="form-group">
-                    <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                    <label for="agree-term" class="label-agree-term"><span><span></span></span>Confirmation to Add New Manager</a></label>
-                </div>
                 <div class="form-group form-button">
                     <div class="text-left">
                         <button id="add-user-btn" class="btn btn-info"><i class="lnr lnr-plus-circle"></i> Register</button>
@@ -83,7 +81,6 @@ session_start();
             </div>
         </div>
     </div>            
-</section>
 
 
 
@@ -123,6 +120,14 @@ $("#add-user-btn").click(function() {
                 title: 'Success!',
                 content: 'New Manager Has Been Registered!',
             });
+            $('#name').val("");
+            $('#email').val("");
+            $('#address').val("");
+            $('#no_telp').val("");
+            $('#username').val("");
+            $('#pass').val("");
+            var re_pass = $('#conf_pass').val("");
+
         },
         error: function($xhr, textStatus, errorThrown) {
             alert($xhr.responseJSON['error']);
