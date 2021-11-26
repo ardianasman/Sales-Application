@@ -131,6 +131,7 @@
             </ul>
         </div>
     </nav>
+    <div class="container">
     <div class="transparent">
                 <?php
                     if($stmt->rowCount() == 1)
@@ -171,7 +172,7 @@
                                     <label>Status Order : </label>
                                     <input class="form-control w-25" id="ustat" name="ustatus" value="<?php echo $item['status_order']; ?>">
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-around">
                                     <button class="btn btn-outline-secondary p-2" onclick="window.history.go(-1)">Back</button>
                                     <button class="btn btn-warning p-2">Edit</button>
                                     <button class="btn btn-danger p-2" onclick="deleteP()">Delete</button>
@@ -186,5 +187,7 @@
                         </div>
                     <?php } ?>
     </div>
+    </div>
+    
 </body>
 </html>
