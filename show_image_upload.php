@@ -117,7 +117,7 @@ function load_data() {
                 var col2 = $("<td>" + aktivitas['id_aktivitas'] + "</td>");
                 var col3 = $("<td>" + aktivitas['Nama_Cust'] + "</td>");
                 var target_file = aktivitas['foto_kunjungan'];
-                var col4 = $("<td><img src='" + target_file  + "' style='width:400px; height:auto;'></td>");
+                var col4 = $("<td><img src='" + target_file  + "' style='width:400px; height:400px;'></td>");
                 var col5 = $("<td>" + aktivitas['nama'] + "</td>");
                 var col6 = $("<td>" + aktivitas['jadwal_kunjungan'] + "</td>");
 
