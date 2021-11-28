@@ -12,7 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     FROM aktivitas_sales a
     JOIN customer c ON a.id_customer = c.id_customer
     JOIN sales s ON a.id_sales = s.id_sales
-    WHERE s.id_manager=?";
+    WHERE s.id_manager=?
+    order BY a.jadwal_kunjungan DESC";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$_SESSION['id_manajer']]);
 
