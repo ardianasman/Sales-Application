@@ -38,7 +38,7 @@
             <div class="col-12 col-lg-6 p-5 justify-content-center">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-center">
-                        <img class="yodalogo" src="../assets/pics/googlelogo.png" alt="Aplikasi Sales Logo">
+                        <img class="yodalogo" src="image/Logo.png" alt="Aplikasi Sales Logo">
                     </div>
                     <div class="col-12 d-flex justify-content-center">
                         <h2 style="font-weight: normal">Masuk ke akun Anda</h2>

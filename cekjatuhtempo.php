@@ -127,7 +127,7 @@ if (!isset($_SESSION['id'])) {
                             var col4 = $("<td>" + nota['id_customer'] + "</td>");
                             var col5 = $("<td>" + nota['tanggal_order'] + "</td>");
                             var col6 = $("<td>" + nota['tanggal_jatuh_tempo'] + "</td>");
-                            var col7 = $("<td>" + nota['total_harga'] + "</td>");
+                            var col7 = $("<td>" + nota['total_harga'].toLocaleString() + "</td>");
 
                             col2.appendTo(row);
                             col3.appendTo(row);

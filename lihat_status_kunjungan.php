@@ -68,14 +68,14 @@ if (!isset($_SESSION['id'])) {
         </div>
         <div class="row pt-4">
             <div class="col-12 table-responsive-sm">
-                <table id="tableImage" class="table table-hover table-striped table-bordered">
+                <table id="tableImage" class="table table-hover table-striped table-bordered " style= "text-align : center;">
                     <thead>
                         <tr>
                             <th width="25%" data-sortable="true">No</th>
                             <th width="25%" data-sortable="true">ID Customer</th>
                             <th width="25%" data-sortable="true">Nama Customer</th>
                             <th width="25%" data-sortable="true">Jadwal Kunjungan</th>
-                            <th width="25%" data-sortable="true">Status Persetujuan</th>
+                            <th width="25%" data-sortable="true">Status</th>
                         </tr>
                     </thead>
                     <tbody id="user-content">
