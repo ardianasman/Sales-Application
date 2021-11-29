@@ -9,6 +9,9 @@
     {
         $id_order = $_GET['ids'];
     }
+    $sql = "SELECT n.nama FROM `order` m JOIN `customer` n ON m.id_customer = n.id_customer WHERE m.id_order = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_order]);
 ?>
 <!doctype html>
 <html lang="en">
@@ -65,7 +68,7 @@
                             var row = $("<tr></tr>");
                             var col1 = $("<td>" + count + "</td>");
                             var col2 = $("<td>" + item['nama_produk'] + "</td>");
-                            var col3 = $("<td>" + item['harga_produk'] + "</td>");
+                            var col3 = $("<td>" + item['harga_produk'].toLocaleString() + "</td>");
                             var col4 = $("<td><input type='number' name='inp' id='inpqty' required value = '<?php echo 0 ?>'></input></td>");
                             
                             var btn = $('<td scope="col" hidden></td>');
@@ -149,12 +152,67 @@
                         }
                     });
                 });
+                $("#calctotal").on("click", function(){
+                    var str = $('#qtyform').serializeArray();
+                    var arr_harga = [];
+                    $.ajax({
+                        url: "./services/getlistharga.php",
+                        method: "GET",
+                        success: function(res){
+                            res.forEach(function(item){
+                                arr_harga.push(item['harga_produk']);
+                            });
+                            
+                            $.ajax({
+                                url: "./services/gettemptotal.php",
+                                method: "POST",
+                                data: {
+                                    str : str,
+                                    arr_harga : arr_harga
+                                },
+                                success: function(res){
+                                    $('#calctotaltext').val(res);
+                                },
+                                error: function(data){
+                                    alert(data);
+                                }
+                            });
+                        }
+                    });
+                });
             });
             function init(){
                 getData();
                 getProduct();
             }
         </script>
+        <style>
+            .input-group{
+                margin-top: 25px;
+            }
+            .input-group-prepend {
+                width : 15%;
+                padding : 0px;
+            }
+            .input-group-prepend span{
+                width: 100%;
+            }
+            #inpi{
+                background-color: white;
+            }
+            .inpc{
+                width: 10%;
+            }
+            .inpc:read-only{
+                background-color: white;
+            }
+            #basic-addon1{
+                width: 10%;
+            }
+            .navbar{
+                margin-bottom:15px;
+            }
+        </style>
 </head>
 
 <body onload="init()">
@@ -165,17 +223,40 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="show_image_upload.php">Activity</a>
-                <a class="nav-item nav-link" href="ListCustomer.php">Customer</a>
-                <a class="nav-item nav-link active" href="manage_order.php">Order</a>
-                <a class="nav-item nav-link" href="profile_sales.php">Profile</a>
-                <a class="nav-item nav-link" href="logout.php">Logout</a>
+                <ul>
+                    <li><a class="nav-item nav-link " href="index.php">Home <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item dropdown"><a class="nav-link" id="navbarDropdownMenuLink"aria-haspopup="true" aria-expanded="false">Activity</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="show_activity.php">Sales Activity</a>
+                            <a class="dropdown-item" href="add_rencanakungjungan.php">Visit Plan</a>
+                            <a class="dropdown-item" href="lihat_status_kunjungan.php">Plan Status</a>
+                        </div>
+                    </li>
+                    <li><a class="nav-item nav-link" href="ListCustomer.php">Customer</a></li>
+                    <li><a class="nav-item nav-link active" href="manage_order.php">Order</a></li>
+                    <li><a class="nav-item nav-link" href="profile_sales.php">Profile</a></li>
+                    <li><a class="nav-item nav-link" href="logout.php">Logout</a></li>
+                </ul>
             </div>
         </div>
     </nav>
     <div class="container">
         <div class="transparent">
+            <?php $item = $stmt->fetch();?>
+            <h4 style="text-align: center; margin-bottom: 15px;"><b>Add Customer Product</b></h4>
+            
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend col-sm">
+                    <span class="input-group-text"><b>ID Order</b></span>
+                </div>
+                <input type="text" class="form-control" id="inpi" value="<?php echo $id_order;?>" style="margin-right: 10px;" readonly>
+                <div class="input-group-prepend col-sm">
+                    <span class="input-group-text"><b>Customer Name</b></span>
+                </div>
+                <input type="text" class="form-control" id="inpi" value="<?php echo $item['nama']?>" readonly>
+            </div>
+
             <div>
                 <form id="qtyform">
                     <table id="tableImage" class="table table-hover table-striped table-bordered">
@@ -194,7 +275,17 @@
                     </table>
                 </form>
             </div>
-            <div><button class="btn btn-danger" id="inp-btn">Submit</button></div>
+            <div>
+                
+                <div class="input-group">
+                    <div class="input-group-prepend col-sm">
+                        <button class="btn btn-danger" id="calctotal" style="float: left; margin-right: 15px;">Calculate</button>
+                        <span class="input-group-text" id="basic-addon1">Total</span>
+                        <input type="text" class="form-control inpc" id="calctotaltext" placeholder="0" readonly>
+                        <button class="btn btn-danger col-md-4 offset-md-4" id="inp-btn">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

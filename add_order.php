@@ -71,6 +71,7 @@
                 var pajak = $("#idpajak").val();
                 sessionStorage.setItem("idpajak", pajak);
                 var diskon = $("#iddiskon").val();
+                diskon = diskon.substring(0,2);
                 sessionStorage.setItem("iddiskon", diskon);
                 //
                 
@@ -118,6 +119,9 @@
     .w-50{
         margin-bottom:10px;
     }
+    .navbar{
+        margin-bottom:20px;
+    }
 </style>
 
 <body onload="init()">
@@ -147,6 +151,7 @@
     </nav>
     <div class="container">
         <div class="transparent">
+            <h4 style="text-align: center; margin-bottom: 25px;"><b>Add Order</b></h4>
                 <form method="POST" action="./services/addorder.php" enctype="multipart/form-data">
                     <div class="form-content">  
                         <div class="form-group">
@@ -176,16 +181,12 @@
                                     <input type="date" class="form-control" style="text-align:center" name="idtempo" id="idtempo" value="<?php echo date('Y-m-d', strtotime('+30 days')); ?>">
                                 </div>
                                 <div class="w-50" style="margin-left: auto; margin-right: auto">
-                                    <label for="matauang"><b">Mata Uang</b></label>
-                                    <input type="text" class="form-control" style="text-align:center" name="iduang" id="iduang" value="Rupiah" readonly>
-                                </div>
-                                <div class="w-50" style="margin-left: auto; margin-right: auto">
                                     <label for="diskon"><b">Diskon</b></label>
-                                    <input type="number" class="form-control" style="text-align:center" name="iddiskon" id="iddiskon" min="" max="99">
+                                    <input type="number" class="form-control" style="text-align:center" name="iddiskon" id="iddiskon" min="" max="99" placeholder="Dalam %">
                                 </div>
                                 <div class="w-50" style="margin-left: auto; margin-right: auto">
                                     <label for="pajak"><b">Pajak</b></label>
-                                    <input type="text" class="form-control" style="text-align:center" name="idpajak" id="idpajak" value="10" readonly>
+                                    <input type="text" class="form-control" style="text-align:center" name="idpajak" id="idpajak" value="10%" readonly>
                                 </div>
                         </div>
                     </div>

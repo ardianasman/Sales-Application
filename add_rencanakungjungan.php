@@ -8,7 +8,7 @@ $sql = "SELECT * FROM `aktivitas_sales` ORDER BY `id_aktivitas` DESC LIMIT 1";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 
-$sqlmanager = "SELECT n.nama FROM `sales` m JOIN `manager` n ON m.id_manager = n.id_manager WHERE m.id_sales = $id";
+$sqlmanager = "SELECT m.id_manager, n.nama FROM `sales` m JOIN `manager` n ON m.id_manager = n.id_manager WHERE m.id_sales = $id";
 $stmtmanager = $pdo->prepare($sqlmanager);
 $stmtmanager->execute();
 ?>
@@ -38,7 +38,7 @@ $stmtmanager->execute();
                 method: "POST",
                 success: function(res) {
                     $("#data-list").html('');
-                    var opt = $("<select style='height:40px; width: 277.5px; text-align: center' required></select>");
+                    var opt = $("<select style='height:40px; width: 100%; text-align: center' required></select>");
                     var data = [];
                     res.forEach(function(item) {
                         var html = $(`
@@ -66,11 +66,9 @@ $stmtmanager->execute();
         //     });
         // }
         function addRencana() {
-            console.log("masuk");
             var id_customer = $("#data-list").find(":selected").text();
-            var id_manager = $("#datamanager-list").find(":selected").text();
+            var id_manager = $("#idmanager").val();
             var id_aktivitas = $("#idktivitas").val();
-
 
             var date = new Date($("#idtglkunjung").val());
             var day = date.getDate();
@@ -92,8 +90,7 @@ $stmtmanager->execute();
                     jadwal_kunjungan: jadwal_kunjungan
                 },
                 success: function(data) {
-                    alert("success");
-                    //window.location.replace(index.php);
+                    
                 },
                 error: function() {
                     alert("fail");
@@ -103,8 +100,20 @@ $stmtmanager->execute();
 
         function start() {
             getCustId();
-            getManagerId();
+            //getManagerId();
         }
+        $(document).ready(function(){
+            $("#btnsubmit").on("click", function(){
+                var checkdate = $("#idtglkunjung").val();
+                if(checkdate == ""){
+                    alert("Date is not selected !");
+                }
+                else{
+                    addRencana();
+                    window.location.href = "lihat_status_kunjungan.php";
+                }
+            });
+        });
     </script>
     <style>
         .btn {
@@ -130,6 +139,19 @@ $stmtmanager->execute();
 
         .w-25 {
             margin-bottom: 10px;
+        }
+        .input-group-prepend {
+            width : 15%; /*adjust as needed*/
+        }
+        .input-group-prepend span{
+            width: 100%;
+            overflow: hidden;
+        }
+        .form-control[readonly]{
+            background-color: transparent;
+        }
+        .navbar{
+            margin-bottom: 25px;
         }
     </style>
 </head>
@@ -169,11 +191,12 @@ $stmtmanager->execute();
     </nav>
     <div class="container">
         <div class="transparent">
+        <h4 style="text-align: left; margin-bottom: 35px;"><b>Rencana Kunjungan</b></h4>
             <?php
             if ($stmt->rowCount() == 1) {
                 $item = $stmt->fetch();
                 $itemmanager = $stmtmanager->fetch(); ?>
-                <div id="item-list" class="item-list">
+                <!-- <div id="item-list" class="item-list">
                     <div class="w-25" style="margin-left: auto; margin-right: auto">
                         <label for="idktivits">
                             <b">ID Aktivitas</b>
@@ -209,6 +232,43 @@ $stmtmanager->execute();
                             <button class="btn btn-outline-secondary p-2 mr-4" onclick="window.history.go(-1)">Back</button>
                             <button class="btn btn-success ml-auto p-2 ml-4 justify-content-center align-items-center" onclick="addRencana()">Add Plan</button>
                         </div>
+                    </div>
+                </div> -->
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">ID Aktivitas</span>
+                    </div>
+                    <input class="form-control" id="idktivitas" value="<?php echo $item['id_aktivitas'] + 1; ?>" readonly></input>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">ID Sales</span>
+                    </div>
+                    <input class="form-control" value="<?php echo $id; ?>" readonly></input>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Manager</span>
+                    </div>
+                    <input id="idmanager" class="form-control" value="<?php echo $itemmanager['id_manager']; echo " - "; echo $itemmanager['nama'];?>" readonly></input>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Customer</span>
+                    </div>
+                    <div style="width: 85%" id="data-list" name="idcust"></div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Jadwal Kunjungan</span>
+                    </div>
+                    <input class="form-control" type="datetime-local" class="form-control" style="text-align:center" name="idtglkunjung" id="idtglkunjung" required>
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+                    <div class="btn-group">
+                        <button class="btn btn-outline-secondary p-2 mr-4" onclick="window.history.go(-1)">Back</button>
+                        <button id="btnsubmit" class="btn btn-success ml-auto p-2 ml-4 justify-content-center align-items-center">Add Plan</button>
                     </div>
                 </div>
             <?php } else { ?>

@@ -41,6 +41,9 @@
         button{
             margin-bottom: 15px;
         }
+        .navbar{
+            margin-bottom:25px;
+        }
     </style>
 
     
@@ -132,7 +135,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active dropdown"><a class="nav-link" id="navbarDropdownMenuLink"aria-haspopup="true" aria-expanded="false">Activity</a>
+                <li class="nav-item dropdown"><a class="nav-link" id="navbarDropdownMenuLink"aria-haspopup="true" aria-expanded="false">Activity</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="show_activity.php">Sales Activity</a>
                         <a class="dropdown-item" href="add_rencanakungjungan.php">Visit Plan</a>
@@ -143,7 +146,7 @@
                     <a class="nav-link" href="ListCustomer.php">Customer <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="manage_order.php">Order <span class="sr-only"></span></a>
+                    <a class="nav-link active" href="manage_order.php">Order <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="profile_sales.php">Profile <span class="sr-only"></span></a>
@@ -158,7 +161,9 @@
         <div class="transparent">
             <?php
                 $item = $stmt->fetch()?>
-                <button class="btn btn-success" style="float: right; margin-right: 15px; margin-top: 15px;" onclick="location.href = `./add_order.php?ids=`+ <?php if($stmt->rowCount() == 0){$tot = 1;} else{$tot = $item['id_order'] + 1;} echo $tot; ?>">Add Order</button>
+                <h4 style="text-align: left; margin-bottom: 10px;"><b>Order List</b></h4>
+                
+                <button class="btn btn-success" style="float: left; margin-right: 15px; margin-top: 15px;" onclick="location.href = `./add_order.php?ids=`+ <?php if($stmt->rowCount() == 0){$tot = 1;} else{$tot = $item['id_order'] + 1;} echo $tot; ?>">Add Order</button>
                 <!-- <div id="order-list" class="transparent"> </div>-->
 
                 <div>

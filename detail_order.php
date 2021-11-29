@@ -66,6 +66,9 @@
                 margin: 15px;
                 text-align: center;
             }
+            .navbar{
+                margin-bottom: 25px;
+            }
         </style>
 </head>
 
@@ -105,6 +108,7 @@
 
     <div class="container">
         <div class="transparent">
+            <h4 style="text-align: center; margin-bottom: 35px;"><b>Detail Order</b></h4>
             <div id="detail-list" class="transparent"> </div>
                 <button class="btn btn-outline-secondary" onclick="window.history.go(-1)">Back</button>
         </div>

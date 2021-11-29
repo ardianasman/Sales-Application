@@ -4,7 +4,6 @@
     $number = count($_POST["str"]);
     $id_order = $_POST["id_order"];
     $id_detail = $_POST["detailorder_id"];
-    $id_uang = $_POST["iduang"];
     $id_pajak = $_POST["idpajak"];
     $id_diskon = $_POST["iddiskon"];
     if ($_SERVER['REQUEST_METHOD'] == "POST" && $number > 1)
@@ -18,7 +17,7 @@
                 if($temp != 0){
                     $sql = "INSERT INTO `detail_order` VALUES (?, ?, ?, ?, ?, ?, ?)";
                     $stmt = $pdo->prepare($sql);
-                    $stmt->execute([$id_detail, $id_order, $_POST["arr_id"][$i - 1], $temp, $id_uang, $id_diskon, $id_pajak]);
+                    $stmt->execute([$id_detail, $id_order, $_POST["arr_id"][$i - 1], $temp, "Rupiah", $id_diskon, $id_pajak]);
                     $count = $count + 1;
                 }
             }

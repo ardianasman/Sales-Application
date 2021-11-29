@@ -40,6 +40,9 @@
         .item-list{
             text-align: center;
         }
+        .navbar{
+            margin-bottom: 25px;
+        }
     </style>
 </head>
 
@@ -78,6 +81,7 @@
     </nav>
     <div class="container">
         <div class="transparent">
+            <h4 style="text-align: center; margin-bottom: 35px;"><b>Add New Customer</b></h4>
             <?php
                 if($stmt->rowCount() == 1){
                     $item = $stmt->fetch();
