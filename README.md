@@ -3,7 +3,7 @@ Sales Application is an PHP, HTML/CSS, JS based Project for Information Technolo
 
 This application used to help Managers manage monitor their employees
 
-Created by : 
+Created by : <br />
 Gloria Immanuela Endhy		C14190009<br />
 Ardian Asman			C14190018<br />
 Richardo Jason 			C14190181<br />
